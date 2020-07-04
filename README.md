@@ -1,5 +1,5 @@
 # GFRAS
 Gamified Facial Recognition Attendance Software
 
-#Technologies:
+# Technologies:
 NodeJS ,React.JS, android
