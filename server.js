@@ -1,7 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
-var path = require('path');
 var http = require('http').Server(app);
 import apiRouter from './api/index';
 import mongoose from 'mongoose';
@@ -20,13 +19,13 @@ mongoose.connect('mongodb://localhost/EtihadDB', {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var server = http.listen(3000, () => {
+var server = http.listen(3001, () => {
     console.log('server is on the ' + server.address().port);
 });
 
 app.get('/', (req, res) => {
     res.render('index', {
-        content: 'hello waleed'
+        content: 'rendered from server'
     });
 });
 

@@ -7,6 +7,8 @@ NodeJS ,React.JS, android
 1) Clone repositry
 2) npm install to download all the dependencies
 3) npm start will keep nodemon working 
+4) npm run dev should also be run. 
+5) *Both point 3 and 4 need to be run on two different terminals!!!*
 
 
 # Structure:
