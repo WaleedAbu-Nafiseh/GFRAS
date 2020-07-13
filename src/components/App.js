@@ -1,12 +1,17 @@
 import React from 'react';
 import Header from './Header';
-import UserPreview from './userPreview';
 import axios from 'axios';
+import UserList from './userList';
+const pushState= (obj,url)=>{
+    window.history.pushState(obj,'',url);
+};
 
 class  App extends React.Component  {
     state={
         pageHeader:'This is the header ',
-        users:[]    
+        users:[],
+        userId:{},
+
     };
 
     componentDidMount(){
@@ -18,22 +23,34 @@ class  App extends React.Component  {
                 });
             })
             .catch(console.error);
-       
-
     }
-
-
-
+    fetchUser=(userID)=>{
+        pushState(
+            {currentUserID:userID},
+            `/users/${userID}`
+        );
+        console.log(this.state.users[userID].username);
+        this.setState({
+            
+            pageHeader:this.state.users[userID].username
+        });
+      
+    }
+    currentUser(){
+        if(this.state.currentUserID){
+            return( <UserList
+                onUserClick={this.fetchUser}
+                users={this.state.users}/>);
+        }else{ return( <UserList
+            onUserClick={this.fetchUser}
+            users={this.state.users}/>);}
+       
+    }
     render (){
         return ( 
             <div className="App"> 
                 <Header message={this.state.pageHeader}></Header>
-                <div>
-                    {this.state.users.map(users =>
-                        <UserPreview key={users.id} {...users}></UserPreview>
-                    )}
-               
-                </div>
+                {this.currentUser()}
             </div>
         );
     }
