@@ -2,6 +2,8 @@ import React from 'react';
 import Header from './Header';
 import axios from 'axios';
 import UserList from './userList';
+import UserProfile from './userProfile';
+import * as api from '../api';
 const pushState= (obj,url)=>{
     window.history.pushState(obj,'',url);
 };
@@ -29,21 +31,33 @@ class  App extends React.Component  {
             {currentUserID:userID},
             `/users/${userID}`
         );
-        console.log(this.state.users[userID].username);
-        this.setState({
-            
-            pageHeader:this.state.users[userID].username
+
+        api.fetchUser(userID).then(user =>{
+            this.setState({
+                selectedID:userID,
+                pageHeader:user.username,
+                users:{ ...this.state.users,
+                    [user.id]:user
+                }    
+            });
         });
+
+        console.log(this.state.users[userID].username);
+       
       
-    }
+    };
     currentUser(){
-        if(this.state.currentUserID){
+
+        if(this.state.selectedID){
+            console.log('Got in if');
+            return(<UserProfile{... this.state.users[this.state.selectedID]}>
+
+            </UserProfile>);
+        }else{ 
+            console.log('Got in else ');
             return( <UserList
                 onUserClick={this.fetchUser}
-                users={this.state.users}/>);
-        }else{ return( <UserList
-            onUserClick={this.fetchUser}
-            users={this.state.users}/>);}
+                users={this.state.users}/>);}
        
     }
     render (){
