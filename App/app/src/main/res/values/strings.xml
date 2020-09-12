@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GFRAS-App</string>
+    <string name="StudentID">Student ID</string>
+    <string name="login">Login</string>
 </resources>

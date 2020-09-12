@@ -3,18 +3,15 @@ var bodyParser = require('body-parser');
 var app = express();
 var http = require('http').Server(app);
 import apiRouter from './api/index';
-import mongoose from 'mongoose';
+
 app.use(express.static(__dirname));
 
 app.set('view engine', 'ejs');
-
-//Mongose connection 
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/EtihadDB', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+var dbcon = require('./dbconn');
+dbcon.query('SELECT * FROM gfras_db.student;', function (err, result, fields) {
+    if (err) throw err;
+    console.log(result);
 });
-
 // bodyparser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
