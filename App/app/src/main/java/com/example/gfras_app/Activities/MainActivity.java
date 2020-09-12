@@ -1,29 +1,22 @@
-package com.example.gfras_app;
+package com.example.gfras_app.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.example.gfras_app.R;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getName();
@@ -54,9 +47,20 @@ public class MainActivity extends AppCompatActivity {
 
                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                         Log.d(TAG, document.getId() + " => " + document.getData());
+                                        if(document.get("firstName").equals(edtStudentID.getText().toString())){
+                                            Intent intent = new Intent(getApplicationContext(),HomePageActivity.class);
+                                            startActivity(intent);
+                                        }
+                                        else{
+                                            Toast toast = Toast.makeText(getApplicationContext(), "What?!", Toast.LENGTH_LONG);
+                                            toast.show();
+                                        }
                                     }
+
                                 } else {
                                     Log.d(TAG, "Error getting documents: ", task.getException());
+                                    Toast toast = Toast.makeText(getApplicationContext(), "Try again, You failed!", Toast.LENGTH_LONG);
+                                    toast.show();
                                 }
                             }
                         });
