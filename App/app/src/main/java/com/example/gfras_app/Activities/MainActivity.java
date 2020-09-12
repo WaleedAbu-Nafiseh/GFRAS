@@ -52,12 +52,14 @@ public class MainActivity extends AppCompatActivity {
                                             startActivity(intent);
                                         }
                                         else{
+                                            Log.d(TAG, document.getId() + " => " + document.getData());
                                             Toast toast = Toast.makeText(getApplicationContext(), "What?!", Toast.LENGTH_LONG);
                                             toast.show();
                                         }
                                     }
 
-                                } else {
+                                }
+                                else {
                                     Log.d(TAG, "Error getting documents: ", task.getException());
                                     Toast toast = Toast.makeText(getApplicationContext(), "Try again, You failed!", Toast.LENGTH_LONG);
                                     toast.show();
