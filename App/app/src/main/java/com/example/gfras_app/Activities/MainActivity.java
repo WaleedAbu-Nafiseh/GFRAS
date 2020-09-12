@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String studentID= edtStudentID.getText().toString();
                 db.collection("students")
-                        .whereEqualTo("firstName", studentID)
+                            .whereEqualTo("firstName", studentID)
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
                                             toast.show();
                                         }
                                     }
-
                                 }
                                 else {
                                     Log.d(TAG, "Error getting documents: ", task.getException());
