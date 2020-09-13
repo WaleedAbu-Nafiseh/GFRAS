@@ -22,12 +22,15 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getName();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     Button btnLogIn;
+    Button btnSignup;
     EditText edtStudentID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-         btnLogIn= findViewById(R.id.btnLogIn);
+        btnLogIn= findViewById(R.id.btnLogIn);
+        btnSignup= findViewById(R.id.btnSignup);
          edtStudentID= findViewById(R.id.edtStudentID);
         onclick();
     }
@@ -68,5 +71,16 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        btnSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),SignupActivity.class);
+                startActivity(intent);
+
+            }
+        });
     }
+
+
+
 }
