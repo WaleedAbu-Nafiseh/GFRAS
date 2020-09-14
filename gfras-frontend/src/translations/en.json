@@ -1,12 +1,14 @@
 {
-  "login.signIn.signInToGfras": "SIGN IN TO GFRAS",
-  "login.signUp.signUpToGfras": "SIGN UP TO GFRAS",
-  "login.form.email": "Email",
-  "login.form.password": "Password",
-  "landingPage.login.useGoogle": "USE GOOGLE",
-  "landingPage.signIn.signInButton": "SIGN IN",
-  "landingPage.signUp.signUpButton": "SIGN UP",
-  "landingPage.signIn.newToGfras": "New To GFRAS?",
-  "landingPage.signUp.alreadyHaveAnAccount": "Already have an account?",
-  "landingPage.signIn.alreadyAMember": "Already A Member?"
+	"login.signIn.signInToGfras": "SIGN IN TO GFRAS",
+	"login.signUp.signUpToGfras": "SIGN UP TO GFRAS",
+	"login.form.email": "Email",
+	"login.form.password": "Password",
+	"landingPage.login.useGoogle": "USE GOOGLE",
+	"landingPage.signIn.signInButton": "SIGN IN",
+	"landingPage.signUp.signUpButton": "SIGN UP",
+	"landingPage.signIn.newToGfras": "New To GFRAS?",
+	"landingPage.signUp.alreadyHaveAnAccount": "Already have an account?",
+	"landingPage.signIn.alreadyAMember": "Already A Member?",
+	"landingPage.signUp.emailAlreadyInUse": "The email is already in use by another account.",
+	"landingPage.signIn.incorrectEmailOrPassword": "Incorrect username or password."
 }

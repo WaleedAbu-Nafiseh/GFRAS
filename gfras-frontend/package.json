@@ -1,62 +1,64 @@
 {
-  "name": "frgas-frontend",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@chakra-ui/core": "^1.0.0-rc.3",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
-    "axios": "^0.20.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-intl": "^5.8.1",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "@babel/core": "^7.11.6",
-    "@storybook/addon-actions": "^6.0.21",
-    "@storybook/addon-essentials": "^6.0.21",
-    "@storybook/addon-links": "^6.0.21",
-    "@storybook/node-logger": "^6.0.21",
-    "@storybook/preset-create-react-app": "^3.1.4",
-    "@storybook/react": "^6.0.21",
-    "babel-loader": "^8.1.0",
-    "husky": "^4.3.0",
-    "lint-staged": "^10.3.0",
-    "prettier": "2.1.1",
-    "react-is": "^16.13.1"
-  }
+	"name": "frgas-frontend",
+	"version": "0.1.0",
+	"private": true,
+	"dependencies": {
+		"@chakra-ui/core": "^1.0.0-rc.3",
+		"@testing-library/jest-dom": "^4.2.4",
+		"@testing-library/react": "^9.5.0",
+		"@testing-library/user-event": "^7.2.1",
+		"axios": "^0.20.0",
+		"firebase": "^7.20.0",
+		"react": "^16.13.1",
+		"react-dom": "^16.13.1",
+		"react-hook-form": "^6.8.2",
+		"react-intl": "^5.8.1",
+		"react-router-dom": "^5.2.0",
+		"react-scripts": "3.4.1"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	},
+	"lint-staged": {
+		"**/*": "prettier --write --ignore-unknown"
+	},
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test",
+		"eject": "react-scripts eject",
+		"storybook": "start-storybook -p 6006 -s public",
+		"build-storybook": "build-storybook -s public"
+	},
+	"eslintConfig": {
+		"extends": "react-app"
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	},
+	"devDependencies": {
+		"@babel/core": "^7.11.6",
+		"@storybook/addon-actions": "^6.0.21",
+		"@storybook/addon-essentials": "^6.0.21",
+		"@storybook/addon-links": "^6.0.21",
+		"@storybook/node-logger": "^6.0.21",
+		"@storybook/preset-create-react-app": "^3.1.4",
+		"@storybook/react": "^6.0.21",
+		"babel-loader": "^8.1.0",
+		"husky": "^4.3.0",
+		"lint-staged": "^10.3.0",
+		"prettier": "2.1.1",
+		"react-is": "^16.13.1"
+	}
 }

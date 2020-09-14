@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { SignIn } from '../organisms';
 import { Heading, Flex, Button, Text } from '@chakra-ui/core';
 import { useIntl } from 'react-intl';
-import { Google } from '../../../components/icons';
 import { SignUp } from '../organisms/SignUp';
+import { AuthContext } from '../../../components/auth-provider';
 
 export function Forms() {
 	const { formatMessage } = useIntl();
 	const [showSignIn, setShowSignIn] = useState(true);
+	const { setErrMessage } = useContext(AuthContext);
 
 	return (
 		<>
@@ -18,17 +19,6 @@ export function Forms() {
 							? formatMessage({ id: 'login.signIn.signInToGfras' })
 							: formatMessage({ id: 'login.signUp.signUpToGfras' })}
 					</Heading>
-					<Button
-						leftIcon={<Google boxSize='30px' mr='1.25rem' />}
-						mt={30}
-						border='1px solid gray'
-						bg='transparent'
-						w='180px'
-						fontSize={17}
-						fontWeight='bold'
-					>
-						{formatMessage({ id: 'landingPage.login.useGoogle' })}
-					</Button>
 				</Flex>
 				{showSignIn ? <SignIn /> : <SignUp />}
 				<Flex mt='26px' justify='center' align='center'>
@@ -41,7 +31,10 @@ export function Forms() {
 					</Text>
 					<Button
 						bg='transparent'
-						onClick={() => setShowSignIn((prevState) => !prevState)}
+						onClick={() => {
+							setErrMessage('');
+							setShowSignIn((prevState) => !prevState);
+						}}
 						fontSize={16}
 						color='rgb(0,115,207)'
 						_focus={{ bg: 'none' }}
