@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.gfras_app.Data.Question;
 import com.example.gfras_app.Data.Quiz;
@@ -32,16 +34,24 @@ public class QuizzingActivity extends AppCompatActivity {
     private static FirebaseFirestore db;
     public Quiz quiz;
     public static String TAG=QuizzingActivity.class.getName();
-    private EditText edtText;
+    private TextView txtQuestionPlace;
     private ProgressBar prgsBar;
     DocumentReference docRef;
-
+    private Button btnOptionA;
+    private Button btnOptionB;
+    private Button btnOptionC;
+    private Button btnOptionD;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quizzing);
-        edtText=findViewById(R.id.edtText);
+        txtQuestionPlace=findViewById(R.id.txtQuestionPlace);
         prgsBar=findViewById(R.id.prgsBar);
+        btnOptionA=findViewById(R.id.btnOptionA);
+        btnOptionB=findViewById(R.id.btnOptionB);
+        btnOptionC=findViewById(R.id.btnOptionC);
+        btnOptionD=findViewById(R.id.btnOptionD);
+        Log.d(TAG," onCreate");
         prgsBar.setVisibility(View.VISIBLE);
         db = FirebaseFirestore.getInstance();
         docRef = db.collection(CollectionsName.QUIZZES).document("kPAZCjZjtFJjHNh5RnTt");
@@ -60,6 +70,7 @@ public class QuizzingActivity extends AppCompatActivity {
         start();
     }
     public void start(){
+        Log.d(TAG," start");
 
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -86,13 +97,21 @@ public class QuizzingActivity extends AppCompatActivity {
 
 
     public  void writeUI(){
+        Log.d(TAG," writeUI");
+
         if(quiz.getIsStarted()){
             //It is  started
+            prgsBar.setVisibility(View.INVISIBLE);
+            txtQuestionPlace.setText(quiz.getQuestions().get(0).getQuestion());
+            btnOptionA.setText(quiz.getQuestions().get(0).getOptionA());
+            btnOptionB.setText(quiz.getQuestions().get(0).getOptionB());
+            btnOptionC.setText(quiz.getQuestions().get(0).getOptionC());
+            btnOptionD.setText(quiz.getQuestions().get(0).getOptionD());
+
         }else{
             //It is not started
+            txtQuestionPlace.setText("Please wait until the quiz starts");
         }
-        prgsBar.setVisibility(View.INVISIBLE);
-        edtText.setText(quiz.getQuestions().get(0).getQuestion());
 
     }
 }
