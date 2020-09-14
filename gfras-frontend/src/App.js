@@ -1,21 +1,19 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { ChakraProvider } from '@chakra-ui/core';
-import { BrowserRouter } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
 import messages_en from './translations/en.json';
 import UnAuthenticated from './UnAuthenticated';
+import { AuthContext } from './components/auth-provider';
+import { AuthenticatedApp } from './Authenticated';
 
 function App() {
-	const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+	const { isAuthenticated } = useContext(AuthContext);
 	return (
-		<BrowserRouter>
-			<IntlProvider locale='en' messages={messages_en}>
-				<ChakraProvider resetCSS>
-					{isAuthenticated ? <>Authenticated</> : <UnAuthenticated />}
-				</ChakraProvider>
-			</IntlProvider>
-		</BrowserRouter>
+		<IntlProvider locale='en' messages={messages_en}>
+			<ChakraProvider resetCSS>
+				{isAuthenticated ? <AuthenticatedApp /> : <UnAuthenticated />}
+			</ChakraProvider>
+		</IntlProvider>
 	);
 }
 
