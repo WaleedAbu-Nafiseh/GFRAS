@@ -3,4 +3,9 @@
     <string name="StudentID">Student ID</string>
     <string name="login">Login</string>
     <string name="signup">Signup</string>
+    <string name="ToQuiz">To Quiz</string>
+    <string name="optionA">A</string>
+    <string name="optionB">B</string>
+    <string name="optionC">C</string>
+    <string name="optionD">D</string>
 </resources>

@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.gfras_app.Data.Student;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -49,9 +50,10 @@ public class DBServices {
                     }
                 });
     }
-    public static void getObject(String collectionName,String documentID){
+    public static Student getStudent(String collectionName,String documentID){
+        db = FirebaseFirestore.getInstance();
         DocumentReference  docRef = db.collection(collectionName).document(documentID);
-
+        final Student[] s = {new Student()};
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -59,6 +61,8 @@ public class DBServices {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                        s[0] =document.toObject(Student.class);
+                        Log.d(TAG,s[0].firstName );
                     } else {
                         Log.d(TAG, "No such document");
                     }
@@ -67,6 +71,8 @@ public class DBServices {
                 }
             }
         });
+
+        return s[0];
 
         }
 }
