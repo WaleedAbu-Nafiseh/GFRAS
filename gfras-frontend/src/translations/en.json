@@ -10,5 +10,13 @@
 	"landingPage.signUp.alreadyHaveAnAccount": "Already have an account?",
 	"landingPage.signIn.alreadyAMember": "Already A Member?",
 	"landingPage.signUp.emailAlreadyInUse": "The email is already in use by another account.",
-	"landingPage.signIn.incorrectEmailOrPassword": "Incorrect username or password."
+	"landingPage.signIn.incorrectEmailOrPassword": "Incorrect username or password.",
+	"header.bar.title": "Easy Lecture",
+	"header.bar.menuItems.quizzes": "Quizzes",
+	"courses.yourCourses.emptyCourses": "You Don't have courses!",
+	"courses.yourCourses.createNewCourse": "Create New Course",
+	"courses.createNewCourse.courseName": "Course Name",
+	"courses.createNewCourse.quizID": "Quiz ID",
+	"courses.createNewCourse.students": "Students",
+	"courses.createNewCourse.createNewCourseBtn": "Create"
 }

@@ -30,14 +30,16 @@ export function AuthProvider({ children }) {
 		const citiesRef = db.collection('Instructors');
 		setIsLoading(true);
 		setErrMessage('');
-
+		console.log(citiesRef, citiesRef.id);
 		citiesRef
 			.where('email', '==', email)
 			.where('password', '==', password)
 			.get()
 			.then((querySnapshot) => {
+				console.log(querySnapshot.docs[0].id);
 				if (querySnapshot.size > 0) {
 					setUserAuthentication(email);
+					localStorage.setItem('instructorID', querySnapshot.docs[0].id);
 					setIsLoading(false);
 				} else {
 					setIsLoading(false);
@@ -63,6 +65,7 @@ export function AuthProvider({ children }) {
 						email,
 						password
 					});
+					localStorage.setItem('instructorID', res.docs[0].id);
 				} else {
 					setErrMessage('landingPage.signUp.emailAlreadyInUse');
 				}
@@ -77,6 +80,7 @@ export function AuthProvider({ children }) {
 		<AuthContext.Provider
 			value={{
 				isAuthenticated,
+				setIsAuthenticated,
 				isLoading,
 				errMessage,
 				userInfo,
