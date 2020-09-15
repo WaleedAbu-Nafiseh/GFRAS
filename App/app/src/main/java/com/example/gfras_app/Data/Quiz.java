@@ -52,4 +52,12 @@ public class Quiz {
     public void setId(String id) {
         this.id = id;
     }
+    public int getCurrentQuestion() {
+        for (int i = 0; i < questions.size(); i++) {
+            if (questions.get(i).isShowQuestion()) {
+                return i;
+            }
+        }
+        return -1;
+    }
 }

@@ -30,7 +30,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class QuizzingActivity extends AppCompatActivity {
-
+    private int currentQuetion;
     private static FirebaseFirestore db;
     public Quiz quiz;
     public static String TAG=QuizzingActivity.class.getName();
@@ -83,6 +83,8 @@ public class QuizzingActivity extends AppCompatActivity {
 
                 if (snapshot != null && snapshot.exists()) {
                     quiz =snapshot.toObject(Quiz.class);
+                    currentQuetion=quiz.getCurrentQuestion();
+                    Log.d(TAG, "Current Question is question number : " + currentQuetion);
                     writeUI();
                     Log.d(TAG, "Current data after Drama: " + snapshot.getData());
                 } else {
@@ -98,19 +100,38 @@ public class QuizzingActivity extends AppCompatActivity {
 
     public  void writeUI(){
         Log.d(TAG," writeUI");
-
-        if(quiz.getIsStarted()){
-            //It is  started
-            prgsBar.setVisibility(View.INVISIBLE);
-            txtQuestionPlace.setText(quiz.getQuestions().get(0).getQuestion());
-            btnOptionA.setText(quiz.getQuestions().get(0).getOptionA());
-            btnOptionB.setText(quiz.getQuestions().get(0).getOptionB());
-            btnOptionC.setText(quiz.getQuestions().get(0).getOptionC());
-            btnOptionD.setText(quiz.getQuestions().get(0).getOptionD());
-
-        }else{
-            //It is not started
+        if(currentQuetion==-1){
             txtQuestionPlace.setText("Please wait until the quiz starts");
+            btnOptionA.setVisibility(View.INVISIBLE);
+            btnOptionB.setVisibility(View.INVISIBLE);
+            btnOptionC.setVisibility(View.INVISIBLE);
+            btnOptionD.setVisibility(View.INVISIBLE);
+        }else{
+            if(quiz.getIsStarted()){
+                //It is  started
+                prgsBar.setVisibility(View.INVISIBLE);
+                txtQuestionPlace.setText(quiz.getQuestions().get(currentQuetion).getQuestion());
+                btnOptionA.setVisibility(View.VISIBLE);
+                btnOptionB.setVisibility(View.VISIBLE);
+                btnOptionC.setVisibility(View.VISIBLE);
+                btnOptionD.setVisibility(View.VISIBLE);
+
+                btnOptionA.setText(quiz.getQuestions().get(currentQuetion).getOptionA());
+                btnOptionB.setText(quiz.getQuestions().get(currentQuetion).getOptionB());
+                btnOptionC.setText(quiz.getQuestions().get(currentQuetion).getOptionC());
+                btnOptionD.setText(quiz.getQuestions().get(currentQuetion).getOptionD());
+
+            }else{
+                //It is not started
+                txtQuestionPlace.setText("Please wait until the quiz starts");
+                btnOptionA.setVisibility(View.INVISIBLE);
+                btnOptionB.setVisibility(View.INVISIBLE);
+                btnOptionC.setVisibility(View.INVISIBLE);
+                btnOptionD.setVisibility(View.INVISIBLE);
+
+
+            }
+
         }
 
     }
