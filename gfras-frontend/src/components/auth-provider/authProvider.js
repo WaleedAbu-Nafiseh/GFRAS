@@ -22,7 +22,7 @@ export function AuthProvider({ children }) {
 		setIsAuthenticated(true);
 		localStorage.setItem('token', email);
 		localStorage.setItem('userID', email);
-		history.replace(ROUTES.DASHBOARD);
+		history.replace(ROUTES.QUIZZES);
 	};
 
 	const signIn = ({ email, password }) => {
@@ -30,7 +30,6 @@ export function AuthProvider({ children }) {
 		const citiesRef = db.collection('Instructors');
 		setIsLoading(true);
 		setErrMessage('');
-
 		citiesRef
 			.where('email', '==', email)
 			.where('password', '==', password)
@@ -38,6 +37,7 @@ export function AuthProvider({ children }) {
 			.then((querySnapshot) => {
 				if (querySnapshot.size > 0) {
 					setUserAuthentication(email);
+					localStorage.setItem('instructorID', querySnapshot.docs[0].id);
 					setIsLoading(false);
 				} else {
 					setIsLoading(false);
@@ -63,6 +63,7 @@ export function AuthProvider({ children }) {
 						email,
 						password
 					});
+					localStorage.setItem('instructorID', res.docs[0].id);
 				} else {
 					setErrMessage('landingPage.signUp.emailAlreadyInUse');
 				}
@@ -77,6 +78,7 @@ export function AuthProvider({ children }) {
 		<AuthContext.Provider
 			value={{
 				isAuthenticated,
+				setIsAuthenticated,
 				isLoading,
 				errMessage,
 				userInfo,
