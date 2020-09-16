@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gfras_app.R;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnLogIn;
     Button btnSignup;
     EditText edtStudentID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

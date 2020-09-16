@@ -9,27 +9,33 @@ public class Student {
     @DocumentId
     public String id;
     public String firstName;
+    public int studentNum;
+    public String phoneNum;
     public String lastName;
     public Date dateOfBirth;
     public String password;
     public List<String> courses;
     public Student(){}
 
-    public Student(String firstName, String lastName, Date dateOfBirth, String password, List<String> courses) {
+    public Student(String firstName, String lastName, Date dateOfBirth, String password,int studentNum,String phoneNum, List<String> courses) {
         this.id=id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.password = password;
         this.courses = courses;
+        this.studentNum=studentNum;
+        this.phoneNum=phoneNum;
     }
-    public Student(String id,String firstName, String lastName, Date dateOfBirth, String password, List<String> courses) {
+    public Student(String id,String firstName, String lastName, Date dateOfBirth, String password,int studentNum,String phoneNum, List<String> courses) {
         this.id=id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.password = password;
+        this.studentNum=studentNum;
         this.courses = courses;
+        this.phoneNum=phoneNum;
     }
     public String getFirstName() {
         return firstName;
@@ -77,5 +83,21 @@ public class Student {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public int getStudentNum() {
+        return studentNum;
+    }
+
+    public void setStudentNum(int studentNum) {
+        this.studentNum = studentNum;
+    }
+
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
     }
 }
