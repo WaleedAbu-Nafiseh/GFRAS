@@ -1,7 +1,13 @@
 import React, { Suspense, useState } from 'react';
-import { Button, Text, Flex, Spinner } from '@chakra-ui/core';
+import { Button, Flex, Spinner } from '@chakra-ui/core';
 import * as ROUTES from './constant';
-import { Switch, Route, Redirect, NavLink } from 'react-router-dom';
+import {
+	Switch,
+	Route,
+	Redirect,
+	NavLink,
+	useLocation
+} from 'react-router-dom';
 import Header from './components/layout/Header';
 import { useIntl } from 'react-intl';
 import { menuItems } from './constant';
@@ -9,7 +15,10 @@ import { Courses } from './screens/courses/pages/Courses';
 
 export function AuthenticatedApp() {
 	const { formatMessage } = useIntl();
-	const [activeMenuButtons, setActiveMenuButtons] = useState('Courses');
+	const { pathname } = useLocation();
+	const [activeMenuButtons, setActiveMenuButtons] = useState(
+		pathname !== '/login' ? pathname : '/quizzes'
+	);
 
 	const onSetMenuButton = (buttonName) => {
 		setActiveMenuButtons(buttonName);
@@ -22,8 +31,8 @@ export function AuthenticatedApp() {
 					bg='transparent'
 					align='center'
 					_active={{ color: '#11293f' }}
-					isActive={activeMenuButtons === title}
-					onClick={() => onSetMenuButton(title)}
+					isActive={activeMenuButtons === route}
+					onClick={() => onSetMenuButton(route)}
 					fontSize={22}
 					_hover={{ bg: 'transparent' }}
 					_focus={{ bg: 'transparent' }}
@@ -50,8 +59,7 @@ export function AuthenticatedApp() {
 				<Switch>
 					<Route path={ROUTES.QUIZZES} render={() => <>quizzes</>} />
 					<Route path={ROUTES.COURSES} render={() => <Courses />} />
-					{/*<Route path={ROUTES.DASHBOARD} render={() => <>Authenticated</>} />*/}
-					<Redirect from='/' to={ROUTES.COURSES} />
+					<Redirect from='/' to={ROUTES.QUIZZES} />
 				</Switch>
 			</Suspense>
 		</>

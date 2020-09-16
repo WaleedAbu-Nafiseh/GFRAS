@@ -8,5 +8,5 @@ export const createNewCourses = ({
 }) => {
 	const db = firebase.firestore();
 	const courses = db.collection('Courses');
-	courses.add({ instructorID, courseName, quizzes, students });
+	courses.add({ InstructorID: instructorID, courseName, quizzes, students });
 };

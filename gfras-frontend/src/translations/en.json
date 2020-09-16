@@ -18,5 +18,6 @@
 	"courses.createNewCourse.courseName": "Course Name",
 	"courses.createNewCourse.quizID": "Quiz ID",
 	"courses.createNewCourse.students": "Students",
-	"courses.createNewCourse.createNewCourseBtn": "Create"
+	"courses.createNewCourse.createNewCourseBtn": "Create",
+	"courses.yourCourses.noOfStudents": "No Of Students:"
 }

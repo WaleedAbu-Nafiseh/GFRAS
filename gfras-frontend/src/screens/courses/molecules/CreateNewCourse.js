@@ -9,7 +9,6 @@ export function CreateNewCourse() {
 	const { register, handleSubmit, errors, watch } = useForm();
 	const { formatMessage } = useIntl();
 	const onSubmit = handleSubmit(({ courseName, quizzes, students }) => {
-		console.log(localStorage.getItem('instructorID'));
 		createNewCourses({
 			instructorID: localStorage.getItem('instructorID'),
 			courseName,

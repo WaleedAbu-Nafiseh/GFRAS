@@ -6,7 +6,6 @@ const Header = ({ navTitle, menuItems, ...props }) => {
 	const [show, setShow] = React.useState(false);
 	const handleToggle = () => setShow(!show);
 	const { setIsAuthenticated } = useContext(AuthContext);
-	console.log(menuItems);
 	return (
 		<Flex
 			as='nav'
@@ -58,6 +57,8 @@ const Header = ({ navTitle, menuItems, ...props }) => {
 					onClick={() => {
 						setIsAuthenticated(false);
 						localStorage.removeItem('token');
+						localStorage.removeItem('userID');
+						localStorage.removeItem('instructorID');
 					}}
 					bg='transparent'
 					border='1px'
