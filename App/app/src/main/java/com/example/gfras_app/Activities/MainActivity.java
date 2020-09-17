@@ -3,6 +3,7 @@ package com.example.gfras_app.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gfras_app.R;
+import com.example.gfras_app.app.facerecognizer.FirstFRActicity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -24,7 +26,10 @@ public class MainActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     Button btnLogIn;
     Button btnSignup;
+    Button btnFR;
     EditText edtStudentID;
+    private static final String PERMISSION_CAMERA = Manifest.permission.CAMERA;
+    private static final String PERMISSION_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 
     @Override
@@ -33,7 +38,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         btnLogIn= findViewById(R.id.btnLogIn);
         btnSignup= findViewById(R.id.btnSignup);
+        btnFR= findViewById(R.id.btnFR);
          edtStudentID= findViewById(R.id.edtStudentID);
+
         onclick();
     }
 
@@ -77,6 +84,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),SignupActivity.class);
+                startActivity(intent);
+
+            }
+        });
+        btnFR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), FirstFRActicity.class);
                 startActivity(intent);
 
             }
