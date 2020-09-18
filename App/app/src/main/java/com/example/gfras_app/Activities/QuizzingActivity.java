@@ -54,7 +54,7 @@ public class QuizzingActivity extends AppCompatActivity {
         Log.d(TAG," onCreate");
         prgsBar.setVisibility(View.VISIBLE);
         db = FirebaseFirestore.getInstance();
-        docRef = db.collection(CollectionsName.QUIZZES).document("kPAZCjZjtFJjHNh5RnTt");
+        docRef = db.collection(CollectionsName.QUIZZES).document("megWwizowg6aQ420QG1O");
 
         /** This snippet is to sho wto to add a Quiz which contains a list of questions
          * List<Question> questions=new LinkedList<>();
