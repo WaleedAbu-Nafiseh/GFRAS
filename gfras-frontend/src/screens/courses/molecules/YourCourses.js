@@ -2,7 +2,8 @@ import React from 'react';
 import { Flex, Text, Button } from '@chakra-ui/core';
 import { CREATE_NEW_COURSE } from '../courses.config';
 import { useIntl } from 'react-intl';
-import { useCoursesContext } from '../../CoursesContext';
+import { useCoursesContext } from '../CoursesContext';
+import { NavLink } from 'react-router-dom';
 
 function EmptyCourses({ setActiveSideMenuButton }) {
 	const { formatMessage } = useIntl();
@@ -30,7 +31,6 @@ export function YourCourse({ setActiveSideMenuButton }) {
 	const { formatMessage } = useIntl();
 	const { data } = useCoursesContext();
 	const courses = [];
-	console.log(data);
 	data.forEach(function (doc) {
 		courses.push(
 			<Flex
@@ -51,6 +51,22 @@ export function YourCourse({ setActiveSideMenuButton }) {
 					</Text>
 					<Text fontWeight='500'>{doc.data().students.length}</Text>
 				</Flex>
+				<NavLink
+					to={`/quiz/${doc.id}`}
+					style={{
+						color: 'white',
+						borderRadius: '4px',
+						padding: '0px 16px 4px',
+						fontWeight: 'bold',
+						marginTop: 'auto',
+						backgroundColor: 'rgb(19, 104, 206)',
+						textAlign: 'center',
+						lineHeight: '2.875rem',
+						boxShadow: 'rgba(0, 0, 0, 0.25) 0px -4px inset'
+					}}
+				>
+					{formatMessage({ id: 'courses.createQuizzes.courseDetails' })}
+				</NavLink>
 			</Flex>
 		);
 	});
@@ -59,5 +75,9 @@ export function YourCourse({ setActiveSideMenuButton }) {
 		return <EmptyCourses setActiveSideMenuButton={setActiveSideMenuButton} />;
 	}
 
-	return <Flex p='60px'>{courses}</Flex>;
+	return (
+		<Flex p='60px' flexWrap='wrap'>
+			{courses}
+		</Flex>
+	);
 }

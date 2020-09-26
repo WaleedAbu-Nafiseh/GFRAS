@@ -11,7 +11,7 @@ export const AuthContext = React.createContext({
 
 export function AuthProvider({ children }) {
 	const history = useHistory();
-	const [userInfo, setUserInfo] = useState({});
+	const [userInfo] = useState({});
 	const [errMessage, setErrMessage] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
 	const [isAuthenticated, setIsAuthenticated] = useState(

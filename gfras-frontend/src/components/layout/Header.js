@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import { Box, Flex, Button } from '@chakra-ui/core';
 import { AuthContext } from '../auth-provider';
+import { NavLink } from 'react-router-dom';
+import * as ROUTES from '../../constant';
 
 const Header = ({ navTitle, menuItems, ...props }) => {
 	const [show, setShow] = React.useState(false);
@@ -18,16 +20,18 @@ const Header = ({ navTitle, menuItems, ...props }) => {
 			{...props}
 		>
 			<Flex align='center' mr={5}>
-				<Button
-					bg='transparent'
-					mr={6}
-					_focus={{ bg: 'transparent' }}
-					_hover={{ bg: 'transparent' }}
-					letterSpacing={'-.1rem'}
-					fontSize={35}
-				>
-					{navTitle}
-				</Button>
+				<NavLink to={ROUTES.QUIZZES}>
+					<Button
+						bg='transparent'
+						mr={6}
+						_focus={{ bg: 'transparent' }}
+						_hover={{ bg: 'transparent' }}
+						letterSpacing={'-.1rem'}
+						fontSize={35}
+					>
+						{navTitle}
+					</Button>
+				</NavLink>
 			</Flex>
 			<Box display={{ base: 'block', md: 'none' }} onClick={handleToggle}>
 				<svg

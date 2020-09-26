@@ -1,5 +1,5 @@
 import React, { Suspense, useState } from 'react';
-import { Button, Flex, Spinner } from '@chakra-ui/core';
+import { Button, Spinner } from '@chakra-ui/core';
 import * as ROUTES from './constant';
 import {
 	Switch,
@@ -11,14 +11,17 @@ import {
 import Header from './components/layout/Header';
 import { useIntl } from 'react-intl';
 import { menuItems } from './constant';
-import { Courses } from './screens/courses/pages/Courses';
+
+const Courses = React.lazy(() => import('./screens/courses/pages/Courses'));
+const Quiz = React.lazy(() => import('./screens/courses/pages/Quiz'));
+const StartedQuiz = React.lazy(() =>
+	import('./screens/started-quiz/Pages/StartedQuiz')
+);
 
 export function AuthenticatedApp() {
 	const { formatMessage } = useIntl();
 	const { pathname } = useLocation();
-	const [activeMenuButtons, setActiveMenuButtons] = useState(
-		pathname !== '/login' ? pathname : '/quizzes'
-	);
+	const [activeMenuButtons, setActiveMenuButtons] = useState(pathname);
 
 	const onSetMenuButton = (buttonName) => {
 		setActiveMenuButtons(buttonName);
@@ -49,17 +52,15 @@ export function AuthenticatedApp() {
 				navTitle={formatMessage({ id: 'header.bar.title' })}
 				menuItems={navMenuItems}
 			/>
-			<Suspense
-				fallback={
-					<Flex width='full' justify='center' height='900px' align='center'>
-						<Spinner />
-					</Flex>
-				}
-			>
+			<Suspense fallback={<Spinner m='auto' />}>
 				<Switch>
-					<Route path={ROUTES.QUIZZES} render={() => <>quizzes</>} />
 					<Route path={ROUTES.COURSES} render={() => <Courses />} />
-					<Redirect from='/' to={ROUTES.QUIZZES} />
+					<Route
+						path={`${ROUTES.QUIZ}/:courseID/:quizID`}
+						render={() => <StartedQuiz />}
+					/>
+					<Route exact path={`${ROUTES.QUIZ}/:id`} render={() => <Quiz />} />
+					<Redirect from='/' to={ROUTES.COURSES} />
 				</Switch>
 			</Suspense>
 		</>

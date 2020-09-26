@@ -14,7 +14,7 @@ import { AuthContext } from '../../../components/auth-provider';
 export function SignUp() {
 	const { formatMessage } = useIntl();
 	const { errMessage, isLoading, signUp } = useContext(AuthContext);
-	const { register, handleSubmit, errors, watch } = useForm();
+	const { register, handleSubmit, watch } = useForm();
 	const onSubmit = handleSubmit((user) => {
 		signUp({ email: user.email, password: user.password });
 	});

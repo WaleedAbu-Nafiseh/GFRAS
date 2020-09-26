@@ -14,7 +14,7 @@ import { useForm } from 'react-hook-form';
 export function SignIn() {
 	const { formatMessage } = useIntl();
 	const { errMessage, signIn, isLoading } = useContext(AuthContext);
-	const { register, handleSubmit, errors, watch } = useForm();
+	const { register, handleSubmit, watch } = useForm();
 	const onSubmit = handleSubmit(({ email, password }) => {
 		signIn({ email: email, password: password });
 	});

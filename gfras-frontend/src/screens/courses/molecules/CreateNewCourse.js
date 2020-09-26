@@ -1,26 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Flex, FormLabel, Input, Stack, Button } from '@chakra-ui/core';
 import { useIntl } from 'react-intl';
 import { useForm } from 'react-hook-form';
-import { useMutation } from 'react-query';
-import { createNewCourses } from '../../../API/createNewCourses';
+import { createNewCourses } from '../../../API/courses/createNewCourses';
 
 export function CreateNewCourse() {
-	const { register, handleSubmit, errors, watch } = useForm();
+	const { register, handleSubmit, watch, reset } = useForm();
 	const { formatMessage } = useIntl();
-	const onSubmit = handleSubmit(({ courseName, quizzes, students }) => {
+	const [isLoading, setIsLoading] = useState(false);
+	const onSubmit = handleSubmit(({ courseName, quizzes, students = [] }) => {
+		setIsLoading(true);
 		createNewCourses({
 			instructorID: localStorage.getItem('instructorID'),
 			courseName,
 			quizzes: [quizzes],
-			students: [students]
+			students: [...students]
+		}).then((res) => {
+			setIsLoading(false);
+			reset();
 		});
 	});
-
-	const [
-		onCreateNewCourse,
-		{ isSuccess, isLoading, isIdle, reset, isError }
-	] = useMutation(onSubmit);
 
 	const createNewCourseForm = [
 		{
@@ -32,11 +31,6 @@ export function CreateNewCourse() {
 			label: formatMessage({ id: 'courses.createNewCourse.quizID' }),
 			id: 'quizzes-id',
 			inputName: 'quizzes'
-		},
-		{
-			label: formatMessage({ id: 'courses.createNewCourse.students' }),
-			id: 'students',
-			inputName: 'students'
 		}
 	];
 
@@ -62,10 +56,9 @@ export function CreateNewCourse() {
 				<Button
 					mt={10}
 					w='full'
-					isDisabled={
-						!watch('courseName') || !watch('quizzes') || !watch('students')
-					}
+					isDisabled={!watch('courseName') || !watch('quizzes')}
 					width='200px'
+					isLoading={isLoading}
 					borderRadius='7px'
 					type='submit'
 					bg='rgb(0,127,255)'
