@@ -19,5 +19,18 @@
 	"courses.createNewCourse.quizID": "Quiz ID",
 	"courses.createNewCourse.students": "Students",
 	"courses.createNewCourse.createNewCourseBtn": "Create",
-	"courses.yourCourses.noOfStudents": "No Of Students:"
+	"courses.yourCourses.noOfStudents": "No Of Students:",
+	"courses.createQuizzes.createQuiz": "Create Quiz",
+	"courses.createQuizzes.courseDetails": "Course Details",
+	"courses.createQuizzes.courseID": "Course ID",
+	"courses.createQuizzes.typeYourQuestion": "Type your question",
+	"courses.createQuizzes.create": "Create",
+	"courses.createQuizzes.addNewQuestion": "Add New Question",
+	"courses.createQuizzes.deleteLastQuestion": "Delete Last Question",
+	"courses.createQuizzes.startQuiz": "Start Quiz",
+	"courses.createQuizzes.question": "Question",
+	"courses.createQuizzes.addQuestion": "Add Question",
+	"course.quiz.startedQuiz.nextQuestion": "Next",
+	"course.quiz.startedQuiz.endQuestion": "End",
+	"course.quiz.startedQuiz.currentQuestion": "{currentQuestionNo} of {noOfQuestions}"
 }

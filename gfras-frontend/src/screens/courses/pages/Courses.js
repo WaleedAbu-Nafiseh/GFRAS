@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Flex, VStack, Button, Text, Spinner } from '@chakra-ui/core';
-import { SideMenu } from '../template/SideMenu';
+import { SideMenu } from '../../../components/side-menu/SideMenu';
 import { sideMenuItems, YOUR_COURSES } from '../courses.config';
 import { CourseMainViews } from '../organisms/CourseMainViews';
-import CoursesProvider, { useCoursesContext } from '../../CoursesContext';
+import CoursesProvider, { useCoursesContext } from '../CoursesContext';
 
 function PageSideMenu() {
 	const [activeSideMenuButton, setActiveSideMenuButton] = useState(
@@ -11,8 +11,8 @@ function PageSideMenu() {
 	);
 
 	return (
-		<Flex>
-			<SideMenu>
+		<Flex h='full'>
+			<SideMenu minW='200px'>
 				<VStack mx='auto' pt={10} spacing={6} align='stretch'>
 					{sideMenuItems.map(({ title }, index) => {
 						const isActive = activeSideMenuButton === title;
@@ -47,10 +47,12 @@ function PageContainer() {
 	if (!isLoading && !isError) return <PageSideMenu />;
 }
 
-export function Courses() {
+function Courses() {
 	return (
 		<CoursesProvider>
 			<PageContainer />
 		</CoursesProvider>
 	);
 }
+
+export default Courses;

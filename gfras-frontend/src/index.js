@@ -6,15 +6,18 @@ import firebase from 'firebase/app';
 import { firebaseConfig } from './firebase/firebaseConfig';
 import { AuthProvider } from './components/auth-provider';
 import { BrowserRouter } from 'react-router-dom';
+import ThemeProvider from './components/theme-provider/ThemeProvider';
 
 firebase.initializeApp(firebaseConfig);
 
 ReactDOM.render(
 	<React.StrictMode>
 		<BrowserRouter>
-			<AuthProvider>
-				<App />
-			</AuthProvider>
+			<ThemeProvider>
+				<AuthProvider>
+					<App />
+				</AuthProvider>
+			</ThemeProvider>
 		</BrowserRouter>
 	</React.StrictMode>,
 	document.getElementById('root')
