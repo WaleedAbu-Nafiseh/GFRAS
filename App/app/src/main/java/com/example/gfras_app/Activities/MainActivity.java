@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         btnFR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), FirstFRActicity.class);
+                Intent intent = new Intent(getApplicationContext(), CourseHomeMainActivity.class);
                 startActivity(intent);
 
             }
