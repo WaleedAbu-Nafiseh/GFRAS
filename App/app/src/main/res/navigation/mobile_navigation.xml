@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_quiz">
+
+    <fragment
+        android:id="@+id/nav_quiz"
+        android:name="com.example.gfras_app.Activities.CourseHomeUI.quiz.QuizzesFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_quizzes" />
+
+    <fragment
+        android:id="@+id/nav_calendar"
+        android:name="com.example.gfras_app.Activities.CourseHomeUI.calendar.GalleryFragment"
+        android:label="@string/menu_calendar"
+        tools:layout="@layout/fragment_calendar" />
+
+    <fragment
+        android:id="@+id/nav_top_students"
+        android:name="com.example.gfras_app.Activities.CourseHomeUI.topStudents.TopStudentsFragment"
+        android:label="@string/nav_top_students"
+        tools:layout="@layout/fragment_top_students" />
+</navigation>
