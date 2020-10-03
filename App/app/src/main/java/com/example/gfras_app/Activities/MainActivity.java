@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.gfras_app.Activities.CourseHomeUI.CourseHomeMainActivity;
 import com.example.gfras_app.R;
+import com.example.gfras_app.app.facerecognizer.FirstFRActicity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -90,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         btnFR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), CourseHomeMainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), FirstFRActicity.class);
                 startActivity(intent);
 
             }
