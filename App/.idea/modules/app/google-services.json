@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1081926795452",
+    "firebase_url": "https://gfras-app.firebaseio.com",
+    "project_id": "gfras-app",
+    "storage_bucket": "gfras-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1081926795452:android:c78ea34cc88b79a0b650b9",
+        "android_client_info": {
+          "package_name": "com.example.gfras_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1081926795452-i7lsqb2lu0pe4c8idvtnof74e10di3cd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gfras_app",
+            "certificate_hash": "a1953cb97a8d5917c8ff56142411a4c634167d4f"
+          }
+        },
+        {
+          "client_id": "1081926795452-mhg94d7fc964e4m8hour4goamvcs5ego.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmMZritWke74jqR48fTuzWbhTO9gznQ5o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1081926795452-mhg94d7fc964e4m8hour4goamvcs5ego.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
