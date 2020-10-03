@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_quiz">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.example.gfras_app.Activities.ui.home.HomeFragment"
+        android:id="@+id/nav_quiz"
+        android:name="com.example.gfras_app.Activities.CourseHomeUI.quiz.QuizzesFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_quizzes" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.gfras_app.Activities.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_calendar"
+        android:name="com.example.gfras_app.Activities.CourseHomeUI.calendar.GalleryFragment"
+        android:label="@string/menu_calendar"
+        tools:layout="@layout/fragment_calendar" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.gfras_app.Activities.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_top_students"
+        android:name="com.example.gfras_app.Activities.CourseHomeUI.topStudents.TopStudentsFragment"
+        android:label="@string/nav_top_students"
+        tools:layout="@layout/fragment_top_students" />
 </navigation>
