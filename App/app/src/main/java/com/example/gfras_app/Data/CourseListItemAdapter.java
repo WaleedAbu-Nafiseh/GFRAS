@@ -15,9 +15,11 @@ import java.util.List;
 
 public class CourseListItemAdapter extends RecyclerView.Adapter<CourseListItemAdapter.CourseListItemViewHolder>  {
     private ArrayList<Course> coursesList;
+    private  RecyclerViewClickListener listener;
 
-    public CourseListItemAdapter(List<Course> coursesList) {
+    public CourseListItemAdapter(List<Course> coursesList,RecyclerViewClickListener listener) {
         this.coursesList =new ArrayList<Course>(coursesList);
+        this.listener=listener;
     }
 
     @NonNull
@@ -32,7 +34,7 @@ public class CourseListItemAdapter extends RecyclerView.Adapter<CourseListItemAd
     public void onBindViewHolder(@NonNull CourseListItemViewHolder holder, int position) {
         Course currentItem = coursesList.get(position);
         holder.mTextView1.setText(currentItem.getCourseName());
-        holder.mTextView2.setText(currentItem.InstructorID);
+        holder.mTextView2.setText(currentItem.getCourseId());
 
     }
 
@@ -41,14 +43,26 @@ public class CourseListItemAdapter extends RecyclerView.Adapter<CourseListItemAd
         return coursesList.size();
     }
 
-    public static class CourseListItemViewHolder extends RecyclerView.ViewHolder {
+    public  class CourseListItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView mTextView1;
         public TextView mTextView2;
         public CourseListItemViewHolder(View itemView) {
             super(itemView);
             mTextView1 = itemView.findViewById(R.id.courseName);
             mTextView2 = itemView.findViewById(R.id.courseId);
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            listener.onClick(view,getAdapterPosition());
+
+        }
+    }
+    public  interface RecyclerViewClickListener{
+        void onClick(View v,int position);
+
+
     }
 
 }

@@ -33,10 +33,10 @@ public class CourseListSingleton {
         quizzes.add("Quix1");
         List<String> students=new LinkedList<String>();
         students.add("syudent1");
-        courseList.add(new Course("comp",  "C",  "iO2qJRViPJ6rfoh1KzQW",  quizzes,  students));
-        courseList.add(new Course("69czB4Krg19QX3LHfLrf",  "C",  "iO2qJRViPJ6rfoh1KzQW",  quizzes,  students));
-        courseList.add(new Course("adwawdaw",  "C",  "iO2qJRViPJ6rfoh1KzQW",  quizzes,  students));
-        courseList.add(new Course("erdhgerge",  "C",  "iO2qJRViPJ6rfoh1KzQW",  quizzes,  students));
+        courseList.add(new Course("comp232",  "C",  "iO2qJRViPJ6rfoh1KzQW",  quizzes,  students));
+        courseList.add(new Course("comp242",  "Java",  "iO2qJRViPJ6rfoh1KzQW",  quizzes,  students));
+        courseList.add(new Course("comp322",  "data structure",  "iO2qJRViPJ6rfoh1KzQW",  quizzes,  students));
+        courseList.add(new Course("erdhgerge",  "Alghorithms",  "iO2qJRViPJ6rfoh1KzQW",  quizzes,  students));
         courseList.add(new Course("69czB4Krg19QX3LHfLrf",  "C",  "iO2qJRViPJ6rfoh1KzQW",  quizzes,  students));
         courseList.add(new Course("69czB4Krg19QX3LHfLrf",  "C",  "iO2qJRViPJ6rfoh1KzQW",  quizzes,  students));
         courseList.add(new Course("69czB4Krg19QX3LHfLrf",  "C",  "iO2qJRViPJ6rfoh1KzQW",  quizzes,  students));
