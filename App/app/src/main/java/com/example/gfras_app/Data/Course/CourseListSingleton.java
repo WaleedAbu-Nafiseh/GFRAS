@@ -1,4 +1,4 @@
-package com.example.gfras_app.Data;
+package com.example.gfras_app.Data.Course;
 
 import android.util.Log;
 
@@ -7,15 +7,10 @@ import androidx.annotation.NonNull;
 import com.example.gfras_app.util.CollectionsName;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 public class CourseListSingleton {
@@ -27,24 +22,6 @@ public class CourseListSingleton {
         courseList=new LinkedList<Course>();
         getOneCourseListFromDB();
     }
-    public  List<Course> getCoursesListFake(){
-        List<String> quizzes = new LinkedList<String>();
-        quizzes.add("Quix1");
-        List<String> students=new LinkedList<String>();
-        students.add("syudent1");
-        courseList.add(new Course("comp232",  "C",  "iO2qJRViPJ6rfoh1KzQW",  quizzes,  students));
-        courseList.add(new Course("comp242",  "Java",  "iO2qJRViPJ6rfoh1KzQW",  quizzes,  students));
-        courseList.add(new Course("comp322",  "data structure",  "iO2qJRViPJ6rfoh1KzQW",  quizzes,  students));
-        courseList.add(new Course("erdhgerge",  "Alghorithms",  "iO2qJRViPJ6rfoh1KzQW",  quizzes,  students));
-        courseList.add(new Course("69czB4Krg19QX3LHfLrf",  "C",  "iO2qJRViPJ6rfoh1KzQW",  quizzes,  students));
-        courseList.add(new Course("69czB4Krg19QX3LHfLrf",  "C",  "iO2qJRViPJ6rfoh1KzQW",  quizzes,  students));
-        courseList.add(new Course("69czB4Krg19QX3LHfLrf",  "C",  "iO2qJRViPJ6rfoh1KzQW",  quizzes,  students));
-        courseList.add(new Course("69czB4Krg19QX3LHfLrf",  "C",  "iO2qJRViPJ6rfoh1KzQW",  quizzes,  students));
-        courseList.add(new Course("69czB4Krg19QX3LHfLrf",  "C",  "iO2qJRViPJ6rfoh1KzQW",  quizzes,  students));
-        courseList.add(new Course("69czB4Krg19QX3LHfLrf",  "C",  "iO2qJRViPJ6rfoh1KzQW",  quizzes,  students));
-        courseList.add(new Course("69czB4Krg19QX3LHfLrf",  "C",  "iO2qJRViPJ6rfoh1KzQW",  quizzes,  students));
-
-   return courseList; }
     private Course getOneCourseListFromDB() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference  docRef = db.collection(CollectionsName.COURSES).document("96JA4D9clsSaiMpjbTBa");

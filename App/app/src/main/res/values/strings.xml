@@ -30,4 +30,5 @@
     <string name="menu_quizzes">Quizzes</string>
     <string name="menu_calendar">Calendar</string>
     <string name="nav_top_students">Top students</string>
+    <string name="StudentPassword">Password</string>
 </resources>

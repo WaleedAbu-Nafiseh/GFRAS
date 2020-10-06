@@ -8,17 +8,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.example.gfras_app.Activities.CourseHomeUI.CourseHomeMainActivity;
-import com.example.gfras_app.Data.Course;
-import com.example.gfras_app.Data.CourseListItemAdapter;
-import com.example.gfras_app.Data.CourseListSingleton;
+import com.example.gfras_app.Data.Course.Course;
+import com.example.gfras_app.Data.Course.CourseListItemAdapter;
+import com.example.gfras_app.Data.User.User;
+import com.example.gfras_app.Data.User.UserServices;
 import com.example.gfras_app.R;
 import com.example.gfras_app.util.CollectionsName;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -38,7 +35,7 @@ public class HomePageActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private CourseListItemAdapter.RecyclerViewClickListener listener;
     List<Course> courseList;
-
+    User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,14 +48,16 @@ public class HomePageActivity extends AppCompatActivity {
         prgsBarHomePage.setVisibility(View.VISIBLE);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
-        showEitherLoadingOrReady();
+        currentUser=UserServices.getCurrentUser(getApplicationContext());
 
+        showEitherLoadingOrReady();
     }
 
     private void showEitherLoadingOrReady() {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             CollectionReference citiesRef = db.collection(CollectionsName.COURSES);
-            citiesRef.whereArrayContains("students", " 10mzMn9tOoHXu85AI03p").get()
+            Log.e("ID",currentUser.getId());
+            citiesRef.whereArrayContains("students", currentUser.getId()).get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {

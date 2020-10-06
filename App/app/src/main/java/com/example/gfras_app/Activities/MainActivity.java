@@ -5,21 +5,29 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gfras_app.Activities.CourseHomeUI.CourseHomeMainActivity;
+import com.example.gfras_app.Data.Course.Course;
+import com.example.gfras_app.Data.User.User;
+import com.example.gfras_app.Data.User.UserServices;
 import com.example.gfras_app.R;
 import com.example.gfras_app.app.facerecognizer.FirstFRActicity;
+import com.example.gfras_app.util.CollectionsName;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getName();
@@ -28,9 +36,9 @@ public class MainActivity extends AppCompatActivity {
     Button btnSignup;
     Button btnFR;
     EditText edtStudentID;
-    private static final String PERMISSION_CAMERA = Manifest.permission.CAMERA;
-    private static final String PERMISSION_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
-
+    EditText edtStudentPassword;
+    TextView txtWrong;
+    SharedPreferences mPrefs ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +47,14 @@ public class MainActivity extends AppCompatActivity {
         btnLogIn= findViewById(R.id.btnLogIn);
         btnSignup= findViewById(R.id.btnSignup);
         btnFR= findViewById(R.id.btnFR);
-         edtStudentID= findViewById(R.id.edtStudentID);
-
+        edtStudentID= findViewById(R.id.edtStudentID);
+        txtWrong=findViewById(R.id.txtWrong);
+        edtStudentPassword=findViewById(R.id.edtStudentPassword);
         onclick();
+        mPrefs = getPreferences(MODE_PRIVATE);
+        //set variables of 'myObject', etc.
+
+
     }
 
     private void onclick() {
@@ -49,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String studentID= edtStudentID.getText().toString();
-                db.collection("students")
+                db.collection(CollectionsName.STUDENTS)
                             .whereEqualTo("firstName", studentID)
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -59,18 +72,24 @@ public class MainActivity extends AppCompatActivity {
 
                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                         Log.d(TAG, document.getId() + " => " + document.getData());
-                                        if(document.get("firstName").equals(edtStudentID.getText().toString())){
+                                        if(document.get("firstName").equals(edtStudentID.getText().toString())
+                                        && document.get("password").equals(edtStudentPassword.getText().toString()) ){
+                                            User s = document.toObject(User.class);
+                                            UserServices.setCurrentUser(getApplicationContext(),s);
                                             Intent intent = new Intent(getApplicationContext(),HomePageActivity.class);
                                             startActivity(intent);
                                         }
                                         else{
+                                            txtWrong.setText("Password or username are wrong");
                                             Log.d(TAG, document.getId() + " => " + document.getData());
-                                            Toast toast = Toast.makeText(getApplicationContext(), "What?!", Toast.LENGTH_LONG);
+                                            Toast toast = Toast.makeText(getApplicationContext(), "Password or username are wrong!", Toast.LENGTH_LONG);
                                             toast.show();
                                         }
                                     }
                                 }
                                 else {
+                                    txtWrong.setText("Error occured, make sure you are connected to the internet    ");
+
                                     Log.d(TAG, "Error getting documents: ", task.getException());
                                     Toast toast = Toast.makeText(getApplicationContext(), "Try again, You failed!", Toast.LENGTH_LONG);
                                     toast.show();

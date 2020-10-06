@@ -1,4 +1,4 @@
-package com.example.gfras_app.Data;
+package com.example.gfras_app.Data.Course;
 
 import com.google.firebase.firestore.DocumentId;
 
