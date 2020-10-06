@@ -25,7 +25,6 @@ public class CourseListSingleton {
 
     private CourseListSingleton() {
         courseList=new LinkedList<Course>();
-        getCoursesListFromDB();
         getOneCourseListFromDB();
     }
     public  List<Course> getCoursesListFake(){
@@ -46,29 +45,6 @@ public class CourseListSingleton {
         courseList.add(new Course("69czB4Krg19QX3LHfLrf",  "C",  "iO2qJRViPJ6rfoh1KzQW",  quizzes,  students));
 
    return courseList; }
-    private void getCoursesListFromDB() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference citiesRef = db.collection(CollectionsName.COURSES);
-        citiesRef.whereArrayContainsAny(CollectionsName.STUDENTS, Collections.singletonList("10mzMn9tOoHXu85AI03p")).get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                               Course c = document.toObject(Course.class);
-                               courseList.add(c);
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-        Log.d(TAG,  "this is the list: "+courseList.toString());
-
-
-
-    }
     private Course getOneCourseListFromDB() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference  docRef = db.collection(CollectionsName.COURSES).document("96JA4D9clsSaiMpjbTBa");

@@ -50,29 +50,4 @@ public class DBServices {
                     }
                 });
     }
-    public static Student getStudent(String collectionName,String documentID){
-        db = FirebaseFirestore.getInstance();
-        DocumentReference  docRef = db.collection(collectionName).document(documentID);
-        final Student[] s = {new Student()};
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                        s[0] =document.toObject(Student.class);
-                        Log.d(TAG,s[0].firstName );
-                    } else {
-                        Log.d(TAG, "No such document");
-                    }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
-                }
-            }
-        });
-
-        return s[0];
-
-        }
 }
