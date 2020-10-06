@@ -57,7 +57,7 @@ public class HomePageActivity extends AppCompatActivity {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             CollectionReference citiesRef = db.collection(CollectionsName.COURSES);
             Log.e("ID",currentUser.getId());
-            citiesRef.whereArrayContains("students", currentUser.getId()).get()
+            citiesRef.whereArrayContains(CollectionsName.STUDENTS, currentUser.getId()).get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {

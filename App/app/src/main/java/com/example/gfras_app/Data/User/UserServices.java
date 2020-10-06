@@ -12,7 +12,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 
 public class UserServices {
-    private static String CURRENT_USER = "CurrentUser";
+    public static String CURRENT_USER = "CurrentUser";
 
     public static User getCurrentUser(Context c) {
         SharedPreferences mPrefs = c.getSharedPreferences(UserServices.CURRENT_USER, c.MODE_PRIVATE);

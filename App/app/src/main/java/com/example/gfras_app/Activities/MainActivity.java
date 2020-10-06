@@ -38,20 +38,26 @@ public class MainActivity extends AppCompatActivity {
     EditText edtStudentID;
     EditText edtStudentPassword;
     TextView txtWrong;
-    SharedPreferences mPrefs ;
+    SharedPreferences mPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btnLogIn= findViewById(R.id.btnLogIn);
-        btnSignup= findViewById(R.id.btnSignup);
-        btnFR= findViewById(R.id.btnFR);
-        edtStudentID= findViewById(R.id.edtStudentID);
-        txtWrong=findViewById(R.id.txtWrong);
-        edtStudentPassword=findViewById(R.id.edtStudentPassword);
+        btnLogIn = findViewById(R.id.btnLogIn);
+        btnSignup = findViewById(R.id.btnSignup);
+        btnFR = findViewById(R.id.btnFR);
+        edtStudentID = findViewById(R.id.edtStudentID);
+        txtWrong = findViewById(R.id.txtWrong);
+        edtStudentPassword = findViewById(R.id.edtStudentPassword);
         onclick();
-        mPrefs = getPreferences(MODE_PRIVATE);
+        mPrefs =getSharedPreferences(UserServices.CURRENT_USER, MODE_PRIVATE);
+
+        if(mPrefs.contains(UserServices.CURRENT_USER)){
+            Intent intent = new Intent(getApplicationContext(), HomePageActivity.class);
+            startActivity(intent);
+
+        }
         //set variables of 'myObject', etc.
 
 
@@ -61,9 +67,9 @@ public class MainActivity extends AppCompatActivity {
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String studentID= edtStudentID.getText().toString();
+                String studentID = edtStudentID.getText().toString();
                 db.collection(CollectionsName.STUDENTS)
-                            .whereEqualTo("firstName", studentID)
+                        .whereEqualTo("firstName", studentID)
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
@@ -72,22 +78,20 @@ public class MainActivity extends AppCompatActivity {
 
                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                         Log.d(TAG, document.getId() + " => " + document.getData());
-                                        if(document.get("firstName").equals(edtStudentID.getText().toString())
-                                        && document.get("password").equals(edtStudentPassword.getText().toString()) ){
+                                        if (document.get("firstName").equals(edtStudentID.getText().toString())
+                                                && document.get("password").equals(edtStudentPassword.getText().toString())) {
                                             User s = document.toObject(User.class);
-                                            UserServices.setCurrentUser(getApplicationContext(),s);
-                                            Intent intent = new Intent(getApplicationContext(),HomePageActivity.class);
+                                            UserServices.setCurrentUser(getApplicationContext(), s);
+                                            Intent intent = new Intent(getApplicationContext(), HomePageActivity.class);
                                             startActivity(intent);
-                                        }
-                                        else{
+                                        } else {
                                             txtWrong.setText("Password or username are wrong");
                                             Log.d(TAG, document.getId() + " => " + document.getData());
                                             Toast toast = Toast.makeText(getApplicationContext(), "Password or username are wrong!", Toast.LENGTH_LONG);
                                             toast.show();
                                         }
                                     }
-                                }
-                                else {
+                                } else {
                                     txtWrong.setText("Error occured, make sure you are connected to the internet    ");
 
                                     Log.d(TAG, "Error getting documents: ", task.getException());
@@ -102,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),SignupActivity.class);
+                Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
                 startActivity(intent);
 
             }
@@ -116,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
 }
