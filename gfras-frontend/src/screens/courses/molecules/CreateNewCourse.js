@@ -8,29 +8,26 @@ export function CreateNewCourse() {
 	const { register, handleSubmit, watch, reset } = useForm();
 	const { formatMessage } = useIntl();
 	const [isLoading, setIsLoading] = useState(false);
-	const onSubmit = handleSubmit(({ courseName, quizzes, students = [] }) => {
-		setIsLoading(true);
-		createNewCourses({
-			instructorID: localStorage.getItem('instructorID'),
-			courseName,
-			quizzes: [quizzes],
-			students: [...students]
-		}).then((res) => {
-			setIsLoading(false);
-			reset();
-		});
-	});
+	const onSubmit = handleSubmit(
+		({ courseName, quizzes = [], students = [] }) => {
+			setIsLoading(true);
+			createNewCourses({
+				instructorID: localStorage.getItem('instructorID'),
+				courseName,
+				quizzes: [...quizzes],
+				students: [...students]
+			}).then((res) => {
+				setIsLoading(false);
+				reset();
+			});
+		}
+	);
 
 	const createNewCourseForm = [
 		{
 			label: formatMessage({ id: 'courses.createNewCourse.courseName' }),
 			id: 'course-name',
 			inputName: 'courseName'
-		},
-		{
-			label: formatMessage({ id: 'courses.createNewCourse.quizID' }),
-			id: 'quizzes-id',
-			inputName: 'quizzes'
 		}
 	];
 
@@ -56,7 +53,7 @@ export function CreateNewCourse() {
 				<Button
 					mt={10}
 					w='full'
-					isDisabled={!watch('courseName') || !watch('quizzes')}
+					isDisabled={!watch('courseName')}
 					width='200px'
 					isLoading={isLoading}
 					borderRadius='7px'

@@ -1,4 +1,4 @@
-package com.example.gfras_app.Data;
+package com.example.gfras_app.Data.Course;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +25,7 @@ public class CourseListItemAdapter extends RecyclerView.Adapter<CourseListItemAd
     @NonNull
     @Override
     public CourseListItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.course_list_item, parent, false);
         CourseListItemViewHolder evh = new CourseListItemViewHolder(v);
         return evh;
     }
