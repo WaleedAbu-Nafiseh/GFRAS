@@ -1,6 +1,7 @@
 package com.example.gfras_app.Activities.CourseHomeUI;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 
@@ -20,6 +21,7 @@ import androidx.appcompat.widget.Toolbar;
 public class CourseHomeMainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private String courseId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,13 @@ public class CourseHomeMainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
+        Bundle bundle = getIntent().getExtras();
+
+//Extract the data…
+        courseId = bundle.getString("COURSE_ID");
+
+//Create the text view
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -35,6 +44,7 @@ public class CourseHomeMainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        Log.e("IDCHECK",courseId);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -61,5 +71,10 @@ public class CourseHomeMainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+    public Bundle getMyData() {
+        Bundle hm = new Bundle();
+        hm.putString("val1",courseId);
+        return hm;
     }
 }
