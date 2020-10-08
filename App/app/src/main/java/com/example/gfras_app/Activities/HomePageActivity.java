@@ -30,7 +30,7 @@ import java.util.List;
 
 public class HomePageActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
-    ProgressBar prgsBarHomePage ;
+    ProgressBar prgsBarHomePage;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private CourseListItemAdapter.RecyclerViewClickListener listener;
@@ -43,54 +43,55 @@ public class HomePageActivity extends AppCompatActivity {
         setContentView(R.layout.home_page);
         setOnclickListener();
         mRecyclerView = findViewById(R.id.CourseListRecyclerView);
-        courseList=new LinkedList<Course>();
+        courseList = new LinkedList<Course>();
         prgsBarHomePage = findViewById(R.id.prgsBarHomePage);
         prgsBarHomePage.setVisibility(View.VISIBLE);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
-        currentUser=UserServices.getCurrentUser(getApplicationContext());
+        currentUser = UserServices.getCurrentUser(getApplicationContext());
 
         showEitherLoadingOrReady();
     }
 
     private void showEitherLoadingOrReady() {
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            CollectionReference citiesRef = db.collection(CollectionsName.COURSES);
-            Log.e("ID",currentUser.getId());
-            citiesRef.whereArrayContains(CollectionsName.STUDENTS, currentUser.getId()).get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    Log.d("TAG", document.getId() + " => " + document.getData());
-                                    Course c = document.toObject(Course.class);
-                                    courseList.add(c);
-                                }
 
-                                mAdapter = new CourseListItemAdapter(courseList,listener);
-                                mRecyclerView.setLayoutManager(mLayoutManager);
-                                prgsBarHomePage.setVisibility(View.INVISIBLE);
-                                mRecyclerView.setAdapter(mAdapter);
-
-                            } else {
-                                Log.d("TAG", "Error getting documents: ", task.getException());
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference citiesRef = db.collection(CollectionsName.COURSES);
+        Log.e("ID", currentUser.getId());
+        citiesRef.whereArrayContains("students", currentUser.getId()).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("TAG", document.getId() + " => " + document.getData());
+                                Course c = document.toObject(Course.class);
+                                courseList.add(c);
                             }
+
+                            mAdapter = new CourseListItemAdapter(courseList, listener);
+                            mRecyclerView.setLayoutManager(mLayoutManager);
+                            prgsBarHomePage.setVisibility(View.INVISIBLE);
+                            mRecyclerView.setAdapter(mAdapter);
+
+                        } else {
+                            Log.d("TAG", "Error getting documents: ", task.getException());
                         }
-                    });
-            Log.d("TAG",  "this is the list: "+courseList.toString());
-
-
-
+                    }
+                });
+        Log.d("TAG", "this is the list: " + courseList.toString());
 
 
     }
 
     private void setOnclickListener() {
-        listener=new CourseListItemAdapter.RecyclerViewClickListener() {
+        listener = new CourseListItemAdapter.RecyclerViewClickListener() {
             @Override
             public void onClick(View v, int position) {
-                Intent intent=new Intent(getApplicationContext(), CourseHomeMainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), CourseHomeMainActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("COURSE_ID", courseList.get(position).getCourseId());
+                intent.putExtras(bundle);
                 startActivity(intent);
 
 
