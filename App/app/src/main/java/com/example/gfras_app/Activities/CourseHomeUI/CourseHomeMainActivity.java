@@ -1,6 +1,8 @@
 package com.example.gfras_app.Activities.CourseHomeUI;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 
@@ -20,7 +22,8 @@ import androidx.appcompat.widget.Toolbar;
 public class CourseHomeMainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-
+    private String courseId;
+    private  Bundle bundle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +31,7 @@ public class CourseHomeMainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -38,8 +42,6 @@ public class CourseHomeMainActivity extends AppCompatActivity {
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_quiz, R.id.nav_calendar, R.id.nav_top_students)
                 .setDrawerLayout(drawer)
@@ -61,5 +63,12 @@ public class CourseHomeMainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+    public Bundle getMyData() {
+        Intent intent = getIntent();
+        courseId = intent.getExtras().getString("COURSE_ID");
+        bundle = new Bundle();
+        bundle.putString("COURSE_ID",courseId);
+        return bundle;
     }
 }
