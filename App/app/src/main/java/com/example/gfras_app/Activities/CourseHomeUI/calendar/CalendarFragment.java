@@ -21,7 +21,7 @@ public class CalendarFragment extends Fragment {
        TextView textView =(TextView) root.findViewById(R.id.text_gallery);
         CourseHomeMainActivity activity=(CourseHomeMainActivity) getActivity();
         Bundle results = activity.getMyData();
-        String strtext = results.getString("val1");
+        String strtext = results.getString("COURSE_ID");
         textView.setText(strtext);
         return root;
        /* Bundle bundle = this.getArguments();

@@ -1,5 +1,6 @@
 package com.example.gfras_app.Activities.CourseHomeUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,10 +31,11 @@ public class CourseHomeMainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
-        Bundle bundle = getIntent().getExtras();
 
 //Extract the data…
-        courseId = bundle.getString("COURSE_ID");
+        Intent intent = getIntent();
+        courseId = intent.getExtras().getString("COURSE_ID");
+
 
 //Create the text view
 
@@ -73,8 +75,8 @@ public class CourseHomeMainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
     public Bundle getMyData() {
-        Bundle hm = new Bundle();
-        hm.putString("val1",courseId);
-        return hm;
+       Bundle bundle = new Bundle();
+        bundle.putString("COURSE_ID",courseId);
+        return bundle;
     }
 }
