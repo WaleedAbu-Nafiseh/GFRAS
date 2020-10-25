@@ -24,6 +24,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -56,9 +57,9 @@ public class HomePageActivity extends AppCompatActivity {
     private void showEitherLoadingOrReady() {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference citiesRef = db.collection(CollectionsName.COURSES);
+        CollectionReference courseRef = db.collection(CollectionsName.COURSES);
         Log.e("ID", currentUser.getId());
-        citiesRef.whereArrayContains("students", currentUser.getId()).get()
+        courseRef.whereArrayContains("students", currentUser.getId()).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -90,7 +91,9 @@ public class HomePageActivity extends AppCompatActivity {
             public void onClick(View v, int position) {
                 Intent intent = new Intent(getApplicationContext(), CourseHomeMainActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("COURSE_ID", courseList.get(position).getCourseId());
+                Gson g = new Gson();
+;
+                bundle.putString("COURSE_ID",g.toJson(courseList.get(position)));
                 intent.putExtras(bundle);
                 startActivity(intent);
 
