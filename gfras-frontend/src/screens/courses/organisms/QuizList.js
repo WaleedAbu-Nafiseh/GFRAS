@@ -1,16 +1,20 @@
 import React from 'react';
-import { Flex, Text, Button, Spinner } from '@chakra-ui/core';
+import { Flex, Text, Button, Spinner, IconButton } from '@chakra-ui/core';
 import { useQuizContext } from '../QuizContext';
 import { useIntl } from 'react-intl';
 import { startQuiz } from '../../../API/quizzes/startQuiz';
 import { useLocation } from 'react-router-dom';
-import { useCoursesContext } from '../CoursesContext';
+import { ChevronLeftIcon } from '../../../components/icons/ChevronLeft';
+import { useCourseDetailsContext } from '../CourseDetailsContext';
 
 export function QuizList() {
 	const { pathname } = useLocation();
 	const { formatMessage } = useIntl();
-	const { data, setIsSideMenuExpanded } = useQuizContext();
-	const { setSelectedCourseDetail } = useCoursesContext();
+	const { data } = useQuizContext();
+	const {
+		setIsSideMenuExpanded,
+		setSelectedCourseDetail
+	} = useCourseDetailsContext();
 
 	if (!data) {
 		return <Spinner />;
@@ -50,23 +54,35 @@ export function QuizList() {
 	}
 
 	return (
-		<Flex direction='column' p='100px' w='full'>
-			{data.map(({ id, quizTitle, quizID }, index) => {
-				return (
-					<Flex
-						border='1px solid white'
-						boxShadow='0 0 20px rgba(0,0,0,0.14)'
-						key={`${id}-${quizTitle}-${quizID}`}
-						p={'10px'}
-						my='10px'
-					>
-						<Text>{quizTitle}</Text>
-						<Button ml='auto' onClick={() => handleStartQuiz(quizID)}>
-							{formatMessage({ id: 'courses.createQuizzes.startQuiz' })}
-						</Button>
-					</Flex>
-				);
-			})}
-		</Flex>
+		<>
+			<Flex>
+				<IconButton
+					ml='25px'
+					fontSize='25px'
+					onClick={() => (window.location.href = '/courses')}
+					mt='5px'
+					isRound
+					icon={<ChevronLeftIcon />}
+				/>
+			</Flex>
+			<Flex direction='column' p='100px' w='full'>
+				{data.map(({ id, quizTitle, quizID }, index) => {
+					return (
+						<Flex
+							border='1px solid white'
+							boxShadow='0 0 20px rgba(0,0,0,0.14)'
+							key={`${id}-${quizTitle}-${quizID}`}
+							p={'10px'}
+							my='10px'
+						>
+							<Text>{quizTitle}</Text>
+							<Button ml='auto' onClick={() => handleStartQuiz(quizID)}>
+								{formatMessage({ id: 'courses.createQuizzes.startQuiz' })}
+							</Button>
+						</Flex>
+					);
+				})}
+			</Flex>
+		</>
 	);
 }

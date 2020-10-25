@@ -4,14 +4,17 @@ import { QuizSideMenu } from '../organisms/QuizSideMenu';
 import { Question } from '../organisms/Question';
 import { Flex, IconButton } from '@chakra-ui/core';
 import { CourseDetails } from '../organisms/CourseDetails';
-import { useCoursesContext } from '../CoursesContext';
 import { SmallCloseIcon } from '../../../components/icons/SmallClose';
 import { QuizList } from '../organisms/QuizList';
-import { useQuizContext } from '../QuizContext';
+import { Attendance } from '../organisms/Attendance';
+import { useCourseDetailsContext } from '../CourseDetailsContext';
 
 export function QuizTemplate() {
-	const { selectedCourseDetail } = useCoursesContext();
-	const { isSideMenuExpanded, setIsSideMenuExpanded } = useQuizContext();
+	const { selectedCourseDetail } = useCourseDetailsContext();
+	const {
+		isSideMenuExpanded,
+		setIsSideMenuExpanded
+	} = useCourseDetailsContext();
 
 	return (
 		<Flex h='full'>
@@ -36,6 +39,7 @@ export function QuizTemplate() {
 			)}
 			{selectedCourseDetail === 'create-quiz' && <Question />}
 			{selectedCourseDetail === 'quiz-list' && <QuizList />}
+			{selectedCourseDetail === 'attendance-list' && <Attendance />}
 		</Flex>
 	);
 }

@@ -52,7 +52,7 @@ export function YourCourse({ setActiveSideMenuButton }) {
 					<Text fontWeight='500'>{doc.data().students.length}</Text>
 				</Flex>
 				<NavLink
-					to={`/quiz/${doc.id}`}
+					to={`/course-details/${doc.id}`}
 					style={{
 						color: 'white',
 						borderRadius: '4px',
@@ -76,7 +76,7 @@ export function YourCourse({ setActiveSideMenuButton }) {
 	}
 
 	return (
-		<Flex p='60px' flexWrap='wrap'>
+		<Flex p='60px' flexWrap='wrap' overflow='auto' h='full'>
 			{courses}
 		</Flex>
 	);

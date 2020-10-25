@@ -1,6 +1,5 @@
 import { useQuery } from 'react-query';
 import { getYourCourses } from '../../API/courses/getYourCourses';
-import { useState } from 'react';
 
 async function getInstructorCourses() {
 	const instructorCourses = await getYourCourses();
@@ -8,16 +7,17 @@ async function getInstructorCourses() {
 }
 
 export function useShowYourCourses() {
-	const { data, isError, isLoading } = useQuery([], getInstructorCourses);
-	const [selectedCourseDetail, setSelectedCourseDetail] = useState(
-		'create-quiz'
-	);
+	const {
+		data,
+		isError,
+		isLoading,
+		refetch: refetchCreateNewCourse
+	} = useQuery([], getInstructorCourses);
 
 	return {
 		data,
 		isError,
 		isLoading,
-		setSelectedCourseDetail,
-		selectedCourseDetail
+		refetchCreateNewCourse
 	};
 }

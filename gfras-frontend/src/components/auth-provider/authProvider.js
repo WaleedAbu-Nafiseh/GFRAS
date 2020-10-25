@@ -22,7 +22,7 @@ export function AuthProvider({ children }) {
 		setIsAuthenticated(true);
 		localStorage.setItem('token', email);
 		localStorage.setItem('userID', email);
-		history.replace(ROUTES.QUIZZES);
+		history.replace(ROUTES.COURSES);
 	};
 
 	const signIn = ({ email, password }) => {

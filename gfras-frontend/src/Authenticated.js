@@ -13,7 +13,7 @@ import { useIntl } from 'react-intl';
 import { menuItems } from './constant';
 
 const Courses = React.lazy(() => import('./screens/courses/pages/Courses'));
-const Quiz = React.lazy(() => import('./screens/courses/pages/Quiz'));
+const Quiz = React.lazy(() => import('./screens/courses/pages/CourseDetails'));
 const StartedQuiz = React.lazy(() =>
 	import('./screens/started-quiz/Pages/StartedQuiz')
 );
@@ -21,7 +21,7 @@ const StartedQuiz = React.lazy(() =>
 export function AuthenticatedApp() {
 	const { formatMessage } = useIntl();
 	const { pathname } = useLocation();
-	const [activeMenuButtons, setActiveMenuButtons] = useState(pathname);
+	const [activeMenuButtons, setActiveMenuButtons] = useState(() => pathname);
 
 	const onSetMenuButton = (buttonName) => {
 		setActiveMenuButtons(buttonName);
@@ -56,10 +56,14 @@ export function AuthenticatedApp() {
 				<Switch>
 					<Route path={ROUTES.COURSES} render={() => <Courses />} />
 					<Route
-						path={`${ROUTES.QUIZ}/:courseID/:quizID`}
+						path={`${ROUTES.COURSE_DETAILS}/:courseID/:quizID`}
 						render={() => <StartedQuiz />}
 					/>
-					<Route exact path={`${ROUTES.QUIZ}/:id`} render={() => <Quiz />} />
+					<Route
+						exact
+						path={`${ROUTES.COURSE_DETAILS}/:courseID`}
+						render={() => <Quiz />}
+					/>
 					<Redirect from='/' to={ROUTES.COURSES} />
 				</Switch>
 			</Suspense>

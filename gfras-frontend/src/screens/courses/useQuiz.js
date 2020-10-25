@@ -9,16 +9,15 @@ async function getData(_apiKey, params) {
 }
 
 export function useQuiz() {
-	const { id } = useParams();
-	const { data, isError, isLoading } = useQuery(
-		['quizzes', { courseID: id }],
+	const { courseID } = useParams();
+	const { data, isError, isLoading, refetch: refetchNewQuizCreated } = useQuery(
+		['quizzes', { courseID }],
 		getData
 	);
 	const [noOfSelectedQuestions, setNoOfSelectedQuestions] = useState(1);
 	const [selectedQuestion, setSelectedQuestion] = useState(0);
 	const [deletedQuestion, setDeletedQuestion] = useState(-1);
 	const [quizTitle, setQuizTitle] = useState('');
-	const [isSideMenuExpanded, setIsSideMenuExpanded] = useState(true);
 	const [questionAndOptions, setQuestionAndOptions] = useState([]);
 	const [isValidSubmitQuiz, setIsValidSubmitQuiz] = useState(false);
 
@@ -34,11 +33,10 @@ export function useQuiz() {
 		deletedQuestion,
 		setQuizTitle,
 		quizTitle,
-		isSideMenuExpanded,
-		setIsSideMenuExpanded,
 		questionAndOptions,
 		setQuestionAndOptions,
 		isValidSubmitQuiz,
-		setIsValidSubmitQuiz
+		setIsValidSubmitQuiz,
+		refetchNewQuizCreated
 	};
 }
