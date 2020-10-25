@@ -3,6 +3,7 @@ package com.example.gfras_app.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,6 +33,7 @@ import java.util.List;
 public class QuizzingActivity extends AppCompatActivity {
 
     private static FirebaseFirestore db;
+    private  Bundle bundle;
     public Quiz quiz;
     public static String TAG=QuizzingActivity.class.getName();
     private TextView txtQuestionPlace;
@@ -44,6 +46,7 @@ public class QuizzingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_quizzing);
         txtQuestionPlace=findViewById(R.id.txtQuestionPlace);
         prgsBar=findViewById(R.id.prgsBar);
@@ -56,16 +59,6 @@ public class QuizzingActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         docRef = db.collection(CollectionsName.QUIZZES).document("megWwizowg6aQ420QG1O");
 
-        /** This snippet is to sho wto to add a Quiz which contains a list of questions
-         * List<Question> questions=new LinkedList<>();
-           Question question1= new Question("What is my Name?",  "Waleed",  "1", "Waleed",
-                   "Am", "Dav", "zami",false );
-           Question question2= new Question("What is your Name?",  "Waleed",  "1", "Waleed",
-                   "Am", "Dav", "zami",false );
-           questions.add(question1);
-           questions.add(question2);
-           Quiz quiz = new Quiz( questions, "1", false);
-           DBServices.addToCollection(CollectionsName.QUIZZES,quiz);*/
 
         start();
     }
@@ -114,4 +107,7 @@ public class QuizzingActivity extends AppCompatActivity {
         }
 
     }
+
+
+
 }
