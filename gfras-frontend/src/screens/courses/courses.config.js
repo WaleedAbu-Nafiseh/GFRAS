@@ -1,6 +1,7 @@
 import { QuizIcon } from '../../components/icons/Quiz';
 import React from 'react';
 import { QuizListIcon } from '../../components/icons/QuizzesList';
+import { AttendanceIcon } from '../../components/icons/Attendance';
 
 export const sideMenuItems = [
 	{
@@ -20,6 +21,12 @@ export const courseDetails = [
 		label: 'Quiz List',
 		id: 'quiz-list',
 		icon: <QuizListIcon boxSize='35px' />,
+		canSideMenuExpand: false
+	},
+	{
+		label: 'Attendance',
+		id: 'attendance-list',
+		icon: <AttendanceIcon boxSize='35px' />,
 		canSideMenuExpand: false
 	}
 ];

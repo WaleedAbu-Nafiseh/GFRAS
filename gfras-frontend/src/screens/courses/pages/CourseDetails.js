@@ -3,6 +3,8 @@ import CoursesProvider from '../CoursesContext';
 import { Text, Spinner } from '@chakra-ui/core';
 import { QuizTemplate } from '../template/QuizTemplate';
 import QuizProvider, { useQuizContext } from '../QuizContext';
+import AttendanceProvider from '../AttendanceContext';
+import CourseDetailsProvider from '../CourseDetailsContext';
 
 function PageContainer() {
 	const { isError, isLoading } = useQuizContext();
@@ -13,14 +15,18 @@ function PageContainer() {
 	return null;
 }
 
-function Quiz() {
+function CourseDetails() {
 	return (
 		<CoursesProvider>
-			<QuizProvider>
-				<PageContainer />
-			</QuizProvider>
+			<CourseDetailsProvider>
+				<QuizProvider>
+					<AttendanceProvider>
+						<PageContainer />
+					</AttendanceProvider>
+				</QuizProvider>
+			</CourseDetailsProvider>
 		</CoursesProvider>
 	);
 }
 
-export default Quiz;
+export default CourseDetails;

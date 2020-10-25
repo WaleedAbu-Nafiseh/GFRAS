@@ -20,10 +20,11 @@ export function Question() {
 		questionAndOptions,
 		setQuestionAndOptions,
 		isValidSubmitQuiz,
-		setIsValidSubmitQuiz
+		setIsValidSubmitQuiz,
+		refetchNewQuizCreated
 	} = useQuizContext();
 	const [isLoading, setIsLoading] = useState(false);
-	const { id } = useParams();
+	const { courseID } = useParams();
 	const {
 		selectedQuestion,
 		noOfSelectedQuestions,
@@ -47,7 +48,13 @@ export function Question() {
 			setDeletedQuestion(-1);
 			setSelectedQuestion(0);
 		}
-	}, [deletedQuestion]);
+	}, [
+		setSelectedQuestion,
+		deletedQuestion,
+		setQuestionAndOptions,
+		setNoOfSelectedQuestions,
+		setDeletedQuestion
+	]);
 
 	useEffect(() => canSubmitQuiz(), [
 		questionAndOptions,
@@ -59,9 +66,10 @@ export function Question() {
 		setIsLoading(true);
 		await createQuiz({
 			questionAndOptions: [...questionAndOptions],
-			courseID: id,
+			courseID,
 			quizTitle
 		}).then((res) => {
+			refetchNewQuizCreated();
 			setIsLoading(false);
 			setQuestionAndOptions([]);
 			setNoOfSelectedQuestions(1);

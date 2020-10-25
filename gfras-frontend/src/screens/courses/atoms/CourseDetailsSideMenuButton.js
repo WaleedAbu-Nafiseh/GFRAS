@@ -1,7 +1,6 @@
 import React from 'react';
 import { Flex, Text, Button } from '@chakra-ui/core';
-import { useQuizContext } from '../QuizContext';
-import { useCoursesContext } from '../CoursesContext';
+import { useCourseDetailsContext } from '../CourseDetailsContext';
 
 export function CourseDetailsSideMenuButton({
 	id,
@@ -9,8 +8,11 @@ export function CourseDetailsSideMenuButton({
 	icon,
 	label
 }) {
-	const { selectedCourseDetail, setSelectedCourseDetail } = useCoursesContext();
-	const { setIsSideMenuExpanded } = useQuizContext();
+	const {
+		selectedCourseDetail,
+		setSelectedCourseDetail
+	} = useCourseDetailsContext();
+	const { setIsSideMenuExpanded } = useCourseDetailsContext();
 
 	return (
 		<Button

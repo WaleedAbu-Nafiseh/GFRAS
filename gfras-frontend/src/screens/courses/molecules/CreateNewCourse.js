@@ -3,11 +3,13 @@ import { Flex, FormLabel, Input, Stack, Button } from '@chakra-ui/core';
 import { useIntl } from 'react-intl';
 import { useForm } from 'react-hook-form';
 import { createNewCourses } from '../../../API/courses/createNewCourses';
+import { useCoursesContext } from '../CoursesContext';
 
 export function CreateNewCourse() {
 	const { register, handleSubmit, watch, reset } = useForm();
 	const { formatMessage } = useIntl();
 	const [isLoading, setIsLoading] = useState(false);
+	const { refetchCreateNewCourse } = useCoursesContext();
 	const onSubmit = handleSubmit(
 		({ courseName, quizzes = [], students = [] }) => {
 			setIsLoading(true);
@@ -18,6 +20,7 @@ export function CreateNewCourse() {
 				students: [...students]
 			}).then((res) => {
 				setIsLoading(false);
+				refetchCreateNewCourse();
 				reset();
 			});
 		}
