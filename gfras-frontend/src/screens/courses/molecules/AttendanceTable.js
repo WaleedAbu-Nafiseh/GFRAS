@@ -27,7 +27,6 @@ export const columns = [
 
 			useEffect(() => {
 				if (cell.row.values.isPresent && isPresent === -1) {
-					console.log(cell.row);
 					setStudentsAttendance([
 						...studentsAttendance,
 						{
@@ -36,7 +35,7 @@ export const columns = [
 						}
 					]);
 				}
-			}, []);
+			}, [cell.row, isPresent, setStudentsAttendance, studentsAttendance]);
 
 			return (
 				<Checkbox
@@ -85,7 +84,7 @@ export const AttendanceTable = ({ selectedMenuItem }) => {
 		studentsAttendance,
 		setStudentsAttendance
 	} = useAttendanceContext();
-	const { data: students, isError, isLoading } = useQuery(
+	const { data: students } = useQuery(
 		['attendance-formatted-data', { data, selectedDate: selectedMenuItem }],
 		getData
 	);
