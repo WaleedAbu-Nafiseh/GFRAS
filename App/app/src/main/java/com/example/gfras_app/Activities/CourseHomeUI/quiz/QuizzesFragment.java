@@ -67,26 +67,6 @@ public class QuizzesFragment extends Fragment {
     }
 
     public void showData(){
-        List<Question> questions=new LinkedList<>();
-     /*   Question question1= new Question("What is my Name?",  "Waleed",  "1", "Waleed",
-                "Am", "Dav", "zami",false );
-        Question question2= new Question("What is your Name?",  "Waleed",  "1", "Waleed",
-                "Am", "Dav", "zami",false );
-        questions.add(question1);
-        questions.add(question2);
-        Quiz quiz1 = new Quiz("POP QUIZ", questions, "1", false);
-        Quiz quiz2 = new Quiz("GAME", questions, "2", true);
-        Quiz quiz3 = new Quiz("EVALUATION", questions, "3", true);
-        Quiz quiz4 = new Quiz("TEST", questions, "4", false);
-
-        quizList.add(quiz1);
-        quizList.add(quiz2);
-        quizList.add(quiz3);
-        quizList.add(quiz4);*/
-
-       // Log.e("TEST",quizList.get(0).getCourseID());
-
-
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference courseRef = db.collection(CollectionsName.QUIZZES);
         courseRef.whereEqualTo("courseID",currentCourse.getCourseId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
