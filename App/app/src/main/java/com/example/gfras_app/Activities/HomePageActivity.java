@@ -92,7 +92,7 @@ public class HomePageActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), CourseHomeMainActivity.class);
                 Bundle bundle = new Bundle();
                 Gson g = new Gson();
-;
+
                 bundle.putString("COURSE_ID",g.toJson(courseList.get(position)));
                 intent.putExtras(bundle);
                 startActivity(intent);
