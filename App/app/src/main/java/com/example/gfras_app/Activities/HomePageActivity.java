@@ -59,7 +59,7 @@ public class HomePageActivity extends AppCompatActivity {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference courseRef = db.collection(CollectionsName.COURSES);
-        courseRef.whereArrayContains("students", currentUser.getId()).get()
+        courseRef.whereArrayContains(CollectionsName.STUDENTS, currentUser.getId()).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
