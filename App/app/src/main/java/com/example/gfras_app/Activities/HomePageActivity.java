@@ -42,6 +42,7 @@ public class HomePageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_page);
+        setTitle("Your Courses");
         setOnclickListener();
         mRecyclerView = findViewById(R.id.CourseListRecyclerView);
         courseList = new LinkedList<Course>();
@@ -58,8 +59,7 @@ public class HomePageActivity extends AppCompatActivity {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference courseRef = db.collection(CollectionsName.COURSES);
-        Log.e("ID", currentUser.getId());
-        courseRef.whereArrayContains("students", currentUser.getId()).get()
+        courseRef.whereArrayContains(CollectionsName.STUDENTS, currentUser.getId()).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {

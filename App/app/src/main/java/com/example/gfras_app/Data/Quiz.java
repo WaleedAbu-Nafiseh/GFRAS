@@ -6,7 +6,8 @@ import java.util.List;
 
 public class Quiz {
     @DocumentId
-    String title;
+    String id;
+    String quizTitle;
     List<Question> questions;
     String courseID;
     boolean isStarted;
@@ -15,7 +16,7 @@ public class Quiz {
     }
 
     public Quiz(String title, List<Question> questions, String courseID, boolean isStarted) {
-        this.title = title;
+        this.quizTitle = title;
         this.questions = questions;
         this.courseID = courseID;
         this.isStarted = isStarted;
@@ -45,11 +46,27 @@ public class Quiz {
         this.isStarted = isStarted;
     }
 
-    public String getTitle() {
-        return title;
+    public String getId() {
+        return id;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getQuizTitle() {
+        return quizTitle;
+    }
+
+    public void setQuizTitle(String quizTitle) {
+        this.quizTitle = quizTitle;
+    }
+
+    public boolean isStarted() {
+        return isStarted;
+    }
+
+    public void setStarted(boolean started) {
+        isStarted = started;
     }
 }
