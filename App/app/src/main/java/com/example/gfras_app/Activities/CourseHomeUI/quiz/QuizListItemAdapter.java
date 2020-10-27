@@ -1,4 +1,4 @@
-package com.example.gfras_app.Data;
+package com.example.gfras_app.Activities.CourseHomeUI.quiz;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -10,9 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gfras_app.Activities.QuizzingActivity;
-import com.example.gfras_app.Activities.SignupActivity;
 import com.example.gfras_app.Data.Quiz;
-import com.example.gfras_app.Data.QuizListItemAdapter;
 import com.example.gfras_app.R;
 
 import java.util.ArrayList;
@@ -63,15 +61,7 @@ public class QuizListItemAdapter extends RecyclerView.Adapter<QuizListItemAdapte
         public void onClick(View view) {
             listener.onClick(view,getAdapterPosition());
             Intent i = new Intent(view.getContext(), QuizzingActivity.class);
-
-
-
-
             view.getContext().startActivity(i);
-
-
-
-
 
         }
     }
