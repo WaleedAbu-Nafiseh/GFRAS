@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/nav_quiz"
         android:name="com.example.gfras_app.Activities.CourseHomeUI.quiz.QuizzesFragment"
-        android:label="@string/menu_home"
+        android:label="@string/menu_quizzes"
         tools:layout="@layout/fragment_quizzes" />
 
     <fragment

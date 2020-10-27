@@ -1,6 +1,8 @@
 package com.example.gfras_app.Activities.CourseHomeUI.quiz;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.gfras_app.Activities.QuizzingActivity;
 import com.example.gfras_app.Data.Quiz;
 import com.example.gfras_app.R;
 
@@ -23,6 +24,7 @@ public class QuizListItemAdapter extends RecyclerView.Adapter<QuizListItemAdapte
         this. QuizzesList =new ArrayList<Quiz>( QuizzesList);
         this.listener=listener;
     }
+
     @NonNull
     @Override
     public QuizListItemAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -33,7 +35,7 @@ public class QuizListItemAdapter extends RecyclerView.Adapter<QuizListItemAdapte
     @Override
     public void onBindViewHolder(@NonNull QuizListItemAdapterViewHolder holder, int position) {
         Quiz currentItem = QuizzesList.get(position);
-        holder.TextView1.setText(currentItem.getTitle());
+        holder.TextView1.setText(currentItem.getQuizTitle());
 
 
 
@@ -60,7 +62,14 @@ public class QuizListItemAdapter extends RecyclerView.Adapter<QuizListItemAdapte
         @Override
         public void onClick(View view) {
             listener.onClick(view,getAdapterPosition());
+
             Intent i = new Intent(view.getContext(), QuizzingActivity.class);
+            //Create the bundle
+            Bundle bundle = new Bundle();
+            //Add your data from getFactualResults method to bundle
+            bundle.putString("QUIZ_ID",  QuizzesList.get(getAdapterPosition()).getId());
+            //Add the bundle to the intent
+            i.putExtras(bundle);
             view.getContext().startActivity(i);
 
         }

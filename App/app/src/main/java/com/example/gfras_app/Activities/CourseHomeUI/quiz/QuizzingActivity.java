@@ -1,34 +1,23 @@
-package com.example.gfras_app.Activities;
+package com.example.gfras_app.Activities.CourseHomeUI.quiz;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.gfras_app.Data.Question;
 import com.example.gfras_app.Data.Quiz;
-import com.example.gfras_app.Data.Student;
 import com.example.gfras_app.R;
 import com.example.gfras_app.util.CollectionsName;
-import com.example.gfras_app.util.DBServices;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.annotations.Nullable;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-
-import java.util.LinkedList;
-import java.util.List;
 
 public class QuizzingActivity extends AppCompatActivity {
 
@@ -48,6 +37,10 @@ public class QuizzingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_quizzing);
+        Bundle bundle = getIntent().getExtras();
+        String quizID = bundle.getString("QUIZ_ID");
+        Log.e(TAG,quizID);
+
         txtQuestionPlace=findViewById(R.id.txtQuestionPlace);
         prgsBar=findViewById(R.id.prgsBar);
         btnOptionA=findViewById(R.id.btnOptionA);
@@ -57,7 +50,7 @@ public class QuizzingActivity extends AppCompatActivity {
         Log.d(TAG," onCreate");
         prgsBar.setVisibility(View.VISIBLE);
         db = FirebaseFirestore.getInstance();
-        docRef = db.collection(CollectionsName.QUIZZES).document("megWwizowg6aQ420QG1O");
+        docRef = db.collection(CollectionsName.QUIZZES).document(quizID);
 
 
         start();
@@ -95,6 +88,10 @@ public class QuizzingActivity extends AppCompatActivity {
         if(quiz.getIsStarted()){
             //It is  started
             prgsBar.setVisibility(View.INVISIBLE);
+            btnOptionA.setVisibility(View.VISIBLE);
+            btnOptionB.setVisibility(View.VISIBLE);
+            btnOptionC.setVisibility(View.VISIBLE);
+            btnOptionD.setVisibility(View.VISIBLE);
             txtQuestionPlace.setText(quiz.getQuestions().get(0).getQuestion());
             btnOptionA.setText(quiz.getQuestions().get(0).getOptionA());
             btnOptionB.setText(quiz.getQuestions().get(0).getOptionB());
@@ -104,6 +101,12 @@ public class QuizzingActivity extends AppCompatActivity {
         }else{
             //It is not started
             txtQuestionPlace.setText("Please wait until the quiz starts");
+            btnOptionA.setVisibility(View.INVISIBLE);
+            btnOptionB.setVisibility(View.INVISIBLE);
+            btnOptionC.setVisibility(View.INVISIBLE);
+            btnOptionD.setVisibility(View.INVISIBLE);
+
+
         }
 
     }
