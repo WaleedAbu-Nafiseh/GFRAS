@@ -21,8 +21,9 @@ export function QuizList() {
 	}
 
 	const handleStartQuiz = async (quizID) => {
-		await startQuiz({ docID: quizID });
-		window.location.href = `${pathname}/${quizID}`;
+		await startQuiz({ docID: quizID }).then((res) => {
+			window.location.href = `${pathname}/${quizID}`;
+		});
 	};
 
 	if (data.length === 0) {
