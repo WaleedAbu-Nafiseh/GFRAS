@@ -87,17 +87,7 @@ public class QuizzesFragment extends Fragment {
                     Log.d("TAG", "Error getting documents: ", task.getException());
                 }
             }
-
-
-
-
-
         });
-
-
-
-
-
     }
 
    private void setOnclickListener() {
