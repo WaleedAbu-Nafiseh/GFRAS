@@ -7,7 +7,7 @@
     tools:context=".Activities.SignupActivity"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:id="@+id/main_activity"
+    android:id="@+id/signupPage"
     android:layout_centerHorizontal="true">
     <LinearLayout
         android:orientation="vertical"
@@ -17,11 +17,12 @@
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
 
-        <ImageView android:src="@drawable/logo"
+        <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="132dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginBottom="24dp"
-            android:layout_gravity="center_horizontal" />
+            android:src="@drawable/upimg" />
 
 
 
@@ -96,16 +97,20 @@
             android:inputType="textPassword"
             android:hint="Password"
             />
+
         <Button
             android:id="@+id/btn_signup"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="85dp"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
+            android:background="@drawable/btnbackground"
             android:padding="12dp"
-            android:text="Create Account"/>
+            android:text="Create Account"
+            android:textColor="#ffff"
+            android:textSize="19dp" />
 
-            />
         <TextView
             android:id="@+id/link_login"
             android:layout_width="fill_parent"
