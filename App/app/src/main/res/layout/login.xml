@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    tools:context=".Activities.LoginActivity"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:id="@+id/mainPage"
+    >
+
+
+
+    <ImageView
+        android:layout_width="254dp"
+        android:layout_height="189dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="22dp"
+        android:src="@drawable/inimg"
+        android:id="@+id/logoimg"/>
+
+
+
+    <EditText
+        android:id="@+id/stdid"
+        android:layout_width="265dp"
+        android:layout_height="75dp"
+        android:layout_below="@id/logoimg"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="72dp"
+        android:ems="10"
+        android:hint="@string/StudentID"
+        android:textSize="20dp"
+
+
+        />
+
+    <EditText
+
+        android:id="@+id/edtStudentPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        android:layout_below="@+id/stdid"
+        android:layout_alignLeft="@+id/stdid"
+        android:layout_alignRight="@+id/stdid"
+        android:layout_marginTop="28dp"
+        android:layout_marginRight="0dp"
+        android:ems="10"
+        android:hint="@string/StudentPassword"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/btnLogIn"
+        android:layout_width="206dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edtStudentPassword"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="34dp"
+        android:background="@drawable/btnbackground"
+
+        android:text="Login"
+        android:textColor="#ffff"
+        android:textSize="20dp" />
+
+
+</RelativeLayout>

@@ -23,7 +23,9 @@
         <activity android:name=".app.facerecognizer.FirstFRActicity" />
         <activity android:name=".Activities.SignupActivity" />
         <activity android:name=".Activities.HomePageActivity" />
+        <activity android:name=".Activities.LoginActivity"/>
         <activity android:name=".Activities.MainActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
