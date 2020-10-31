@@ -72,10 +72,10 @@ function NextQuestion({ noOfQuestions }) {
 			maxH='48px'
 			maxW='48px'
 			_hover={{
-				bg: isLastQuestion() ? 'red.600' : 'rgb(18, 96, 190)'
+				bg: isLastQuestion() ? 'red.600' : '#ff5722'
 			}}
 			top='60px'
-			bg={isLastQuestion() ? 'red.500' : 'rgb(19, 104, 206)'}
+			bg={isLastQuestion() ? 'red.500' : '#fc4216'}
 			color='white'
 		>
 			{isLastQuestion()

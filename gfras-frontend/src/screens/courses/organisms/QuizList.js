@@ -1,11 +1,11 @@
 import React from 'react';
-import { Flex, Text, Button, Spinner, IconButton } from '@chakra-ui/core';
+import { Flex, Text, Button, Spinner } from '@chakra-ui/core';
 import { useQuizContext } from '../QuizContext';
 import { useIntl } from 'react-intl';
 import { startQuiz } from '../../../API/quizzes/startQuiz';
 import { useLocation } from 'react-router-dom';
-import { ChevronLeftIcon } from '../../../components/icons/ChevronLeft';
 import { useCourseDetailsContext } from '../CourseDetailsContext';
+import { BackButton } from '../atoms/BackButton';
 
 export function QuizList() {
 	const { pathname } = useLocation();
@@ -28,44 +28,38 @@ export function QuizList() {
 
 	if (data.length === 0) {
 		return (
-			<Flex
-				w='full'
-				h='full'
-				direction='column'
-				align='center'
-				justify='center'
-			>
-				<Text fontSize={20} fontWeight={500}>
-					{formatMessage({ id: 'course.quiz.quizList.noQuizzes' })}
-				</Text>
-				<Button
-					w='fit-content'
-					bg='#3182ce'
-					mt='10px'
-					_hover={{ bg: '#006ace' }}
-					onClick={() => {
-						setIsSideMenuExpanded(true);
-						setSelectedCourseDetail('create-quiz');
-					}}
+			<>
+				<Flex
+					w='full'
+					h='full'
+					direction='column'
+					align='center'
+					justify='center'
 				>
-					{formatMessage({ id: 'course.quiz.quizList.createNewQuiz' })}
-				</Button>
-			</Flex>
+					<Text fontSize={20} fontWeight={500}>
+						{formatMessage({ id: 'course.quiz.quizList.noQuizzes' })}
+					</Text>
+					<Button
+						w='fit-content'
+						bg='#ff5722'
+						_hover={{ bg: '#fc4216' }}
+						color='white'
+						mt='10px'
+						onClick={() => {
+							setIsSideMenuExpanded(true);
+							setSelectedCourseDetail('create-quiz');
+						}}
+					>
+						{formatMessage({ id: 'course.quiz.quizList.createNewQuiz' })}
+					</Button>
+				</Flex>
+			</>
 		);
 	}
 
 	return (
 		<>
-			<Flex>
-				<IconButton
-					ml='25px'
-					fontSize='25px'
-					onClick={() => (window.location.href = '/courses')}
-					mt='5px'
-					isRound
-					icon={<ChevronLeftIcon />}
-				/>
-			</Flex>
+			<BackButton />
 			<Flex direction='column' p='100px' w='full'>
 				{data.map(({ id, quizTitle, quizID }, index) => {
 					return (
@@ -77,7 +71,13 @@ export function QuizList() {
 							my='10px'
 						>
 							<Text>{quizTitle}</Text>
-							<Button ml='auto' onClick={() => handleStartQuiz(quizID)}>
+							<Button
+								ml='auto'
+								bg='#ff5722'
+								_hover={{ bg: '#fc4216' }}
+								color='white'
+								onClick={() => handleStartQuiz(quizID)}
+							>
 								{formatMessage({ id: 'courses.createQuizzes.startQuiz' })}
 							</Button>
 						</Flex>

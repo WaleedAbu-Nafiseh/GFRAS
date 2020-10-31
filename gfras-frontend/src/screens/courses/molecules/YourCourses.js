@@ -54,12 +54,12 @@ export function YourCourse({ setActiveSideMenuButton }) {
 				<NavLink
 					to={`/course-details/${doc.id}`}
 					style={{
-						color: 'white',
 						borderRadius: '4px',
 						padding: '0px 16px 4px',
 						fontWeight: 'bold',
 						marginTop: 'auto',
-						backgroundColor: 'rgb(19, 104, 206)',
+						backgroundColor: '#ff5722',
+						color: 'white',
 						textAlign: 'center',
 						lineHeight: '2.875rem',
 						boxShadow: 'rgba(0, 0, 0, 0.25) 0px -4px inset'

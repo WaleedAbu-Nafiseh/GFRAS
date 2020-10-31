@@ -6,13 +6,16 @@ import {
 	Input,
 	InputRightElement,
 	InputGroup,
-	Button,
-	IconButton
+	Button
 } from '@chakra-ui/core';
 import { useIntl } from 'react-intl';
-import { CheckIcon } from '../../../components/icons/Check';
 import { createQuiz } from '../../../API/quizzes/createQuiz';
-import { ChevronLeftIcon } from '../../../components/icons/ChevronLeft';
+import {
+	useFailureToast,
+	useSuccessToast
+} from '../../../custom-hooks/useSuccessToast';
+import { BackButton } from '../atoms/BackButton';
+import { CorrectAnswer } from '../../../components/icons/CorrectAnswer';
 
 export function Question() {
 	const { formatMessage } = useIntl();
@@ -25,6 +28,9 @@ export function Question() {
 	} = useQuizContext();
 	const [isLoading, setIsLoading] = useState(false);
 	const { courseID } = useParams();
+	const successToast = useSuccessToast();
+	const failureToast = useFailureToast();
+
 	const {
 		selectedQuestion,
 		noOfSelectedQuestions,
@@ -32,7 +38,8 @@ export function Question() {
 		deletedQuestion,
 		setDeletedQuestion,
 		setSelectedQuestion,
-		quizTitle
+		quizTitle,
+		setQuizTitle
 	} = useQuizContext();
 
 	useEffect(() => {
@@ -68,12 +75,35 @@ export function Question() {
 			questionAndOptions: [...questionAndOptions],
 			courseID,
 			quizTitle
-		}).then((res) => {
-			refetchNewQuizCreated();
-			setIsLoading(false);
-			setQuestionAndOptions([]);
-			setNoOfSelectedQuestions(1);
-		});
+		})
+			.then((res) => {
+				refetchNewQuizCreated();
+				setIsLoading(false);
+				setQuestionAndOptions([]);
+				setNoOfSelectedQuestions(1);
+				setQuizTitle('');
+
+				successToast({
+					title: formatMessage({
+						id: 'quiz.toastMessage.createNewQuiz.quizCreated.title'
+					}),
+					description: formatMessage({
+						id: 'quiz.toastMessage.createNewQuiz.quizCreated.description'
+					})
+				});
+			})
+			.catch((err) => {
+				setIsLoading(false);
+				setQuestionAndOptions([]);
+				setNoOfSelectedQuestions(1);
+				setQuizTitle('');
+				failureToast({
+					title: formatMessage({
+						id: 'toastMessage.errorOccurred.title'
+					}),
+					description: err.message
+				});
+			});
 	};
 
 	const canSubmitQuiz = () => {
@@ -151,18 +181,14 @@ export function Question() {
 					isLoading={isLoading}
 					onClick={onSubmitCreateQuestion}
 					float='right'
+					bg='#ff5722'
+					_hover={{ bg: '#fc4216' }}
+					color='white'
 					isDisabled={!isValidSubmitQuiz}
 				>
 					{formatMessage({ id: 'courses.createQuizzes.createQuiz' })}
 				</Button>
-				<IconButton
-					ml='25px'
-					fontSize='25px'
-					onClick={() => (window.location.href = '/courses')}
-					mt='5px'
-					isRound
-					icon={<ChevronLeftIcon />}
-				/>
+				<BackButton />
 			</Flex>
 			<Flex direction='column' mx='auto' justify='center' w='full' px='90px'>
 				<Input
@@ -196,19 +222,28 @@ export function Question() {
 									onChange={(e) => onChangeInputText(e, `option${option}`)}
 								/>
 								<InputRightElement>
-									<CheckIcon
-										onClick={() =>
-											onClickInputRightIcon(option, selectedQuestion)
-										}
-										color={
-											questionAndOptions[selectedQuestion] &&
-											questionAndOptions[selectedQuestion].correctAnswer &&
-											questionAndOptions[selectedQuestion].correctAnswer ===
-												questionAndOptions[selectedQuestion][`option${option}`]
-												? 'green.500'
-												: 'black.500'
-										}
-									/>
+									{questionAndOptions[selectedQuestion] &&
+									questionAndOptions[selectedQuestion].correctAnswer &&
+									questionAndOptions[selectedQuestion].correctAnswer ===
+										questionAndOptions[selectedQuestion][`option${option}`] ? (
+										<CorrectAnswer
+											boxSize='25px'
+											color='green.500'
+											onClick={() =>
+												onClickInputRightIcon(option, selectedQuestion)
+											}
+										/>
+									) : questionAndOptions[selectedQuestion] &&
+									  questionAndOptions[selectedQuestion][`option${option}`] ? (
+										<CorrectAnswer
+											boxSize='25px'
+											color='white'
+											_hover={{ color: 'green.500' }}
+											onClick={() =>
+												onClickInputRightIcon(option, selectedQuestion)
+											}
+										/>
+									) : null}
 								</InputRightElement>
 							</InputGroup>
 						);

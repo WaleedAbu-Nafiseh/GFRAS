@@ -6,19 +6,18 @@ import {
 	Divider,
 	Tooltip,
 	Spinner,
-	IconButton,
 	Icon
 } from '@chakra-ui/core';
 import { useIntl } from 'react-intl';
 import { useParams } from 'react-router-dom';
-import { ChevronLeftIcon } from '../../../components/icons/ChevronLeft';
 import { useAttendanceContext } from '../AttendanceContext';
 import { startNewAttendance } from '../../../API/attendance/startNewAttendance';
-import { format } from 'date-fns';
+import { format, isAfter, parse } from 'date-fns';
 import { AttendanceTable } from '../molecules/AttendanceTable';
 import { AttendanceDropdown } from '../molecules/AttendanceDropDown';
 import { CSVLink } from 'react-csv';
 import { DownloadIcon } from '../../../components/icons/Download';
+import { BackButton } from '../atoms/BackButton';
 
 const csvHeaders = [{ label: 'Student Name', key: 'studentName' }];
 
@@ -30,8 +29,23 @@ export function Attendance() {
 		refetchAttendanceList,
 		studentsAttendance
 	} = useAttendanceContext();
+
+	let dropDownItems = '';
+
+	if (data && data.attendance) {
+		dropDownItems = Object.keys(data.attendance);
+		dropDownItems.sort((a, b) => {
+			return isAfter(
+				parse(a, 'dd-MM-yyyy', new Date()),
+				parse(b, 'dd-MM-yyyy', new Date())
+			)
+				? -1
+				: 1;
+		});
+	}
+
 	const [selectedMenuItem, setSelectedMenuItem] = useState(
-		data && data.attendance ? Object.keys(data.attendance)[0] : ''
+		data && data.attendance ? dropDownItems[0] : ''
 	);
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -42,6 +56,7 @@ export function Attendance() {
 			date: format(new Date(), 'dd-MM-yyyy'),
 			time: format(new Date(), 'HH:mm')
 		}).then(() => {
+			setSelectedMenuItem(format(new Date(), 'dd-MM-yyyy'));
 			refetchAttendanceList();
 			setIsLoading(false);
 		});
@@ -77,7 +92,7 @@ export function Attendance() {
 							}}
 						>
 							{formatMessage({
-								id: 'course.courseDetails.attendance.downloadButton'
+								id: 'course.attendance.attendanceList.takeAttendance'
 							})}
 						</Button>
 					</>
@@ -91,25 +106,16 @@ export function Attendance() {
 			</Flex>
 		);
 	}
-	//TODO: react table for attendance with two columns student name and present checkbox
+
 	return (
 		<Flex w='full' direction='column'>
 			<Flex w='full' justify='space-between'>
-				<IconButton
-					ml='25px'
-					fontSize='25px'
-					w='20px'
-					onClick={() => (window.location.href = '/courses')}
-					mt='5px'
-					isRound
-					icon={<ChevronLeftIcon />}
-				/>
-
+				<BackButton />
 				<Flex alignItems='center'>
 					<CSVLink
 						data={studentsAttendance}
 						headers={csvHeaders}
-						filename={`Algorithms-${selectedMenuItem}.csv`}
+						filename={`${data.courseName}-Attendance Sheet-${selectedMenuItem}.csv`}
 					>
 						<Tooltip
 							hasArrow
@@ -140,12 +146,41 @@ export function Attendance() {
 					<AttendanceDropdown
 						selectedMenuItem={selectedMenuItem}
 						setSelectedMenuItem={setSelectedMenuItem}
-						menuItems={Object.keys(data.attendance)}
+						menuItems={dropDownItems}
 					/>
 				</Flex>
 			</Flex>
-			<Flex w='full' p='20px'>
+			<Flex w='full' p='20px' maxH='calc(100% - 200px)'>
 				<AttendanceTable selectedMenuItem={selectedMenuItem} />
+			</Flex>
+			<Flex borderTop='2px solid #EFEFEF' mx='20px'>
+				<Button
+					minW='100px'
+					mt='10px'
+					bg='#ff5722'
+					_hover={{ bg: '#fc4216' }}
+					isDisabled={true}
+					color='white'
+				>
+					{formatMessage({
+						id: 'course.courseDetails.attendance.submitButtonLabel'
+					})}
+				</Button>
+				<Button
+					minW='100px'
+					ml='20px'
+					mt='10px'
+					bg='#277da1'
+					_hover={{ bg: '#00688d' }}
+					color='white'
+					onClick={() => {
+						handleStartNewAttendance();
+					}}
+				>
+					{formatMessage({
+						id: 'course.attendance.attendanceList.takeNewAttendance'
+					})}
+				</Button>
 			</Flex>
 		</Flex>
 	);

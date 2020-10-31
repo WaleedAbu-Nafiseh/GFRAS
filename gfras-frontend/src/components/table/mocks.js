@@ -4,7 +4,7 @@ import { Checkbox } from '@chakra-ui/core';
 export const tableInitialState = {
 	sortBy: [
 		{
-			id: 'studentName',
+			id: 'fullName',
 			desc: false
 		}
 	]

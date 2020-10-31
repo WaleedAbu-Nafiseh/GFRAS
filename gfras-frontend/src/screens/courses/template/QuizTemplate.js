@@ -8,6 +8,8 @@ import { SmallCloseIcon } from '../../../components/icons/SmallClose';
 import { QuizList } from '../organisms/QuizList';
 import { Attendance } from '../organisms/Attendance';
 import { useCourseDetailsContext } from '../CourseDetailsContext';
+import AddStudents from '../organisms/AddStudents';
+import { BackButton } from '../atoms/BackButton';
 
 export function QuizTemplate() {
 	const { selectedCourseDetail } = useCourseDetailsContext();
@@ -37,9 +39,11 @@ export function QuizTemplate() {
 					{selectedCourseDetail === 'create-quiz' && <QuizSideMenu />}
 				</SideMenu>
 			)}
+			{/*<BackButton />*/}
 			{selectedCourseDetail === 'create-quiz' && <Question />}
 			{selectedCourseDetail === 'quiz-list' && <QuizList />}
 			{selectedCourseDetail === 'attendance-list' && <Attendance />}
+			{selectedCourseDetail === 'add-new-students' && <AddStudents />}
 		</Flex>
 	);
 }

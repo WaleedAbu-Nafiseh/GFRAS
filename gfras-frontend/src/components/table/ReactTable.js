@@ -125,12 +125,6 @@ function Table({ columns, data, initialState: init }) {
 		setHiddenColumns(
 			columns
 				.filter((column) => {
-					console.log(
-						column,
-						!column.hasOwnProperty('isVisible'),
-						!!column.isVisible,
-						!!column.isVisible || !column.hasOwnProperty('isVisible')
-					);
 					return !(!!column.isVisible || !column.hasOwnProperty('isVisible'));
 				})
 				.map((column) => column.accessor)
