@@ -4,12 +4,28 @@ import { useIntl } from 'react-intl';
 import { useForm } from 'react-hook-form';
 import { createNewCourses } from '../../../API/courses/createNewCourses';
 import { useCoursesContext } from '../CoursesContext';
+import { ReadFile } from '../../../components/csv-reader/ReadFile';
+import {
+	useFailureToast,
+	useSuccessToast
+} from '../../../custom-hooks/useSuccessToast';
 
 export function CreateNewCourse() {
 	const { register, handleSubmit, watch, reset } = useForm();
+	const [CSVFileData, setCSVFileData] = useState();
 	const { formatMessage } = useIntl();
 	const [isLoading, setIsLoading] = useState(false);
 	const { refetchCreateNewCourse } = useCoursesContext();
+	const successToast = useSuccessToast();
+	const failureToast = useFailureToast();
+
+	const resetStates = () => {
+		setIsLoading(false);
+		refetchCreateNewCourse();
+		setCSVFileData('');
+		reset();
+	};
+
 	const onSubmit = handleSubmit(
 		({ courseName, quizzes = [], students = [] }) => {
 			setIsLoading(true);
@@ -17,12 +33,36 @@ export function CreateNewCourse() {
 				instructorID: localStorage.getItem('instructorID'),
 				courseName,
 				quizzes: [...quizzes],
-				students: [...students]
-			}).then((res) => {
-				setIsLoading(false);
-				refetchCreateNewCourse();
-				reset();
-			});
+				students: [...students],
+				CSVFileData
+			})
+				.then((res) => {
+					resetStates();
+					successToast({
+						title: formatMessage({
+							id: 'course.toastMessage.createNewCourse.courseCreated.title'
+						}),
+						description: formatMessage(
+							{
+								id:
+									'course.toastMessage.createNewCourse.courseCreated.description'
+							},
+							{
+								courseName
+							}
+						)
+					});
+					document.querySelector('.csv-input').value = '';
+				})
+				.catch((err) => {
+					resetStates();
+					failureToast({
+						title: formatMessage({
+							id: 'toastMessage.errorOccurred.title'
+						}),
+						description: err.message
+					});
+				});
 		}
 	);
 
@@ -61,13 +101,14 @@ export function CreateNewCourse() {
 					isLoading={isLoading}
 					borderRadius='7px'
 					type='submit'
-					bg='rgb(0,127,255)'
-					_hover={{ bg: 'rgb(0,115,207)' }}
+					bg='#ff5722'
+					_hover={{ bg: '#fc4216' }}
 					color='white'
 				>
 					{formatMessage({ id: 'courses.createNewCourse.createNewCourseBtn' })}
 				</Button>
 			</form>
+			<ReadFile setCSVFileData={setCSVFileData} />
 		</Flex>
 	);
 }

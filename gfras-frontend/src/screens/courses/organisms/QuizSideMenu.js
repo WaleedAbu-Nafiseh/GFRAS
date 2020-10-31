@@ -38,8 +38,9 @@ export const QuizSideMenu = () => {
 					display={noOfSelectedQuestions > 1 ? 'block' : 'none'}
 					position='absolute'
 					right='10px'
-					color='grey'
+					color='white'
 					_hover={{ bg: 'transparent', color: 'black' }}
+					_focus={{ border: 0 }}
 					top='20px'
 					bg='transparent'
 					zIndex='1000'
@@ -51,8 +52,12 @@ export const QuizSideMenu = () => {
 					mt='20px'
 					onClick={() => handleSelectedQuestion(i)}
 					isActive={selectedQuestion === i}
+					bg='#3182ce'
+					_hover={{ bg: '#036bb1' }}
+					_active={{ bg: '#036bb1' }}
+					color='white'
 				>
-					{`Q${i + 1}`}
+					{`Question #${i + 1}`}
 				</Button>
 			</Flex>
 		];
@@ -76,6 +81,9 @@ export const QuizSideMenu = () => {
 					mt='26px'
 					onClick={handleAddQuestion}
 					isDisabled={noOfSelectedQuestions >= 5}
+					bg='#ff5722'
+					_hover={{ bg: '#fc4216' }}
+					color='white'
 				>
 					{formatMessage({ id: 'courses.createQuizzes.addQuestion' })}
 				</Button>

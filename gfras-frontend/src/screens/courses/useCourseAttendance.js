@@ -14,7 +14,6 @@ export function useCourseAttendance() {
 		getData
 	);
 	const [studentsAttendance, setStudentsAttendance] = useState(() => []);
-
 	return {
 		data,
 		isError,

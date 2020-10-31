@@ -22,8 +22,9 @@ function PageSideMenu() {
 								onClick={() => setActiveSideMenuButton(title)}
 								isActive={isActive}
 								bg='transparent'
-								_hover={{ bg: '#3182ce' }}
-								_active={{ bg: '#3182ce' }}
+								_hover={{ bg: '#036bb1', color: 'white' }}
+								_active={{ bg: '#036bb1', color: 'white' }}
+								color='#036bb1'
 							>
 								{title}
 							</Button>

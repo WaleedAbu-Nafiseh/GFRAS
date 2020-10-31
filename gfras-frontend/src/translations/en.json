@@ -36,7 +36,18 @@
 	"course.quiz.quizList.noQuizzes": "This Course has no quizzes",
 	"course.quiz.quizList.createNewQuiz": "Create Quiz",
 	"course.attendance.attendanceList.takeAttendance": "Take Attendance",
+	"course.attendance.attendanceList.takeNewAttendance": "Take New Attendance",
 	"course.attendance.attendanceList.emptyList": "You didn't take any attendance",
 	"course.attendance.attendanceList.noStudents": "You can't take the attendance. This course has no students",
-	"course.courseDetails.attendance.downloadButton": "Download CSV"
+	"course.courseDetails.attendance.downloadButton": "Download CSV",
+	"course.createNewCourse.addStudents": "Add Students",
+	"course.createNewCourse.csvFilesOnly": "*Only CSV files are accepted",
+	"course.toastMessage.createNewCourse.courseCreated.title": "Course Created.",
+	"course.toastMessage.createNewCourse.courseCreated.description": "{courseName} is created successfully.",
+	"toastMessage.errorOccurred.title": "An error occurred.",
+	"course.toastMessage.createNewCourse.errorOccurred.description": "Unable to create user account.",
+	"quiz.toastMessage.createNewQuiz.quizCreated.title": "Quiz Created.",
+	"quiz.toastMessage.createNewQuiz.quizCreated.description": "New quiz is created successfully.",
+	"course.addNewStudents.button.label": "Add New Students",
+	"course.courseDetails.attendance.submitButtonLabel": "Submit"
 }

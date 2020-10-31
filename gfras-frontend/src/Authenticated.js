@@ -33,8 +33,9 @@ export function AuthenticatedApp() {
 				<Button
 					bg='transparent'
 					align='center'
-					_active={{ color: '#11293f' }}
-					isActive={activeMenuButtons === route}
+					color='white'
+					// _active={{ color: '#11293f' }}
+					// isActive={activeMenuButtons === route}
 					onClick={() => onSetMenuButton(route)}
 					fontSize={22}
 					_hover={{ bg: 'transparent' }}

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Checkbox } from '@chakra-ui/core';
+import { Checkbox, Spinner } from '@chakra-ui/core';
 import { tableInitialState } from '../../../components/table/mocks';
 import Table from '../../../components/table/ReactTable';
 import { useAttendanceContext } from '../AttendanceContext';
@@ -79,19 +79,13 @@ async function getData(_apiKey, params) {
 }
 
 export const AttendanceTable = ({ selectedMenuItem }) => {
-	const {
-		data,
-		studentsAttendance,
-		setStudentsAttendance
-	} = useAttendanceContext();
+	const { data, setStudentsAttendance } = useAttendanceContext();
 	const { data: students } = useQuery(
 		['attendance-formatted-data', { data, selectedDate: selectedMenuItem }],
 		getData
 	);
-	console.log(studentsAttendance);
 
 	useEffect(() => {
-		console.log(data, students);
 		if (students && students.length > 0) {
 			const presentStudents = Object.assign(
 				{},
@@ -104,7 +98,6 @@ export const AttendanceTable = ({ selectedMenuItem }) => {
 					}
 				})
 			);
-			console.log(presentStudents);
 			setStudentsAttendance([presentStudents]);
 		}
 	}, [selectedMenuItem, students]);
@@ -122,5 +115,7 @@ export const AttendanceTable = ({ selectedMenuItem }) => {
 			data={tableData}
 			initialState={tableInitialState}
 		/>
-	) : null;
+	) : (
+		<Spinner m='auto' />
+	);
 };

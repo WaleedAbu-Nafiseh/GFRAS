@@ -33,7 +33,7 @@ export const AttendanceDropdown = ({
 					>
 						{selectedMenuItem}
 					</MenuButton>
-					<MenuList>
+					<MenuList maxH='200px' overflow='auto'>
 						{menuItems.map((menuItem, id) => (
 							<MenuItem
 								onClick={() => {
