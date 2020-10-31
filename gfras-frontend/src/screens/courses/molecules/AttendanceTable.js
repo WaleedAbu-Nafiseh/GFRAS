@@ -1,11 +1,19 @@
 import React, { useEffect } from 'react';
 import { Checkbox, Spinner } from '@chakra-ui/core';
-import { tableInitialState } from '../../../components/table/mocks';
 import Table from '../../../components/table/ReactTable';
 import { useAttendanceContext } from '../AttendanceContext';
 import { getStudentsAttendance } from '../../../API/students/getStudentsAttendance';
 import { useQuery } from 'react-query';
 import { attendanceTableSelector } from '../selectors';
+
+const tableInitialState = {
+	sortBy: [
+		{
+			id: 'fullName',
+			desc: false
+		}
+	]
+};
 
 export const columns = [
 	{
@@ -109,6 +117,7 @@ export const AttendanceTable = ({ selectedMenuItem }) => {
 				selectedMenuItem
 			}
 		);
+
 	return tableData ? (
 		<Table
 			columns={columns}

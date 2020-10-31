@@ -24,7 +24,6 @@ export const ReadFile = ({ setCSVFileData, ...rest }) => {
 			</Text>
 			<Flex direction='column' marginTop='7px'>
 				<CSVReader
-					onError={(err) => console.log(err)}
 					inputStyle={{
 						padding: '5px',
 						display: 'block',
