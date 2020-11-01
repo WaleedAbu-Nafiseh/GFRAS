@@ -20,7 +20,7 @@
             android:label="@string/title_activity_course_home_main"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".Activities.CourseHomeUI.quiz.QuizzingActivity" />
-        <activity android:name=".app.facerecognizer.FirstFRActicity" />
+        <activity android:name="pp.facerecognizer.FirstFRActicity" />
         <activity android:name=".Activities.SignupActivity" />
         <activity android:name=".Activities.HomePageActivity" />
         <activity android:name=".Activities.LoginActivity"/>

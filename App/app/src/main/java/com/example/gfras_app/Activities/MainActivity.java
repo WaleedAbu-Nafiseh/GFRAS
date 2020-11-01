@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.gfras_app.R;
-import com.example.gfras_app.app.facerecognizer.FirstFRActicity;
+import pp.facerecognizer.FirstFRActicity;
 
 public class MainActivity extends AppCompatActivity {
     Button btnLogIn;
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
+                Intent intent = new Intent(getApplicationContext(), FirstFRActicity.class);
                 startActivity(intent);
 
             }
