@@ -15,17 +15,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Activities.Instructor.InstructorCoursesList"></activity>
+        <activity
+            android:name=".Activities.InstructorHomePageActivitywD"
+            android:label="@string/title_activity_instructor_home_page_activityw_d"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Activities.Instructor.InstructorHomePageActivity"
+            android:label="@string/title_activity_instructor_home_page"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.CourseHomeUI.CourseHomeMainActivity"
             android:label="@string/title_activity_course_home_main"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.CourseHomeUI.quiz.QuizzingActivity" />
         <activity android:name="pp.facerecognizer.FirstFRActicity" />
         <activity android:name=".Activities.SignupActivity" />
         <activity android:name=".Activities.HomePageActivity" />
-        <activity android:name=".Activities.LoginActivity"/>
+        <activity android:name=".Activities.LoginActivity" />
         <activity android:name=".Activities.MainActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

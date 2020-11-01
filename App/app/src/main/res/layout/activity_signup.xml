@@ -9,7 +9,7 @@
     android:layout_width="match_parent"
     android:id="@+id/signupPage"
     android:layout_centerHorizontal="true">
-    <LinearLayout
+    <Cons
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -131,7 +131,7 @@
 
 
 
-    </LinearLayout>
+    </Cons>
 
 
 
