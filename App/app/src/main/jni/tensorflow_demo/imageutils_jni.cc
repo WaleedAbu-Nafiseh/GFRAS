@@ -178,3 +178,13 @@ IMAGEUTILS_METHOD(prewhiten)(
 
     env->ReleaseFloatArrayElements(input, i, JNI_ABORT);
 }
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_gfras_1app_app_facerecognizer_tracking_ObjectTracker_initNative(JNIEnv *env,
+                                                                                 jobject thiz,
+                                                                                 jint image_width,
+                                                                                 jint image_height,
+                                                                                 jboolean always_track) {
+
+}

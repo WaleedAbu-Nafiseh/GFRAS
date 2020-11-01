@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package com.example.gfras_app.app.facerecognizer;
+package pp.facerecognizer;
 
 import android.content.ClipData;
 import android.content.Intent;
@@ -30,6 +30,7 @@ import android.media.ImageReader.OnImageAvailableListener;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 import android.util.Size;
 import android.util.TypedValue;
 import android.view.View;
@@ -215,7 +216,7 @@ public class FirstFRActicity extends CameraActivity implements OnImageAvailableL
             if (!dir.isDirectory()) {
                 if (dir.exists()) dir.delete();
                 dir.mkdirs();
-
+                Log.e("TEST","In it");
                 AssetManager mgr = getAssets();
                 FileUtils.copyAsset(mgr, FileUtils.DATA_FILE);
                 FileUtils.copyAsset(mgr, FileUtils.MODEL_FILE);

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.gfras_app.app.facerecognizer;
+package pp.facerecognizer;
 
 import android.app.Activity;
 import android.app.AlertDialog;
