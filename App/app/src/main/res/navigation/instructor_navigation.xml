@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/instructor_navigation"
+    app:startDestination="@+id/nav_FR">
+    <fragment
+        android:id="@+id/nav_FR"
+        android:name="com.example.gfras_app.Activities.Instructor.FRFragment"
+        android:label="@string/menu_fr"
+        tools:layout="@layout/fragment_f_r" />
+
+</navigation>
