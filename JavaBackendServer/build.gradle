@@ -1,0 +1,24 @@
+apply plugin: 'java'
+apply plugin: 'jacoco'
+apply plugin: 'application'
+
+
+mainClassName = 'JavaBackendServer.Main'
+
+repositories {
+    jcenter()
+        google()  // Google's Maven repository
+
+}
+
+dependencies {
+    implementation 'io.javalin:javalin:3.11.0'
+    implementation 'org.slf4j:slf4j-simple:1.7.30'
+    implementation 'com.google.firebase:firebase-admin:7.0.1'
+    implementation 'com.google.firebase:firebase-firestore:17.0.4'
+    implementation 'com.google.firebase:firebase-core:16.0.1'
+    implementation 'io.grpc:grpc-okhttp:1.28.1'
+
+    testImplementation     'junit:junit:4.13'
+    
+}

@@ -18,7 +18,6 @@ public class UserServices {
         SharedPreferences mPrefs = c.getSharedPreferences(UserServices.CURRENT_USER, c.MODE_PRIVATE);
         String userJSON = mPrefs.getString(UserServices.CURRENT_USER, "");
         Gson gson = new Gson();
-        Log.e("TEST","Loging from Servcice, "+userJSON);
         User user = gson.fromJson(userJSON, User.class);
         return user;
     }

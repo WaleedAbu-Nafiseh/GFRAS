@@ -55,7 +55,6 @@ public class FileUtils {
     }
 
     public static void copyAsset(AssetManager mgr, String filename) {
-        Log.e("TEST","copyAsset");
         InputStream in = null;
         OutputStream out = null;
         OutputStream testout = null;
