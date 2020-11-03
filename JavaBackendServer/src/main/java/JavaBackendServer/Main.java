@@ -56,7 +56,7 @@ public class Main {
             path("/", () -> {
                
             });
-            path("/notfications/:userID", () -> {
+            path("/notifications/:userID", () -> {
                 get(NotificationsController::SendNotificationToUser);
 
             });
