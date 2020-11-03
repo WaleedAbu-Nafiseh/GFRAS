@@ -5,17 +5,14 @@ Gamified Facial Recognition Attendance Software
 https://www.youtube.com/watch?v=sSCMnaMnCzA&t=14s
 
 # Technologies:
-NodeJS, ReactJS, android.
+Javalin (https://javalin.io/), ReactJS, Android.
 
 # How to Run:
 1) Clone repositry
-2) npm install to download all the dependencies
-3) npm start will keep nodemon working 
-4) npm run dev should also be run. 
-5) *Both point 3 and 4 need to be run on two different terminals!!!*
+2) change directory to the front end folder, npm install to download all the dependencies, 
+3) npm start will run the front end 
+4) Change directory to the backed server, open with a Java IDE, and run the application. It will be run on port 7000
+5)
 
-
-# Structure:
-src folder will contain the react frontend file
-api folder will contain thebackend nodejs endpoints 
-public for the statically served pages
+# Shoutouts:
+1) https://github.com/pillarpond/face-recognizer-android
