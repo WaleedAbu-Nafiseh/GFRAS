@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GFRAS-App</string>
+    <string name="app_name">EasyLecture</string>
     <string name="StudentID">Student ID</string>
     <string name="login">Login</string>
     <string name="signup">Signup</string>

@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String studentID = stdid.getText().toString();
                 db.collection(CollectionsName.STUDENTS)
-                        .whereEqualTo("firstName", studentID)
+                            .whereEqualTo("firstName", studentID)
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override

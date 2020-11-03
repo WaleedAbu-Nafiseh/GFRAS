@@ -1,138 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
 
-    tools:context=".Activities.SignupActivity"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:id="@+id/signupPage"
-    android:layout_centerHorizontal="true">
-    <Cons
-        android:orientation="vertical"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/signupPage"
+        >
+
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="132dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/upimg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/sdFName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="56dp"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp">
+        android:hint="First Name "
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.050000012"
+        tools:layout_editor_absoluteX="0dp" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="132dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="24dp"
-            android:src="@drawable/upimg" />
+    <EditText
+        android:id="@+id/sdLName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Last Name "
 
-
-
-
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:hint="First Name "
-            android:id="@+id/sdFName"
-            android:inputType="text"
-
-            />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:hint="Last Name "
-            android:id="@+id/sdLName"
-            android:inputType="text"
-
-            />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:hint="Date Of Birth "
-            android:id="@+id/date"
-            android:inputType="date"
-
-            />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:inputType="number"
-            android:hint="Student ID"
-            android:id="@+id/stdNum"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sdFName"
+        app:layout_constraintVertical_bias="0.050000012"
+        tools:layout_editor_absoluteX="0dp" />
 
 
-            />
+    <EditText
+        android:id="@+id/date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:hint="Date Of Birth "
+        android:inputType="date"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sdLName"
+        app:layout_constraintVertical_bias="0.050000012"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <EditText
+        android:id="@+id/stdNum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Student ID"
 
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:inputType="number"
-            android:hint="Phone Number"
-            android:id="@+id/sdphone"
-            />
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date"
+        app:layout_constraintVertical_bias="0.04000002"
+        tools:layout_editor_absoluteX="0dp" />
 
 
+    <EditText
+        android:id="@+id/sdphone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Phone Number"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stdNum"
+        app:layout_constraintVertical_bias="0.050000012"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <EditText
+        android:id="@+id/sdpass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:hint="Password"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sdphone"
+        app:layout_constraintVertical_bias="0.050000012"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:id="@+id/btn_signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btnbackground"
+        android:padding="12dp"
+        android:text="Create Account"
+        android:textColor="#ffff"
+        android:textSize="19dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/link_login"
+        app:layout_constraintStart_toStartOf="@+id/link_login"
+        app:layout_constraintTop_toBottomOf="@+id/link_login"
+        app:layout_constraintVertical_bias="0.18" />
+
+    <TextView
+        android:id="@+id/link_login"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:autoLink=""
+        android:gravity="center"
+        android:text="Already a member? Login"
+        android:textSize="16dip"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sdpass"
+        app:layout_constraintVertical_bias="0.13999999"
+        tools:layout_editor_absoluteX="0dp" />
 
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:id="@+id/sdpass"
-
-            android:inputType="textPassword"
-            android:hint="Password"
-            />
-
-        <Button
-            android:id="@+id/btn_signup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="85dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="24dp"
-            android:background="@drawable/btnbackground"
-            android:padding="12dp"
-            android:text="Create Account"
-            android:textColor="#ffff"
-            android:textSize="19dp" />
-
-        <TextView
-            android:id="@+id/link_login"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:text="Already a member? Login"
-            android:gravity="center"
-            android:textSize="16dip"
-            android:autoLink=""
-            />
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-
-
-
-
-
-
-
-    </Cons>
-
-
-
-</ScrollView>
