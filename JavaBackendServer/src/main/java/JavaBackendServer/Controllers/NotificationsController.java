@@ -5,10 +5,25 @@
  */
 package JavaBackendServer.Controllers;
 
+import JavaBackendServer.Model.Attendance;
+import JavaBackendServer.Model.Course;
+import JavaBackendServer.Model.Student;
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.DocumentSnapshot;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.cloud.firestore.QuerySnapshot;
+import com.google.firebase.cloud.FirestoreClient;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
 import io.javalin.http.Context;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,23 +31,72 @@ import io.javalin.http.Context;
  */
 public class NotificationsController {
 
-    public static void SendNotificationToUser(Context ctx) throws FirebaseMessagingException {
-                    // This registration token comes from the client FCM SDKs.
-                String registrationToken = ctx.pathParam("userID");
+    public static void SendNotificationToUser(Context ctx) throws FirebaseMessagingException, InterruptedException, ExecutionException {
+        String courseId = ctx.pathParam("courseId");
+        String date = ctx.pathParam("date");
+        List<Student> studentsList = new ArrayList<Student>();
+        List<Student> studentsInCourseList = new ArrayList<Student>();
+        Course c = new Course();
 
-            // See documentation on defining a message payload.
-            Message message = Message.builder()
-                    .putData("score", "850")
-                    .putData("time", "2:45")
-                    .setToken(registrationToken)
-                    .build();
+        Firestore db = FirestoreClient.getFirestore();
+        //getCourse Id
+        //get Course
+        //getStudents All students in cours 
+        DocumentReference docRef = db.collection("Courses").document(courseId);
+        ApiFuture<DocumentSnapshot> future = docRef.get();
+        DocumentSnapshot document = future.get();
+        if (document.exists()) {
+            c = new Course();
+            c = document.toObject(Course.class);
+            System.out.println("Document data: " + document.getData());
+            System.out.println("Object first attendance data: " + c.getAttendance().get(date).get(0).getStudentID());
 
-            // Send a message to the device corresponding to the provided
-            // registration token.
-            String response = FirebaseMessaging.getInstance().send(message);
-// Response is a message ID string.
-            System.out.println("Successfully sent message: " + response);
+        } else {
+            System.out.println("No such document!");
+        }
 
-            ctx.result(ctx.pathParam("userID"));
+        ApiFuture<QuerySnapshot> dref = db.collection("students").get();
+        List<QueryDocumentSnapshot> docs = dref.get().getDocuments();
+        for (QueryDocumentSnapshot d : docs) {
+            studentsList.add(d.toObject(Student.class));
+            System.out.println(" the object ID is" + d.toObject(Student.class).getId());
+        }
+        System.out.println("Students in the course +" + c.getCourseId() + " are :");
+        for (Student student : studentsList) {
+            System.out.println("one from all students  +" + student.getId() + " are :");
+
+            if ((c.getStudents().contains(student.getId()))) {
+                System.out.println(student.getId() + "is in the course");
+                studentsInCourseList.add(student);
+            }
+        }
+        //looping through all the ist of Attendance object and send the notification for all
+        for (Attendance a : c.getAttendance().get(date)) {
+            System.out.println("The attendance id is " + a.getStudentID());
+
+            studentsInCourseList.forEach((v) -> {
+                String text = "";
+                if (a.isIsPresent()) {
+                    text = "You are marked as an attende";
+                } else {
+                    text = "You did not come to class today";
+                }
+                if (a.getStudentID().equalsIgnoreCase(v.getId()) ) {
+                    System.out.println("You are valid  and id is " + v.getId());
+                    try {
+                        Message message = Message.builder()
+                                .putData("text", text)
+                                .setToken(v.getToken())
+                                .build();
+                        String response = FirebaseMessaging.getInstance().send(message);
+                    } catch (FirebaseMessagingException ex) {
+                        Logger.getLogger(NotificationsController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+
+        }
+
+        ctx.result("CourseId is " + courseId + "\n date" + date);
     }
 }
