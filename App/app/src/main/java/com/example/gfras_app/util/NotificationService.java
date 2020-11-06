@@ -3,11 +3,13 @@ package com.example.gfras_app.util;
 import android.app.Notification;
 import android.app.Service;
 import android.content.Intent;
+import android.os.Build;
 import android.os.IBinder;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
@@ -21,15 +23,18 @@ public class NotificationService extends FirebaseMessagingService {
     @Override
     public void onNewToken(@NonNull String s) {
         super.onNewToken(s);
+
+
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
         Notification newMessageNotification = new Notification.Builder(getApplicationContext(), CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_baseline_students_24)
-                .setContentTitle("remoteMessage.getNotification().getTitle()")
-                .setContentText("remoteMessage.getNotification().getBody()")
+                .setContentTitle("Attendance!")
+                .setContentText(remoteMessage.getData().get("text"))
                 .build();
 
         // Issue the notification.
