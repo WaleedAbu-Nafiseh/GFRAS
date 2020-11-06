@@ -22,9 +22,11 @@ import com.example.gfras_app.util.CollectionsName;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 
@@ -66,8 +68,18 @@ public class HomePageActivity extends AppCompatActivity {
                         String token = task.getResult();
 
                         // Log and toast
-                        Log.d("TEST", token);
-                        Toast.makeText(HomePageActivity.this, "Token is :"+token, Toast.LENGTH_SHORT).show();
+                        if(currentUser.getToken()==null|| currentUser.getToken()!=token){
+                            Log.d("TEST", token);
+
+                            currentUser.setToken(token);
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            WriteBatch batch = db.batch();
+                            Log.d("TEST", "User is "+currentUser.getId());
+
+                            DocumentReference sfRef= db.collection(CollectionsName.STUDENTS).document(currentUser.getId());
+                            batch.update(sfRef, "token", currentUser.getToken()).commit();
+
+                        }
                     }
                 });
         showEitherLoadingOrReady();
