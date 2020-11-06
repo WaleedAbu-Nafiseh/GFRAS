@@ -12,16 +12,26 @@ public class User {
     String lastName;
     String studentNum;
     String  phoneNum;
+    String token;
 
     public User() {
     }
 
-    public User(Date dateOfBirth, String firstName, String lastName, String studentNum, String phoneNum) {
+    public User(Date dateOfBirth, String firstName, String lastName, String studentNum, String phoneNum, String token) {
         this.dateOfBirth = dateOfBirth;
         this.firstName = firstName;
         this.lastName = lastName;
         this.studentNum = studentNum;
         this.phoneNum = phoneNum;
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getId() {
