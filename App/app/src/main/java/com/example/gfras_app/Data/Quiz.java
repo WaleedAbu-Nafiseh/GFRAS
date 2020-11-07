@@ -11,15 +11,17 @@ public class Quiz {
     List<Question> questions;
     String courseID;
     boolean isStarted;
+    boolean finished;
 
     public Quiz() {
     }
 
-    public Quiz(String title, List<Question> questions, String courseID, boolean isStarted) {
+    public Quiz(String title, List<Question> questions, String courseID, boolean isStarted, boolean finished) {
         this.quizTitle = title;
         this.questions = questions;
         this.courseID = courseID;
         this.isStarted = isStarted;
+        this.finished = finished;
     }
 
     public List<Question> getQuestions() {
@@ -68,5 +70,13 @@ public class Quiz {
 
     public void setStarted(boolean started) {
         isStarted = started;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
     }
 }
