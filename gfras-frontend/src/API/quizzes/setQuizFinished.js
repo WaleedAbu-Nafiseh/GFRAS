@@ -11,7 +11,8 @@ export const setQuizFinished = async ({ quizID }) => {
 		quizzesData.questions[lastQuestion - 1].showQuestion = false;
 		await db.collection('Quizzes').doc(quizID).update({
 			isStarted: false,
-			questions: quizzesData.questions
+			questions: quizzesData.questions,
+			finished: true
 		});
 	});
 };

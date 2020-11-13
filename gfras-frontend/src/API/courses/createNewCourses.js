@@ -25,7 +25,7 @@ export const createNewCourses = async ({
 			CSVFileData &&
 				CSVFileData.map(async (student) => {
 					await studentsRef
-						.where('studentUniversityID', '==', `${student.studentid}`)
+						.where('studentUniversityId', '==', `${student.studentid}`)
 						.get()
 						.then((querySnapshot) => {
 							querySnapshot.forEach(async function (doc) {
