@@ -31,7 +31,8 @@
         app:layout_constraintEnd_toEndOf="@+id/logoimg"
         app:layout_constraintStart_toStartOf="@+id/logoimg"
         app:layout_constraintTop_toBottomOf="@id/logoimg"
-        app:layout_constraintVertical_bias="0.189" />
+        app:layout_constraintVertical_bias="0.189"
+        />
 
     <Button
         android:id="@+id/btnSignup"
