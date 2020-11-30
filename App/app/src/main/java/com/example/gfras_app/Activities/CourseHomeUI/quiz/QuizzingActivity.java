@@ -1,9 +1,12 @@
 package com.example.gfras_app.Activities.CourseHomeUI.quiz;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -36,6 +39,7 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
     private Button btnOptionC;
     private Button btnOptionD;
     private GradeSheet gradeSheet;
+    private ConstraintLayout quizLayout;
     int currentQuestionCounter;
     Question currentQuestion;
     @Override
@@ -54,10 +58,13 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
         btnOptionB=findViewById(R.id.btnOptionB);
         btnOptionC=findViewById(R.id.btnOptionC);
         btnOptionD=findViewById(R.id.btnOptionD);
+        quizLayout=findViewById(R.id.quizLayout);
+
         btnOptionA.setOnClickListener(this);
         btnOptionB.setOnClickListener(this);
         btnOptionC.setOnClickListener(this);
         btnOptionD.setOnClickListener(this);
+
         Log.d(TAG," onCreate");
         prgsBar.setVisibility(View.VISIBLE);
         db = FirebaseFirestore.getInstance();
@@ -136,11 +143,45 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
         Button selectedButton = findViewById(view.getId());
+        switch(view.getId()){
+            case R.id.btnOptionA:
+                btnOptionA.setEnabled(true);
+                btnOptionB.setEnabled(false);
+                btnOptionC.setEnabled(false);
+                btnOptionD.setEnabled(false);
+                break;
+
+            case R.id.btnOptionB:
+                btnOptionA.setEnabled(false);
+                btnOptionB.setEnabled(true);
+                btnOptionC.setEnabled(false);
+                btnOptionD.setEnabled(false);
+                break;
+
+
+            case R.id.btnOptionC:
+                btnOptionA.setEnabled(false);
+                btnOptionB.setEnabled(false);
+                btnOptionC.setEnabled(true);
+                btnOptionD.setEnabled(false);
+                break;
+            case R.id.btnOptionD:
+                btnOptionA.setEnabled(false);
+                btnOptionB.setEnabled(false);
+                btnOptionC.setEnabled(false);
+                btnOptionD.setEnabled(true);
+                break;
+
+        }
         if(selectedButton.getText().toString().equals(currentQuestion.getCorrectAnswer())){
             gradeSheet.addCorrectQuestion(currentQuestionCounter);
+            selectedButton.setBackgroundColor(Color.parseColor("#0EBB3D"));
             Log.d(TAG," Answered Correctly");
+
+
         }else{
             gradeSheet.addWrongQuestion(currentQuestionCounter);
+            selectedButton.setBackgroundColor(Color.parseColor("#F3290D"));
         }
         Log.d(TAG,selectedButton.getText().toString());
 
@@ -157,7 +198,7 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
             case R.id.btnOptionB:
                 if(btnOptionB.getText().toString().equals(currentQuestion.getCorrectAnswer())){
                     gradeSheet.addCorrectQuestion(currentQuestionCounter);
-                    Log.d(TAG," Answered Correctly");
+                    Log.d(TAG," Answered Cor rectly");
                 }else{
                     gradeSheet.addWrongQuestion(currentQuestionCounter);
                 }
@@ -184,5 +225,7 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
             default:
                 break;
         }*/
+
     }
+
 }
