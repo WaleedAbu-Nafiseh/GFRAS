@@ -80,6 +80,7 @@ public class HomePageActivity extends AppCompatActivity {
                             batch.update(sfRef, "token", currentUser.getToken()).commit();
 
                         }
+                        Toast.makeText(getApplicationContext(), "Token is "+token, Toast.LENGTH_SHORT).show();
                     }
                 });
         showEitherLoadingOrReady();

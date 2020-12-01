@@ -25,14 +25,21 @@ import android.graphics.Paint.Join;
 import android.graphics.Paint.Style;
 import android.graphics.RectF;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import pp.facerecognizer.Recognizer.Recognition;
 import pp.facerecognizer.env.BorderedText;
 import pp.facerecognizer.env.ImageUtils;
@@ -162,7 +169,7 @@ public class MultiBoxTracker {
         processResults(timestamp, results, frame);
     }
 
-    public synchronized void draw(final Canvas canvas) {
+    public synchronized void draw(final Canvas canvas) throws IOException {
         final boolean rotated = sensorOrientation % 180 == 90;
         final float multiplier =
                 Math.min(canvas.getHeight() / (float) (rotated ? frameWidth : frameHeight),
@@ -190,6 +197,14 @@ public class MultiBoxTracker {
 
             if( !TextUtils.isEmpty(recognition.title)){
                 labelString=  String.format("%s %.2f", recognition.title, recognition.detectionConfidence);
+                if(recognition.detectionConfidence>0.55){
+                    run("http://192.168.2.18:7000/notifications/IvG38iUdqTs0T4X9xtLb/1162767/07-11-2020/");
+                    Log.e("TEST","Logged as an attendee to db, confidence is :"+recognition.detectionConfidence+" , and  ");
+                }
+                //The method to mark as present should be called from here
+
+
+
             }else{
                 labelString=  String.format("%.2f", recognition.detectionConfidence);
             }
@@ -197,7 +212,27 @@ public class MultiBoxTracker {
             borderedText.drawText(canvas, trackedPos.left + cornerSize, trackedPos.bottom, labelString);
         }
     }
+    void run(String url) throws IOException {
+        OkHttpClient client = new OkHttpClient();
 
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+          client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                    Log.e("Response",response.body().string());
+            }
+        });
+
+    }
     private boolean initialized = false;
 
     public synchronized void onFrame(

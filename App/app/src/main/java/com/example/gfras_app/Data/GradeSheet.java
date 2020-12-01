@@ -109,7 +109,7 @@ public class GradeSheet {
 
     public void addWrongQuestion(int index) {
         if (!this.questionAnswered.get(index)) {
-            this.setPoints(this.points - 1);
+            this.setPoints(this.points);
             this.questionAnswered.set(index, true);
         }
     }

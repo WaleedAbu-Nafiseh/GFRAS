@@ -17,6 +17,7 @@ import com.example.gfras_app.Data.Quiz;
 import com.example.gfras_app.Data.GradeSheet;
 import com.example.gfras_app.R;
 import com.example.gfras_app.util.CollectionsName;
+import com.example.gfras_app.util.DBServices;
 import com.google.firebase.database.annotations.Nullable;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -105,6 +106,11 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
         if(gradeSheet==null){
             gradeSheet=new GradeSheet(quiz.getQuestions().size());
         }
+        if(quiz.isFinished()){
+            Log.e("f",quiz.isFinished()+"is fni");
+            DBServices.addToCollection("GradeSheet",gradeSheet);
+        }
+
 
         txtPoints.setText(Integer.toString(gradeSheet.getPoints()));
         Log.d(TAG,"writeUI points "+gradeSheet.getPoints());
@@ -184,47 +190,6 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
             selectedButton.setBackgroundColor(Color.parseColor("#F3290D"));
         }
         Log.d(TAG,selectedButton.getText().toString());
-
-        /*switch (view.getId()) {
-            case R.id.btnOptionA:
-                    if(btnOptionA.getText().toString().equals(currentQuestion.getCorrectAnswer())){
-                        gradeSheet.addCorrectQuestion(currentQuestionCounter);
-                        Log.d(TAG," Answered Correctly");
-                    }else{
-                        gradeSheet.addWrongQuestion(currentQuestionCounter);
-                    }
-                Log.d(TAG,btnOptionA.getText().toString());
-                break;
-            case R.id.btnOptionB:
-                if(btnOptionB.getText().toString().equals(currentQuestion.getCorrectAnswer())){
-                    gradeSheet.addCorrectQuestion(currentQuestionCounter);
-                    Log.d(TAG," Answered Cor rectly");
-                }else{
-                    gradeSheet.addWrongQuestion(currentQuestionCounter);
-                }
-                Log.d(TAG,btnOptionA.getText().toString());
-                break;
-            case R.id.btnOptionC:
-                if(btnOptionC.getText().toString().equals(currentQuestion.getCorrectAnswer())){
-                    gradeSheet.addCorrectQuestion(currentQuestionCounter);
-                    Log.d(TAG," Answered Correctly");
-                }else{
-                    gradeSheet.addWrongQuestion(currentQuestionCounter);
-                }
-                Log.d(TAG,btnOptionA.getText().toString());
-                break;
-            case R.id.btnOptionD:
-                if(btnOptionD.getText().toString().equals(currentQuestion.getCorrectAnswer())){
-                    gradeSheet.addCorrectQuestion(currentQuestionCounter);
-                    Log.d(TAG," Answered Correctly");
-                }else{
-                    gradeSheet.addWrongQuestion(currentQuestionCounter);
-                }
-                Log.d(TAG,btnOptionA.getText().toString());
-                break;
-            default:
-                break;
-        }*/
 
     }
 

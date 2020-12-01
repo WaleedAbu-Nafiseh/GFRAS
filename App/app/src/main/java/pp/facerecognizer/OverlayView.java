@@ -20,6 +20,7 @@ import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.View;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class OverlayView extends View {
      * Interface defining the callback for client classes.
      */
     public interface DrawCallback {
-        public void drawCallback(final Canvas canvas);
+        public void drawCallback(final Canvas canvas) throws IOException;
     }
 
     public void addCallback(final DrawCallback callback) {
@@ -48,7 +49,11 @@ public class OverlayView extends View {
     public synchronized void draw(final Canvas canvas) {
         super.draw(canvas);
         for (final DrawCallback callback : callbacks) {
-            callback.drawCallback(canvas);
+            try {
+                callback.drawCallback(canvas);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
