@@ -14,6 +14,7 @@ export const createQuiz = async ({
 	});
 	const result = await quizzes.add({
 		questions,
+		finished: false,
 		isStarted: false,
 		courseID,
 		quizTitle
