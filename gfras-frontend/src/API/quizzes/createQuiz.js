@@ -17,7 +17,8 @@ export const createQuiz = async ({
 		finished: false,
 		isStarted: false,
 		courseID,
-		quizTitle
+		quizTitle,
+		finished: false
 	});
 	const courses = db.collection('Courses').doc(courseID);
 

@@ -18,6 +18,7 @@ import { AttendanceDropdown } from '../molecules/AttendanceDropDown';
 import { CSVLink } from 'react-csv';
 import { DownloadIcon } from '../../../components/icons/Download';
 import { BackButton } from '../atoms/BackButton';
+import { submitAttendance } from '../../../API/attendance/submitAttendance';
 
 const csvHeaders = [{ label: 'Student Name', key: 'studentName' }];
 
@@ -55,6 +56,20 @@ export function Attendance() {
 			courseID,
 			date: format(new Date(), 'dd-MM-yyyy'),
 			time: format(new Date(), 'HH:mm')
+		}).then(() => {
+			setSelectedMenuItem(format(new Date(), 'dd-MM-yyyy'));
+			refetchAttendanceList();
+			setIsLoading(false);
+		});
+	};
+
+	const submitNewAttendance = async () => {
+		setIsLoading(true);
+		await submitAttendance({
+			courseID,
+			date: format(new Date(), 'dd-MM-yyyy'),
+			time: format(new Date(), 'HH:mm'),
+			presentStudents: studentsAttendance
 		}).then(() => {
 			setSelectedMenuItem(format(new Date(), 'dd-MM-yyyy'));
 			refetchAttendanceList();
@@ -159,7 +174,7 @@ export function Attendance() {
 					mt='10px'
 					bg='#ff5722'
 					_hover={{ bg: '#fc4216' }}
-					isDisabled={true}
+					onClick={() => submitNewAttendance()}
 					color='white'
 				>
 					{formatMessage({

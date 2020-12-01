@@ -75,7 +75,7 @@ export function CreateNewCourse() {
 	];
 
 	return (
-		<Flex pl={10}>
+		<Flex pl={10} w='full'>
 			<form onSubmit={onSubmit}>
 				<Stack direction={['column', 'row']} spacing='150px' mt={'25px'}>
 					{createNewCourseForm.map(({ label, id, inputName }) => {

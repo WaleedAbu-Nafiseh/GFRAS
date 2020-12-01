@@ -7,6 +7,7 @@
 		"@testing-library/jest-dom": "^4.2.4",
 		"@testing-library/react": "^9.5.0",
 		"@testing-library/user-event": "^7.2.1",
+		"@types/react": "^16.9.56",
 		"axios": "^0.20.0",
 		"date-fns": "^2.16.1",
 		"firebase": "^7.20.0",
@@ -19,7 +20,7 @@
 		"react-intl": "^5.8.1",
 		"react-query": "^2.19.0",
 		"react-router-dom": "^5.2.0",
-		"react-scripts": "3.4.1",
+		"react-scripts": "^4.0.0",
 		"react-table": "^7.6.0",
 		"reselect": "^4.0.0"
 	},
@@ -65,7 +66,7 @@
 		"babel-loader": "^8.1.0",
 		"husky": "^4.3.0",
 		"lint-staged": "^10.3.0",
-		"prettier": "2.1.1",
+		"prettier": "^2.1.2",
 		"react-is": "^16.13.1"
 	}
 }
