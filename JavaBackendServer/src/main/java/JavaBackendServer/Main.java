@@ -37,11 +37,7 @@ import java.util.concurrent.ExecutionException;
  */
 public class Main {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) throws FileNotFoundException, IOException, InterruptedException, ExecutionException, FirebaseMessagingException {
-        // TODO code application logic here
         Javalin app = Javalin.create().start(7000);
         FileInputStream serviceAccount = new FileInputStream("./ServiceAccountKey.json");
 
@@ -54,12 +50,17 @@ public class Main {
         Firestore db = FirestoreClient.getFirestore();
         app.routes(() -> {
             path("/", () -> {
-               
-            });
-            path("/notifications/:courseId/:date", () -> {
-                get(NotificationsController::SendNotificationToUser);
 
             });
+            path("/notifications", () -> {
+                path("/:courseId/:date", () -> {
+                    get(NotificationsController::SendNotificationToCourse);
+                });
+                 path("/:courseId/:studentNum/:date", () -> {
+                    get(NotificationsController::markStudentAsPresentSendNotification);
+                });
+            });
+
         });
 
     }
