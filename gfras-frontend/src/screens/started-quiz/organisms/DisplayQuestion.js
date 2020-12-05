@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Flex, Box, Text, Button } from '@chakra-ui/core';
 import {
 	ANSWER_OPTIONS,
 	optionsBackgroundColors,
 	hoverOptionsBackgroundColor
 } from '../displayQuestion.config';
-import { useParams } from 'react-router-dom';
+import { useParams, Prompt } from 'react-router-dom';
 import { useStartedQuizContext } from '../StartedQuizContext';
 import { useIntl } from 'react-intl';
 import { setQuizFinished } from '../../../API/quizzes/setQuizFinished';
+import { Modal } from '../../../components/modal/modal';
 
 function Question({ question }) {
 	return (
@@ -52,7 +53,7 @@ const ACTUAL_QUESTION_NUMBER = 1;
 function NextQuestion({ noOfQuestions }) {
 	const { setQuestionNumber, questionNumber } = useStartedQuizContext();
 	const { formatMessage } = useIntl();
-	const { quizID } = useParams();
+	const { quizID, courseID } = useParams();
 
 	const isLastQuestion = () =>
 		questionNumber + ACTUAL_QUESTION_NUMBER === noOfQuestions;
@@ -64,7 +65,7 @@ function NextQuestion({ noOfQuestions }) {
 			onClick={async () => {
 				if (isLastQuestion()) {
 					await setQuizFinished({ quizID });
-					window.location.href = '/courses';
+					window.location.href = `/top-students/${courseID}/${quizID}`;
 				} else {
 					setQuestionNumber((prevState) => ++prevState);
 				}
@@ -85,12 +86,57 @@ function NextQuestion({ noOfQuestions }) {
 	);
 }
 
+function ModalFooter({ setShowModal }) {
+	return (
+		<Flex justify='flex-end' w='full'>
+			<Button
+				mr='10px'
+				onClick={() => {
+					setShowModal(false);
+				}}
+				bg='blue.500'
+				color='white'
+				outline='none'
+				border='none'
+				_hover={{ bg: 'blue.600' }}
+				_focus={{ outline: 'none', border: 'none' }}
+			>
+				No
+			</Button>
+			<Button
+				bg='red.500'
+				color='white'
+				outline='none'
+				border='none'
+				_hover={{ bg: 'red.600' }}
+				_focus={{ outline: 'none', border: 'none' }}
+				onClick={() => console.log('yes')}
+			>
+				Continue
+			</Button>
+		</Flex>
+	);
+}
+
 export function DisplayQuestion() {
 	const { data, questionNumber } = useStartedQuizContext();
+	const [showModal, setShowModal] = useState(false);
 	const { formatMessage } = useIntl();
 
 	return (
 		<Flex w='full' direction='column' position='relative'>
+			<Prompt
+				message={() => {
+					setShowModal(true);
+					return false;
+				}}
+			/>
+			<Modal
+				headerTitle={'Navigate to another page'}
+				isOpen={showModal}
+				modalBody='If you navigate to another page the quiz will be ended'
+				modalFooter={<ModalFooter setShowModal={setShowModal} />}
+			/>
 			<Question question={data.questionData.question} />
 			<Text textAlign='center' color='#bbbfc6' fontWeight='600' fontSize='md'>
 				{formatMessage(

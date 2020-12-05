@@ -3,14 +3,16 @@ import { Flex, Text, Button, Spinner } from '@chakra-ui/core';
 import { useQuizContext } from '../QuizContext';
 import { useIntl } from 'react-intl';
 import { startQuiz } from '../../../API/quizzes/startQuiz';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import { useCourseDetailsContext } from '../CourseDetailsContext';
 import { BackButton } from '../atoms/BackButton';
 
 export function QuizList() {
 	const { pathname } = useLocation();
 	const { formatMessage } = useIntl();
+	const { replace } = useHistory();
 	const { data } = useQuizContext();
+
 	const {
 		setIsSideMenuExpanded,
 		setSelectedCourseDetail
@@ -22,7 +24,7 @@ export function QuizList() {
 
 	const handleStartQuiz = async (quizID) => {
 		await startQuiz({ docID: quizID }).then((res) => {
-			window.location.href = `${pathname}/${quizID}`;
+			replace(`${pathname}/${quizID}`);
 		});
 	};
 

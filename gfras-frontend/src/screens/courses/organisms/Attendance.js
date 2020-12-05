@@ -14,7 +14,7 @@ import { useAttendanceContext } from '../AttendanceContext';
 import { startNewAttendance } from '../../../API/attendance/startNewAttendance';
 import { format, isAfter, parse } from 'date-fns';
 import { AttendanceTable } from '../molecules/AttendanceTable';
-import { AttendanceDropdown } from '../molecules/AttendanceDropDown';
+import { DropDown } from '../../../components/dropdown/DropDown';
 import { CSVLink } from 'react-csv';
 import { DownloadIcon } from '../../../components/icons/Download';
 import { BackButton } from '../atoms/BackButton';
@@ -158,14 +158,14 @@ export function Attendance() {
 						mt='10px'
 						orientation='vertical'
 					/>
-					<AttendanceDropdown
+					<DropDown
 						selectedMenuItem={selectedMenuItem}
 						setSelectedMenuItem={setSelectedMenuItem}
 						menuItems={dropDownItems}
 					/>
 				</Flex>
 			</Flex>
-			<Flex w='full' p='20px' maxH='calc(100% - 200px)'>
+			<Flex w='full' p='30px' maxH='calc(100% - 200px)'>
 				<AttendanceTable selectedMenuItem={selectedMenuItem} />
 			</Flex>
 			<Flex borderTop='2px solid #EFEFEF' mx='20px'>

@@ -6,10 +6,16 @@ export function useCourseDetails() {
 		'create-quiz'
 	);
 
+	const [selectedQuizzesDetails, setSelectedQuizzesDetails] = useState(
+		'quizzes-list'
+	);
+
 	return {
 		isSideMenuExpanded,
 		setIsSideMenuExpanded,
 		selectedCourseDetail,
-		setSelectedCourseDetail
+		setSelectedCourseDetail,
+		selectedQuizzesDetails,
+		setSelectedQuizzesDetails
 	};
 }

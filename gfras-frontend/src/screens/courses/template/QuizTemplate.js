@@ -9,13 +9,15 @@ import { QuizList } from '../organisms/QuizList';
 import { Attendance } from '../organisms/Attendance';
 import { useCourseDetailsContext } from '../CourseDetailsContext';
 import AddStudents from '../organisms/AddStudents';
-import { BackButton } from '../atoms/BackButton';
+import QuizListSideMenu from '../organisms/QuizListSideMenu';
+import Grades from '../organisms/Grades';
 
 export function QuizTemplate() {
 	const { selectedCourseDetail } = useCourseDetailsContext();
 	const {
 		isSideMenuExpanded,
-		setIsSideMenuExpanded
+		setIsSideMenuExpanded,
+		selectedQuizzesDetails
 	} = useCourseDetailsContext();
 
 	return (
@@ -37,11 +39,15 @@ export function QuizTemplate() {
 						icon={<SmallCloseIcon boxSize='30px' />}
 					/>
 					{selectedCourseDetail === 'create-quiz' && <QuizSideMenu />}
+					{selectedCourseDetail === 'quizzes-details' && <QuizListSideMenu />}
 				</SideMenu>
 			)}
 			{/*<BackButton />*/}
 			{selectedCourseDetail === 'create-quiz' && <Question />}
-			{selectedCourseDetail === 'quiz-list' && <QuizList />}
+			{selectedCourseDetail === 'quizzes-details' &&
+				selectedQuizzesDetails === 'quizzes-list' && <QuizList />}
+			{selectedCourseDetail === 'quizzes-details' &&
+				selectedQuizzesDetails === 'quizzes-grades' && <Grades />}
 			{selectedCourseDetail === 'attendance-list' && <Attendance />}
 			{selectedCourseDetail === 'add-new-students' && <AddStudents />}
 		</Flex>
