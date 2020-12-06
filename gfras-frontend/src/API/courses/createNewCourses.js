@@ -10,7 +10,7 @@ export const createNewCourses = async ({
 	const db = firebase.firestore();
 	const courses = db.collection('Courses');
 	const studentsRef = db.collection('students');
-	const studentsDocumentID = await [];
+	const studentsDocumentID = [];
 	let courseDocumentID = '';
 
 	await courses
