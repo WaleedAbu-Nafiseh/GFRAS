@@ -28,11 +28,13 @@ public class GradeSheet {
         this.questionAnswered = questionAnswered;
     }
 
-    public GradeSheet(int numQuestions) {
+    public GradeSheet(int numQuestions,String quizId,String studentId) {
         this.points = 0;
         this.questionTF = new ArrayList<>();
         this.questionPoints = new ArrayList<>();
         this.questionAnswered = new ArrayList<>();
+        this.quizId=quizId;
+        this.studentId=studentId;
 
         for (int i = 0; i < numQuestions; i++) {
             this.questionTF.add(false);

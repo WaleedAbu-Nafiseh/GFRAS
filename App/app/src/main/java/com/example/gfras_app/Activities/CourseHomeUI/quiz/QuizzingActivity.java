@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.gfras_app.Data.Question;
 import com.example.gfras_app.Data.Quiz;
 import com.example.gfras_app.Data.GradeSheet;
+import com.example.gfras_app.Data.User.UserServices;
 import com.example.gfras_app.R;
 import com.example.gfras_app.util.CollectionsName;
 import com.example.gfras_app.util.DBServices;
@@ -104,14 +105,12 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
 
     public  void writeUI(){
         if(gradeSheet==null){
-            gradeSheet=new GradeSheet(quiz.getQuestions().size());
+            gradeSheet=new GradeSheet(quiz.getQuestions().size(), quiz.getId(),  UserServices.getCurrentUser(getApplicationContext()).getId());
         }
         if(quiz.isFinished()){
             Log.e("f",quiz.isFinished()+"is fni");
             DBServices.addToCollection("GradeSheet",gradeSheet);
         }
-
-
         txtPoints.setText(Integer.toString(gradeSheet.getPoints()));
         Log.d(TAG,"writeUI points "+gradeSheet.getPoints());
         for(Question question:quiz.getQuestions() ){

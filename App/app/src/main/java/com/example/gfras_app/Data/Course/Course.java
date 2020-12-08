@@ -3,6 +3,7 @@ package com.example.gfras_app.Data.Course;
 import com.google.firebase.firestore.DocumentId;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Course {
@@ -16,11 +17,10 @@ public class Course {
     List<String> quizzes;
     List<String> students;
 
-
     public Course(String courseId, String courseName, String instructorID, List<String> quizzes, List<String> students) {
         this.courseId = courseId;
         this.courseName = courseName;
-        InstructorID = instructorID;
+        this.InstructorID = instructorID;
         this.quizzes = quizzes;
         this.students = students;
 
