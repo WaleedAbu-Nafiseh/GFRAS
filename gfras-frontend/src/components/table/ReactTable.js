@@ -3,6 +3,7 @@ import { useTable, useSortBy, useExpanded } from 'react-table';
 import { Box, Flex, Icon } from '@chakra-ui/core';
 import { ChevronDownIcon } from '../icons/ArrowDown';
 import { ChevronUpIcon } from '../icons/ArrowUp';
+import { ArrowUpDownIcon } from '../icons/ArrowUpDownIcon';
 
 function THeadRow({ headers, getHeaderGroupProps }) {
 	return (
@@ -40,7 +41,13 @@ function THeadRow({ headers, getHeaderGroupProps }) {
 									ml={2}
 									boxSize='16px'
 									color={isSorted ? 'rgba(0,0,0,0.87)' : 'rgba(0,0,0, .18)'}
-									as={isSortedDesc ? ChevronDownIcon : ChevronUpIcon}
+									as={
+										isSorted
+											? isSortedDesc
+												? ChevronDownIcon
+												: ChevronUpIcon
+											: ArrowUpDownIcon
+									}
 								/>
 							)}
 						</Flex>

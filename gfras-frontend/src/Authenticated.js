@@ -17,6 +17,9 @@ const Quiz = React.lazy(() => import('./screens/courses/pages/CourseDetails'));
 const StartedQuiz = React.lazy(() =>
 	import('./screens/started-quiz/Pages/StartedQuiz')
 );
+const TopStudents = React.lazy(() =>
+	import('./screens/top-students/Pages/TopStudents')
+);
 
 export function AuthenticatedApp() {
 	const { formatMessage } = useIntl();
@@ -55,16 +58,22 @@ export function AuthenticatedApp() {
 			/>
 			<Suspense fallback={<Spinner m='auto' />}>
 				<Switch>
-					<Route path={ROUTES.COURSES} render={() => <Courses />} />
 					<Route
 						path={`${ROUTES.COURSE_DETAILS}/:courseID/:quizID`}
 						render={() => <StartedQuiz />}
 					/>
 					<Route
 						exact
+						path={`${ROUTES.TOP_STUDENTS}/:courseID/:quizID`}
+						render={() => <TopStudents />}
+					/>
+					<Route
+						exact
 						path={`${ROUTES.COURSE_DETAILS}/:courseID`}
 						render={() => <Quiz />}
 					/>
+					<Route path={ROUTES.COURSES} render={() => <Courses />} />
+
 					<Redirect from='/' to={ROUTES.COURSES} />
 				</Switch>
 			</Suspense>

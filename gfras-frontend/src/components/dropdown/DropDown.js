@@ -7,10 +7,10 @@ import {
 	Button,
 	Icon
 } from '@chakra-ui/core';
-import { ChevronDownIcon } from '../../../components/icons/ArrowDown';
-import { CheckIcon } from '../../../components/icons/Check';
+import { ChevronDownIcon } from '../icons/ArrowDown';
+import { CheckIcon } from '../icons/Check';
 
-export const AttendanceDropdown = ({
+export const DropDown = ({
 	selectedMenuItem,
 	setSelectedMenuItem,
 	menuItems
