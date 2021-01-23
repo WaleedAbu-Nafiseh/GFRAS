@@ -30,10 +30,9 @@ import com.google.gson.Gson;
 import java.util.LinkedList;
 import java.util.List;
 
-
 public class QuizzesFragment extends Fragment {
     private String quizTitle;
-    private  Bundle bundle;
+    private Bundle bundle;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -41,6 +40,7 @@ public class QuizzesFragment extends Fragment {
     List<Quiz> quizList;
     Course currentCourse;
     Course selectedCourse;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         setOnclickListener();
@@ -58,25 +58,26 @@ public class QuizzesFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext());
         Gson g = new Gson();
-        CourseHomeMainActivity activity=(CourseHomeMainActivity) getActivity();
+        CourseHomeMainActivity activity = (CourseHomeMainActivity) getActivity();
         Bundle results = activity.getMyData();
-        currentCourse=g.fromJson(results.getString("COURSE_ID"),Course.class);
-        selectedCourse= new Course();
-        quizList=new LinkedList<Quiz>();
+        currentCourse = g.fromJson(results.getString("COURSE_ID"), Course.class);
+        selectedCourse = new Course();
+        quizList = new LinkedList<Quiz>();
         showData();
     }
 
-    public void showData(){
+    public void showData() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference courseRef = db.collection(CollectionsName.QUIZZES);
-        courseRef.whereEqualTo("courseID",currentCourse.getCourseId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        courseRef.whereEqualTo("courseID", currentCourse.getCourseId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d("TAGQUIZ", document.getId() + " => " + document.getData());
                         Quiz c = document.toObject(Quiz.class);
-                        quizList.add(c);
+                        if (!c.isFinished()) {
+                            quizList.add(c);
+                        }
                     }
 
                     mAdapter = new QuizListItemAdapter(quizList, listener);
@@ -90,11 +91,10 @@ public class QuizzesFragment extends Fragment {
         });
     }
 
-   private void setOnclickListener() {
+    private void setOnclickListener() {
         listener = new QuizListItemAdapter.RecyclerViewClickListener() {
 
             public void onClick(View v, int position) {
-
 
             }
         };

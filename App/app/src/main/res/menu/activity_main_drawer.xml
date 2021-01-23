@@ -5,6 +5,11 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_top_students"
+            android:icon="@drawable/ic_baseline_students_24"
+            android:title="@string/nav_top_students" />
+
+        <item
             android:id="@+id/nav_quiz"
             android:icon="@drawable/ic_baseline_quiz_24"
             android:title="@string/menu_quizzes" />
@@ -12,9 +17,5 @@
             android:id="@+id/nav_calendar"
             android:icon="@drawable/ic_baseline_calendar_today_24"
             android:title="@string/menu_calendar" />
-        <item
-            android:id="@+id/nav_top_students"
-            android:icon="@drawable/ic_baseline_students_24"
-            android:title="@string/nav_top_students" />
     </group>
 </menu>

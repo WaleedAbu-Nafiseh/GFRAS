@@ -100,7 +100,6 @@ public class HomePageActivity extends AppCompatActivity {
                                 Course c = document.toObject(Course.class);
                                 courseList.add(c);
                                 Log.e("ATT", document.getId() + " => " + c.getAttendance().keySet());
-
                             }
 
                             mAdapter = new CourseListItemAdapter(courseList, listener);
