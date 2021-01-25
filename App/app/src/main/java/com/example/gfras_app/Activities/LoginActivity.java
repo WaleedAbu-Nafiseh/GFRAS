@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogIn = findViewById(R.id.btnLogIn);
 
         stdid = findViewById(R.id.stdid);
-        // txtWrong = findViewById(R.id.txtWrong);
+        txtWrong = findViewById(R.id.txtWrong);
         edtStudentPassword = findViewById(R.id.edtStudentPassword);
         onclick();
         mPrefs =getSharedPreferences(UserServices.CURRENT_USER, MODE_PRIVATE);
@@ -62,23 +62,30 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String studentID = stdid.getText().toString();
                 db.collection(CollectionsName.STUDENTS)
-                            .whereEqualTo("firstName", studentID)
+                            .whereEqualTo("studentUniversityId", studentID)
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()) {
+                                    Log.d(TAG,  " => " + task.getResult());
 
                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                         Log.d(TAG, document.getId() + " => " + document.getData());
-                                        if (document.get("firstName").equals(stdid.getText().toString())
+                                        if (document.get("studentUniversityId").equals(stdid.getText().toString())
                                                 && document.get("password").equals(edtStudentPassword.getText().toString())) {
+                                            if(txtWrong.getVisibility()==View.VISIBLE){
+                                                txtWrong.setVisibility(View.INVISIBLE);
+                                            }
+
                                             User s = document.toObject(User.class);
                                             UserServices.setCurrentUser(getApplicationContext(), s);
                                             Intent intent = new Intent(getApplicationContext(), HomePageActivity.class);
                                             startActivity(intent);
                                         } else {
-                                            txtWrong.setText("Password or username are wrong");
+                                            if(txtWrong.getVisibility()==View.INVISIBLE){
+                                                txtWrong.setVisibility(View.VISIBLE);
+                                            }                                            txtWrong.setText("Password or username are wrong");
                                             Log.d(TAG, document.getId() + " => " + document.getData());
                                             Toast toast = Toast.makeText(getApplicationContext(), "Password or username are wrong!", Toast.LENGTH_LONG);
                                             toast.show();

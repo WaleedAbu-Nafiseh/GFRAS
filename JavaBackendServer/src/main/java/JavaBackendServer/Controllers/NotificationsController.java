@@ -20,7 +20,11 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
 import io.javalin.http.Context;
+import static java.awt.SystemColor.text;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
@@ -35,6 +39,7 @@ public class NotificationsController {
     public static void SendNotificationToCourse(Context ctx) throws FirebaseMessagingException, InterruptedException, ExecutionException {
         String courseId = ctx.pathParam("courseId");
         String date = ctx.pathParam("date");
+       
         List<Student> studentsList = new ArrayList<Student>();
         List<Student> studentsInCourseList = new ArrayList<Student>();
         Course c = new Course();
@@ -78,7 +83,7 @@ public class NotificationsController {
             studentsInCourseList.forEach((v) -> {
                 String text = "";
                 if (a.isIsPresent()) {
-                    text = "You are marked as an attende";
+                    text = "You are marked as an attende on "+date;
                 } else {
                     text = "You did not come to class today";
                 }
@@ -161,5 +166,59 @@ public class NotificationsController {
         //get the student object and the id of it from firebase
         //get the attendance for the given date and mark the student as absent, 
         //after teh update send the notification to the student token
+    }
+    
+    public static void sendReminderToClassNow(Context ctx) throws InterruptedException, ExecutionException, ParseException, FirebaseMessagingException{
+        String courseId = ctx.pathParam("courseId");
+        List<Student> studentsList = new ArrayList<Student>();
+        List<Student> studentsInCourseList = new ArrayList<Student>();
+        Course c = new Course();
+
+        Firestore db = FirestoreClient.getFirestore();
+        //getCourse Id
+        //get Course
+        //getStudents All students in cours 
+        DocumentReference docRef = db.collection("Courses").document(courseId);
+        ApiFuture<DocumentSnapshot> future = docRef.get();
+        DocumentSnapshot document = future.get();
+        if (document.exists()) {
+            c = new Course();
+            c = document.toObject(Course.class);
+        } else {
+            System.out.println("No such document!");
+        }
+
+        ApiFuture<QuerySnapshot> dref = db.collection("students").get();
+        List<QueryDocumentSnapshot> docs = dref.get().getDocuments();
+        for (QueryDocumentSnapshot d : docs) {
+            studentsList.add(d.toObject(Student.class));
+        }
+        for (Student student : studentsList) {
+            System.out.println("one from all students  +" + student.getId() + " are :");
+
+            if ((c.getStudents().contains(student.getId()))) {
+                System.out.println(student.getId() + "is in the course");
+                studentsInCourseList.add(student);
+            }
+        }
+        for(Student s : studentsInCourseList){
+                        Message message = Message.builder()
+                                .putData("type", "CourseReminder")
+                                .putData("header", "New Quiz!")
+                                .putData("header", "A new Quiz is created for "+c.getCourseName())
+                                .setToken(s.getToken())
+                                .build();
+                        String response = FirebaseMessaging.getInstance().send(message);        }
+
+
+        ctx.result("CourseId is " + courseId + "\n date" );
+
+
+    
+    }
+    
+    public static void sendReminderscheduled(Context ctx) throws InterruptedException, ExecutionException, ParseException, FirebaseMessagingException{
+        
+      
     }
 }

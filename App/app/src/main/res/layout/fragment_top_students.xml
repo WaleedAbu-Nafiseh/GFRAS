@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.CourseHomeUI.topStudents.TopStudentsFragment">
+    tools:context=".Activities.CourseHomeUI.topStudents.TopStudentsFragment"
+    android:background="@color/colorAccentLighter"
+    >
 
     <TextView
         android:id="@+id/text_slideshow"

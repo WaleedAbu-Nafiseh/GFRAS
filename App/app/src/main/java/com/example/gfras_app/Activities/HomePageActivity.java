@@ -68,19 +68,19 @@ public class HomePageActivity extends AppCompatActivity {
                         String token = task.getResult();
 
                         // Log and toast
-                        if(currentUser.getToken()==null|| currentUser.getToken()!=token){
+                        if (currentUser.getToken() == null || currentUser.getToken() != token) {
                             Log.d("TEST", token);
 
                             currentUser.setToken(token);
                             FirebaseFirestore db = FirebaseFirestore.getInstance();
                             WriteBatch batch = db.batch();
-                            Log.d("TEST", "User is "+currentUser.getId());
+                            Log.d("TEST", "User is " + currentUser.getId());
 
-                            DocumentReference sfRef= db.collection(CollectionsName.STUDENTS).document(currentUser.getId());
+                            DocumentReference sfRef = db.collection(CollectionsName.STUDENTS).document(currentUser.getId());
                             batch.update(sfRef, "token", currentUser.getToken()).commit();
 
                         }
-                        Toast.makeText(getApplicationContext(), "Token is "+token, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Token is " + token, Toast.LENGTH_SHORT).show();
                     }
                 });
         showEitherLoadingOrReady();
@@ -96,9 +96,10 @@ public class HomePageActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("TAG", document.getId() + " => " + document.getData());
+                                Log.d("TAG", document.toString() + " => " + document.getData());
                                 Course c = document.toObject(Course.class);
                                 courseList.add(c);
+                                Log.e("ATT", document.getId() + " => " + c.getAttendance().keySet());
                             }
 
                             mAdapter = new CourseListItemAdapter(courseList, listener);
@@ -113,7 +114,6 @@ public class HomePageActivity extends AppCompatActivity {
                 });
         Log.d("TAG", "this is the list: " + courseList.toString());
 
-
     }
 
     private void setOnclickListener() {
@@ -124,11 +124,9 @@ public class HomePageActivity extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 Gson g = new Gson();
 
-                bundle.putString("COURSE_ID",g.toJson(courseList.get(position)));
+                bundle.putString("COURSE_ID", g.toJson(courseList.get(position)));
                 intent.putExtras(bundle);
                 startActivity(intent);
-
-
             }
         };
 

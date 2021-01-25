@@ -35,7 +35,7 @@ public class CourseHomeMainActivity extends AppCompatActivity {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_quiz, R.id.nav_calendar, R.id.nav_top_students)
+                R.id.nav_top_students, R.id.nav_quiz, R.id.nav_calendar)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -45,7 +45,7 @@ public class CourseHomeMainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Contacting your instructor is coming soon.", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });

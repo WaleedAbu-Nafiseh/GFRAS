@@ -26,6 +26,7 @@ import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
 import static io.javalin.apibuilder.ApiBuilder.get;
 import static io.javalin.apibuilder.ApiBuilder.path;
+import static io.javalin.apibuilder.ApiBuilder.post;
 import static io.javalin.core.security.SecurityUtil.roles;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,8 +59,18 @@ public class Main {
                 });
                  path("/:courseId/:studentNum/:date", () -> {
                     get(NotificationsController::markStudentAsPresentSendNotification);
+                    
                 });
+                 
             });
+            path("/reminder",()->{
+                 path("/quiz/:courseId/", () -> {
+                    post(NotificationsController::sendReminderToClassNow);
+                });
+                 path("/quiz/:courseId/:date", () -> {
+                    get(NotificationsController::sendReminderscheduled);
+                });
+        });
 
         });
 
