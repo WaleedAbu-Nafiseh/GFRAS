@@ -13,10 +13,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="77dp"
-        android:layout_margin="7dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:layout_height="77dp">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/quizListIcon"
@@ -28,9 +25,7 @@
             android:layout_marginTop="23dp"
             android:layout_marginBottom="30dp"
             android:src="@drawable/ic_baseline_playlist_add_check_24"
-
             />
-
         <TextView
             android:id="@+id/quizTitle"
             android:layout_width="wrap_content"

@@ -13,10 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gfras_app.Activities.CourseHomeUI.CourseHomeMainActivity;
 import com.example.gfras_app.Data.Course.Course;
-import com.example.gfras_app.Data.Course.CourseListItemAdapter;
-import com.example.gfras_app.Data.Question;
 import com.example.gfras_app.Data.Quiz;
-import com.example.gfras_app.Activities.CourseHomeUI.quiz.QuizListItemAdapter;
 import com.example.gfras_app.R;
 import com.example.gfras_app.util.CollectionsName;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,10 +31,14 @@ public class QuizzesFragment extends Fragment {
     private String quizTitle;
     private Bundle bundle;
     private RecyclerView mRecyclerView;
+    private RecyclerView finishedquizListRecyclerView;
     private RecyclerView.Adapter mAdapter;
+    private RecyclerView.Adapter mAdapterFinished;
     private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView.LayoutManager mLayoutManagerFinished;
     private QuizListItemAdapter.RecyclerViewClickListener listener;
     List<Quiz> quizList;
+    List<Quiz> finishedQuizList;
     Course currentCourse;
     Course selectedCourse;
 
@@ -55,14 +56,18 @@ public class QuizzesFragment extends Fragment {
         super.onStart();
 
         mRecyclerView = getActivity().findViewById(R.id.quizListRecyclerView);
+        finishedquizListRecyclerView = getActivity().findViewById(R.id.finishedquizListRecyclerView);
         mRecyclerView.setHasFixedSize(true);
+        finishedquizListRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext());
+        mLayoutManagerFinished = new LinearLayoutManager(getContext());
         Gson g = new Gson();
         CourseHomeMainActivity activity = (CourseHomeMainActivity) getActivity();
         Bundle results = activity.getMyData();
         currentCourse = g.fromJson(results.getString("COURSE_ID"), Course.class);
         selectedCourse = new Course();
         quizList = new LinkedList<Quiz>();
+        finishedQuizList = new LinkedList<Quiz>();
         showData();
     }
 
@@ -77,12 +82,18 @@ public class QuizzesFragment extends Fragment {
                         Quiz c = document.toObject(Quiz.class);
                         if (!c.isFinished()) {
                             quizList.add(c);
+                        } else {
+                            finishedQuizList.add(c);
                         }
                     }
 
                     mAdapter = new QuizListItemAdapter(quizList, listener);
                     mRecyclerView.setLayoutManager(mLayoutManager);
                     mRecyclerView.setAdapter(mAdapter);
+
+                    mAdapterFinished = new QuizListItemAdapter(finishedQuizList, listener);
+                    finishedquizListRecyclerView.setLayoutManager(mLayoutManagerFinished);
+                    finishedquizListRecyclerView.setAdapter(mAdapterFinished);
 
                 } else {
                     Log.d("TAG", "Error getting documents: ", task.getException());

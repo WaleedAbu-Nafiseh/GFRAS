@@ -29,9 +29,9 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 public class QuizzingActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static FirebaseFirestore db;
-    private  Bundle bundle;
+    private Bundle bundle;
     public Quiz quiz;
-    public static String TAG=QuizzingActivity.class.getName();
+    public static String TAG = QuizzingActivity.class.getName();
     private TextView txtQuestionPlace;
     private TextView txtPoints;
     private ProgressBar prgsBar;
@@ -44,6 +44,7 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
     private ConstraintLayout quizLayout;
     int currentQuestionCounter;
     Question currentQuestion;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,34 +52,35 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_quizzing);
         Bundle bundle = getIntent().getExtras();
         String quizID = bundle.getString("QUIZ_ID");
-        Log.e(TAG,quizID);
+        Log.e(TAG, quizID);
 
-        txtQuestionPlace=findViewById(R.id.txtQuestionPlace);
-        txtPoints=findViewById(R.id.txtPoints);
-        prgsBar=findViewById(R.id.prgsBar);
-        btnOptionA=findViewById(R.id.btnOptionA);
-        btnOptionB=findViewById(R.id.btnOptionB);
-        btnOptionC=findViewById(R.id.btnOptionC);
-        btnOptionD=findViewById(R.id.btnOptionD);
-        quizLayout=findViewById(R.id.quizLayout);
+        txtQuestionPlace = findViewById(R.id.txtQuestionPlace);
+        txtPoints = findViewById(R.id.txtPoints);
+        prgsBar = findViewById(R.id.prgsBar);
+        btnOptionA = findViewById(R.id.btnOptionA);
+        btnOptionB = findViewById(R.id.btnOptionB);
+        btnOptionC = findViewById(R.id.btnOptionC);
+        btnOptionD = findViewById(R.id.btnOptionD);
+        quizLayout = findViewById(R.id.quizLayout);
 
         btnOptionA.setOnClickListener(this);
         btnOptionB.setOnClickListener(this);
         btnOptionC.setOnClickListener(this);
         btnOptionD.setOnClickListener(this);
 
-        Log.d(TAG," onCreate");
+        Log.d(TAG, " onCreate");
         prgsBar.setVisibility(View.VISIBLE);
         db = FirebaseFirestore.getInstance();
         docRef = db.collection(CollectionsName.QUIZZES).document(quizID);
-        currentQuestionCounter=0;
-        currentQuestion=new Question();
+        currentQuestionCounter = 0;
+        currentQuestion = new Question();
         start();
 
     }
+
     //Will be called by the onCreate method and it calls the write Ui whenever there is a change on the database
-    public void start(){
-        Log.d(TAG," start");
+    public void start() {
+        Log.d(TAG, " start");
 
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -90,7 +92,7 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
                 }
 
                 if (snapshot != null && snapshot.exists()) {
-                    quiz =snapshot.toObject(Quiz.class);
+                    quiz = snapshot.toObject(Quiz.class);
                     writeUI();
                     Log.d(TAG, "Current data after Drama: " + snapshot.getData());
                 } else {
@@ -99,29 +101,27 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
-
-
     }
 
-    public  void writeUI(){
-        if(gradeSheet==null){
-            gradeSheet=new GradeSheet(quiz.getQuestions().size(), quiz.getId(),  UserServices.getCurrentUser(getApplicationContext()).getId());
+    public void writeUI() {
+        if (gradeSheet == null) {
+            gradeSheet = new GradeSheet(quiz.getQuestions().size(), quiz.getId(), UserServices.getCurrentUser(getApplicationContext()).getId());
         }
-        if(quiz.isFinished()){
-            Log.e("f",quiz.isFinished()+"is fni");
-            DBServices.addToCollection("GradeSheet",gradeSheet);
+        if (quiz.isFinished()) {
+            Log.e("f", quiz.isFinished() + "is fni");
+            DBServices.addToCollection("GradeSheet", gradeSheet);
         }
         txtPoints.setText(Integer.toString(gradeSheet.getPoints()));
-        Log.d(TAG,"writeUI points "+gradeSheet.getPoints());
-        for(Question question:quiz.getQuestions() ){
-            if (question.isShowQuestion()==true){
-                currentQuestion=question;
-                currentQuestionCounter=quiz.getQuestions().indexOf(currentQuestion);
+        Log.d(TAG, "writeUI points " + gradeSheet.getPoints());
+        for (Question question : quiz.getQuestions()) {
+            if (question.isShowQuestion() == true) {
+                currentQuestion = question;
+                currentQuestionCounter = quiz.getQuestions().indexOf(currentQuestion);
             }
 
         }
 
-        if(quiz.getIsStarted() && (currentQuestion!=null)){
+        if (quiz.getIsStarted() && (currentQuestion != null)) {
             //It is  started
             prgsBar.setVisibility(View.INVISIBLE);
             btnOptionA.setVisibility(View.VISIBLE);
@@ -133,8 +133,9 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
             btnOptionB.setText(currentQuestion.getOptionB());
             btnOptionC.setText(currentQuestion.getOptionC());
             btnOptionD.setText(currentQuestion.getOptionD());
+        } else if (!quiz.isFinished()) {
 
-        }else{
+        } else {
             //It is not started
             txtQuestionPlace.setText("Please wait until the quiz starts");
             btnOptionA.setVisibility(View.INVISIBLE);
@@ -148,7 +149,7 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
         Button selectedButton = findViewById(view.getId());
-        switch(view.getId()){
+        switch (view.getId()) {
             case R.id.btnOptionA:
                 btnOptionA.setEnabled(true);
                 btnOptionB.setEnabled(false);
@@ -162,7 +163,6 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
                 btnOptionC.setEnabled(false);
                 btnOptionD.setEnabled(false);
                 break;
-
 
             case R.id.btnOptionC:
                 btnOptionA.setEnabled(false);
@@ -178,17 +178,16 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
                 break;
 
         }
-        if(selectedButton.getText().toString().equals(currentQuestion.getCorrectAnswer())){
+        if (selectedButton.getText().toString().equals(currentQuestion.getCorrectAnswer())) {
             gradeSheet.addCorrectQuestion(currentQuestionCounter);
             selectedButton.setBackgroundColor(Color.parseColor("#0EBB3D"));
-            Log.d(TAG," Answered Correctly");
+            Log.d(TAG, " Answered Correctly");
 
-
-        }else{
+        } else {
             gradeSheet.addWrongQuestion(currentQuestionCounter);
             selectedButton.setBackgroundColor(Color.parseColor("#F3290D"));
         }
-        Log.d(TAG,selectedButton.getText().toString());
+        Log.d(TAG, selectedButton.getText().toString());
 
     }
 
