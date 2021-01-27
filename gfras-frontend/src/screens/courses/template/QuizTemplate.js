@@ -11,6 +11,7 @@ import { useCourseDetailsContext } from '../CourseDetailsContext';
 import AddStudents from '../organisms/AddStudents';
 import QuizListSideMenu from '../organisms/QuizListSideMenu';
 import Grades from '../organisms/Grades';
+import Dashboard from '../organisms/Dashboard';
 
 export function QuizTemplate() {
 	const { selectedCourseDetail } = useCourseDetailsContext();
@@ -21,7 +22,7 @@ export function QuizTemplate() {
 	} = useCourseDetailsContext();
 
 	return (
-		<Flex h='full'>
+		<Flex h='full' w='full'>
 			<CourseDetails />
 			{isSideMenuExpanded && (
 				<SideMenu position='relative' minWidth='250px'>
@@ -43,6 +44,7 @@ export function QuizTemplate() {
 				</SideMenu>
 			)}
 			{/*<BackButton />*/}
+			{selectedCourseDetail === 'dashboard' && <Dashboard />}
 			{selectedCourseDetail === 'create-quiz' && <Question />}
 			{selectedCourseDetail === 'quizzes-details' &&
 				selectedQuizzesDetails === 'quizzes-list' && <QuizList />}

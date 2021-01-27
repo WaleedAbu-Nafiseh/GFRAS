@@ -31,9 +31,7 @@ function GradesTable({ selectedQuizGrades }) {
 	const [tableData, setTableData] = useState([]);
 
 	useEffect(() => {
-		console.log(selectedQuizGrades);
 		getStudentsGrades({ quizId: selectedQuizGrades.menuID }).then((res) => {
-			console.log(tableData);
 			setTableData(res);
 		});
 	}, [selectedQuizGrades]);

@@ -12,7 +12,7 @@ export function CourseDetails() {
 			borderRight='1px solid rgb(240,240,240)'
 			boxShadow='none'
 		>
-			<Flex direction='column' align='center' w='full' mt='10px'>
+			<Flex direction='column' align='center' w='full' mt='10px' h='full'>
 				{courseDetails.map(({ label, id, icon, canSideMenuExpand }) => {
 					return (
 						<CourseDetailsSideMenuButton

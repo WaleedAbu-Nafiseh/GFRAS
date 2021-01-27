@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bar, ResponsiveBar } from 'nivo';
+import { ResponsiveBar } from 'nivo';
 import { Flex } from '@chakra-ui/core';
 
 const BarComponent = (props) => {

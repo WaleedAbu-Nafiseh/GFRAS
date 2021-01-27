@@ -18,3 +18,90 @@ export const attendanceTableSelector = createSelector(
 	getAttendanceTable,
 	(data) => data
 );
+
+function getOverallAttendance({ data }) {
+	const noOfStudentsCourse = data.students.length;
+	const noOfAttendanceTaken = Object.keys(data.attendance).length;
+	const noOfStudentsShouldAttend = noOfStudentsCourse * noOfAttendanceTaken;
+
+	const noOfOverallStudentsAttend = Object.keys(data.attendance).reduce(
+		(acc, currAttendanceDay) => {
+			let noOfAttendanceInOneDay = data.attendance[currAttendanceDay].filter(
+				({ isPresent }) => isPresent
+			).length;
+			return acc + noOfAttendanceInOneDay;
+		},
+		0
+	);
+
+	return (noOfOverallStudentsAttend / noOfStudentsShouldAttend) * 100;
+}
+
+export const selectDashboardOverallAttendance = createSelector(
+	getOverallAttendance,
+	(data) => data
+);
+
+function getNoOfStudentAttendance({ courseAttendance, documentID }) {
+	return Object.keys(courseAttendance).reduce((acc, currAttendanceDay) => {
+		let noOfAttendanceInOneDay = courseAttendance[currAttendanceDay].filter(
+			({ studentID, isPresent }) => studentID === documentID && isPresent
+		).length;
+		return acc + noOfAttendanceInOneDay;
+	}, 0);
+}
+
+function getStudentTotalMarks({ studentsGradesSheet, documentID }) {
+	return studentsGradesSheet.reduce((acc, currStudentQuizData) => {
+		if (documentID === currStudentQuizData.studentId) {
+			return acc + currStudentQuizData.points;
+		}
+
+		return acc;
+	}, 0);
+}
+
+function getStudentsDetailsTable({ studentsGradesSheet, data, studentsData }) {
+	return data.students.reduce((acc, documentID) => {
+		const student = studentsData.find(
+			({ studentDocumentID }) => studentDocumentID === documentID
+		);
+		const tableDataStudentIndex = acc.findIndex(
+			({ studentID }) => studentID === student.studentUniversityId
+		);
+		const studentFullName = `${student.firstName} ${student.lastName}`;
+		const noOfAttendance = getNoOfStudentAttendance({
+			courseAttendance: data.attendance,
+			documentID
+		});
+		const totalMarks = getStudentTotalMarks({
+			studentsGradesSheet,
+			documentID
+		});
+		if (tableDataStudentIndex === -1) {
+			return [
+				...acc,
+				{
+					studentID: student.studentUniversityId,
+					fullName: studentFullName,
+					attendance: noOfAttendance,
+					totalMarks
+				}
+			];
+		} else {
+			// will not enter because tableDataStudentIndex will always be -1
+			const studentTableData = {
+				...acc[tableDataStudentIndex],
+				attendance: acc[tableDataStudentIndex].attendance + noOfAttendance,
+				totalMarks: acc[tableDataStudentIndex].totalMarks + totalMarks
+			};
+			acc.splice(tableDataStudentIndex, 1);
+			return [...acc, studentTableData];
+		}
+	}, []);
+}
+
+export const selectStudentsDetailsTable = createSelector(
+	getStudentsDetailsTable,
+	(data) => data
+);

@@ -1,9 +1,10 @@
 import firebase from 'firebase';
-
+import axios from 'axios';
 export const createQuiz = async ({
 	questionAndOptions,
 	courseID,
-	quizTitle
+	quizTitle,
+	quizStartDate
 }) => {
 	const db = firebase.firestore();
 	const quizzes = db.collection('Quizzes');
@@ -17,7 +18,8 @@ export const createQuiz = async ({
 		finished: false,
 		isStarted: false,
 		courseID,
-		quizTitle
+		quizTitle,
+		startDate: quizStartDate
 	});
 	const courses = db.collection('Courses').doc(courseID);
 
@@ -30,5 +32,8 @@ export const createQuiz = async ({
 			});
 		}
 	});
+	const url = `http://localhost:7000/reminder/quiz/${courseID}`;
+
+	await axios.get(url);
 	return result;
 };

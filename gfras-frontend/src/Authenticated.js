@@ -1,5 +1,5 @@
 import React, { Suspense, useState } from 'react';
-import { Button, Spinner } from '@chakra-ui/core';
+import { Button, Spinner, Flex } from '@chakra-ui/core';
 import * as ROUTES from './constant';
 import {
 	Switch,
@@ -37,8 +37,8 @@ export function AuthenticatedApp() {
 					bg='transparent'
 					align='center'
 					color='white'
-					// _active={{ color: '#11293f' }}
-					// isActive={activeMenuButtons === route}
+					_active={{ color: '#11293f' }}
+					isActive={activeMenuButtons === route || true}
 					onClick={() => onSetMenuButton(route)}
 					fontSize={22}
 					_hover={{ bg: 'transparent' }}
@@ -51,7 +51,7 @@ export function AuthenticatedApp() {
 	});
 
 	return (
-		<>
+		<Flex direction='column' h='100vh'>
 			<Header
 				navTitle={formatMessage({ id: 'header.bar.title' })}
 				menuItems={navMenuItems}
@@ -77,6 +77,6 @@ export function AuthenticatedApp() {
 					<Redirect from='/' to={ROUTES.COURSES} />
 				</Switch>
 			</Suspense>
-		</>
+		</Flex>
 	);
 }
