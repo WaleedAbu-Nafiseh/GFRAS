@@ -24,10 +24,11 @@ function THeadRow({ headers, getHeaderGroupProps }) {
 				) => (
 					<Box
 						as='th'
-						pb={2}
-						color='rgba(18,18,18,0.38)'
+						p={2}
+						bg='#ff6d40'
+						color='white'
 						borderBottom='2px solid #EFEFEF'
-						fontSize='xs'
+						fontSize='md'
 						{...getHeaderProps(getSortByToggleProps())}
 						onClick={() => {
 							toggleSortBy && toggleSortBy(!isSortedDesc, false);
@@ -39,8 +40,8 @@ function THeadRow({ headers, getHeaderGroupProps }) {
 							{canSort && (
 								<Icon
 									ml={2}
-									boxSize='16px'
-									color={isSorted ? 'rgba(0,0,0,0.87)' : 'rgba(0,0,0, .18)'}
+									boxSize='20px'
+									color={isSorted ? 'white' : 'rgba(0,0,0,0.87)'}
 									as={
 										isSorted
 											? isSortedDesc
@@ -65,7 +66,7 @@ function TBodyRow({ row }) {
 		<Box
 			as='tr'
 			height={canExpand ? '48px' : '32px'}
-			fontSize={12}
+			fontSize={16}
 			boxShadow={isExpanded ? '0 0 2px 0 rgba(0,0,0,0.5)' : ''}
 			borderRadius='6px'
 			transition='all 0.3s'
@@ -88,7 +89,7 @@ function TBodyRow({ row }) {
 				return (
 					<Box
 						as='td'
-						py={2}
+						p={2}
 						_first={{
 							borderRadius: '6px 0 0 6px'
 						}}

@@ -3,7 +3,7 @@ import { BackButton } from '../atoms/BackButton';
 import { useQuizContext } from '../QuizContext';
 import { finishedQuizzesSelector } from '../gradesSelector';
 import { GradesDropdown } from '../../../components/dropdown/GradesDropdown';
-import { Flex, Box } from '@chakra-ui/core';
+import { Flex } from '@chakra-ui/core';
 import GradesTable from '../molecules/GradesTable';
 
 function Grades() {
@@ -11,7 +11,6 @@ function Grades() {
 	const { finishedQuizzes, dropdownData } = finishedQuizzesSelector({
 		quizzesData: data
 	});
-	console.log(data, dropdownData);
 	const [selectedQuizGrades, setSelectedQuizGrades] = useState(dropdownData[0]);
 	return (
 		<Flex direction='column' w='full' h='full'>

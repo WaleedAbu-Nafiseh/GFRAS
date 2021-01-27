@@ -65,7 +65,7 @@ public class Main {
             });
             path("/reminder",()->{
                  path("/quiz/:courseId/", () -> {
-                    post(NotificationsController::sendReminderToClassNow);
+                    get(NotificationsController::sendReminderToClassNow);
                 });
                  path("/quiz/:courseId/:date", () -> {
                     get(NotificationsController::sendReminderscheduled);

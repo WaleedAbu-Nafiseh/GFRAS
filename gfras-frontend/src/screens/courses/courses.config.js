@@ -3,6 +3,7 @@ import React from 'react';
 import { AttendanceIcon } from '../../components/icons/Attendance';
 import { AddStudents } from '../../components/icons/AddStudents';
 import { QuizDetailsIcon } from '../../components/icons/QuizDetails';
+import { DashboardIcon } from '../../components/icons/Dashboard';
 
 export const sideMenuItems = [
 	{
@@ -12,6 +13,12 @@ export const sideMenuItems = [
 ];
 
 export const courseDetails = [
+	{
+		label: 'Dashboard',
+		id: 'dashboard',
+		icon: <DashboardIcon boxSize='35px' />,
+		canSideMenuExpand: false
+	},
 	{
 		label: 'Create Quiz',
 		id: 'create-quiz',

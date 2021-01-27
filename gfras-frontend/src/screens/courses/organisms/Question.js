@@ -16,9 +16,12 @@ import {
 } from '../../../custom-hooks/useSuccessToast';
 import { BackButton } from '../atoms/BackButton';
 import { CorrectAnswer } from '../../../components/icons/CorrectAnswer';
+import QuizDateModal from '../molecules/QuizDateModal';
 
 export function Question() {
 	const { formatMessage } = useIntl();
+	const [isQuizDateModalOpen, setIsQuizDateModalOpen] = useState(false);
+
 	const {
 		questionAndOptions,
 		setQuestionAndOptions,
@@ -69,12 +72,13 @@ export function Question() {
 		quizTitle
 	]);
 
-	const onSubmitCreateQuestion = async () => {
+	const onSubmitCreateQuestion = async ({ quizStartDate }) => {
 		setIsLoading(true);
 		await createQuiz({
 			questionAndOptions: [...questionAndOptions],
 			courseID,
-			quizTitle
+			quizTitle,
+			quizStartDate
 		})
 			.then((res) => {
 				refetchNewQuizCreated();
@@ -173,13 +177,18 @@ export function Question() {
 
 	return (
 		<>
+			<QuizDateModal
+				onSubmitCreateQuestion={onSubmitCreateQuestion}
+				setIsOpen={setIsQuizDateModalOpen}
+				isOpen={isQuizDateModalOpen}
+			/>
 			<Flex>
 				<Button
 					position='absolute'
 					right={'105px'}
 					top='100px'
 					isLoading={isLoading}
-					onClick={onSubmitCreateQuestion}
+					onClick={() => setIsQuizDateModalOpen(true)}
 					float='right'
 					bg='#ff5722'
 					_hover={{ bg: '#fc4216' }}

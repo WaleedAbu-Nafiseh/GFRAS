@@ -16,7 +16,6 @@ export const getStudentsGrades = async ({ quizId }) => {
 					.doc(doc.data().studentId)
 					.get()
 					.then((studentsRes) => {
-						console.log(studentsRes.data());
 						const {
 							firstName,
 							lastName,
