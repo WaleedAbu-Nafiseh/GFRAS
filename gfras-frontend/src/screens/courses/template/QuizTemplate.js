@@ -53,7 +53,7 @@ export function QuizTemplate() {
 				selectedQuizzesDetails === 'quizzes-grades' && <Grades />}
 			{selectedCourseDetail === 'attendance-list' && <Attendance />}
 			{selectedCourseDetail === 'add-new-students' && <AddStudents />}
-			{selectedCourseDetail === 'set-reminder' && <Reminder />}
+			{selectedCourseDetail === 'reminder' && <Reminder />}
 		</Flex>
 	);
 }

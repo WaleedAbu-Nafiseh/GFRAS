@@ -45,8 +45,8 @@ export const courseDetails = [
 		canSideMenuExpand: false
 	},
 	{
-		label: 'Set Reminder',
-		id: 'set-reminder',
+		label: 'Reminder',
+		id: 'reminder',
 		icon: <ReminderIcon boxSize='35px' />,
 		canSideMenuExpand: false
 	}
