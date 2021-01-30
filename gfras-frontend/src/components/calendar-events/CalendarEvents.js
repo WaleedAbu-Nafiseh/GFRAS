@@ -19,8 +19,17 @@ const ColoredDateCellWrapper = ({ children }) =>
 		}
 	});
 
-export const CalendarEvents = ({ defaultDate, maxDate, events }) => (
+export const CalendarEvents = ({
+	defaultDate,
+	maxDate,
+	events,
+	onSelectEvent
+}) => (
 	<Calendar
+		popup={true}
+		popupOffset={{ x: 30, y: 20 }}
+		selectable
+		onSelectEvent={onSelectEvent}
 		events={events}
 		views={allViews}
 		step={60}

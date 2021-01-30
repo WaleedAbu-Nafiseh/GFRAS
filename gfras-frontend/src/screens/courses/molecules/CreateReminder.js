@@ -10,6 +10,7 @@ import TimePicker from 'react-time-picker';
 import { setNewReminder } from '../../../API/reminder/setNewReminder';
 import { useParams } from 'react-router-dom';
 import { format } from 'date-fns';
+import { useReminderContext } from '../ReminderContext';
 
 function ReminderButton({ setIsCreateReminderModalOpen }) {
 	const { formatMessage: f } = useIntl();
@@ -40,8 +41,7 @@ function ModalBody({
 	onChangeDate,
 	time,
 	onChangeTime,
-	register,
-	onSubmit
+	register
 }) {
 	const { formatMessage: f } = useIntl();
 
@@ -212,6 +212,7 @@ function ReminderModal({
 	setIsCreateReminderModalOpen,
 	isCreateReminderModalOpen
 }) {
+	const { refetchReminders } = useReminderContext();
 	const { courseID } = useParams();
 	const [isLoading, setIsLoading] = useState(false);
 	const { register, handleSubmit, watch } = useForm();
@@ -232,6 +233,7 @@ function ReminderModal({
 			.then((res) => {
 				setIsLoading(false);
 				setIsCreateReminderModalOpen(false);
+				refetchReminders();
 			})
 			.catch(() => {
 				setIsLoading(false);
@@ -247,7 +249,6 @@ function ReminderModal({
 			})}
 			modalBody={
 				<ModalBody
-					onSubmit={onSubmit}
 					register={register}
 					setIsCalendarOpened={setIsCalendarOpened}
 					date={date}
@@ -269,17 +270,6 @@ function ReminderModal({
 		/>
 	);
 }
-
-const events = [
-	{
-		start: '2015-07-19',
-		end: '2015-07-25',
-		title: 'test event',
-		eventClasses: 'optionalEvent',
-		description: 'This is a test description of an event',
-		data: 'you can add what ever random data you may want to use later'
-	}
-];
 
 function CreateReminder() {
 	const [isCreateReminderModalOpen, setIsCreateReminderModalOpen] = useState(
