@@ -64,7 +64,7 @@ public class QuizzesFragment extends Fragment {
         Gson g = new Gson();
         CourseHomeMainActivity activity = (CourseHomeMainActivity) getActivity();
         Bundle results = activity.getMyData();
-        currentCourse = g.fromJson(results.getString("COURSE_ID"), Course.class);
+        currentCourse = g.fromJson(results.getString("COURSE"), Course.class);
         selectedCourse = new Course();
         quizList = new LinkedList<Quiz>();
         finishedQuizList = new LinkedList<Quiz>();

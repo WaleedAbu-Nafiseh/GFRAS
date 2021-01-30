@@ -63,24 +63,16 @@ public class HomePageActivity extends AppCompatActivity {
                             Log.w("TEST", "Fetching FCM registration token failed", task.getException());
                             return;
                         }
-
                         // Get new FCM registration token
                         String token = task.getResult();
-
                         // Log and toast
                         if (currentUser.getToken() == null || currentUser.getToken() != token) {
-                            Log.d("TEST", token);
-
                             currentUser.setToken(token);
                             FirebaseFirestore db = FirebaseFirestore.getInstance();
                             WriteBatch batch = db.batch();
-                            Log.d("TEST", "User is " + currentUser.getId());
-
                             DocumentReference sfRef = db.collection(CollectionsName.STUDENTS).document(currentUser.getId());
                             batch.update(sfRef, "token", currentUser.getToken()).commit();
-
                         }
-                        Toast.makeText(getApplicationContext(), "Token is " + token, Toast.LENGTH_SHORT).show();
                     }
                 });
         showEitherLoadingOrReady();
@@ -112,22 +104,17 @@ public class HomePageActivity extends AppCompatActivity {
                         }
                     }
                 });
-        Log.d("TAG", "this is the list: " + courseList.toString());
 
     }
 
     private void setOnclickListener() {
-        listener = new CourseListItemAdapter.RecyclerViewClickListener() {
-            @Override
-            public void onClick(View v, int position) {
-                Intent intent = new Intent(getApplicationContext(), CourseHomeMainActivity.class);
-                Bundle bundle = new Bundle();
-                Gson g = new Gson();
-
-                bundle.putString("COURSE_ID", g.toJson(courseList.get(position)));
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
+        listener = (v, position) -> {
+            Intent intent = new Intent(getApplicationContext(), CourseHomeMainActivity.class);
+            Bundle bundle = new Bundle();
+            Gson g = new Gson();
+            bundle.putString("COURSE", g.toJson(courseList.get(position)));
+            intent.putExtras(bundle);
+            startActivity(intent);
         };
 
     }

@@ -39,7 +39,7 @@ public class NotificationsController {
     public static void SendNotificationToCourse(Context ctx) throws FirebaseMessagingException, InterruptedException, ExecutionException {
         String courseId = ctx.pathParam("courseId");
         String date = ctx.pathParam("date");
-       
+
         List<Student> studentsList = new ArrayList<Student>();
         List<Student> studentsInCourseList = new ArrayList<Student>();
         Course c = new Course();
@@ -83,7 +83,7 @@ public class NotificationsController {
             studentsInCourseList.forEach((v) -> {
                 String text = "";
                 if (a.isIsPresent()) {
-                    text = "You are marked as an attende on "+date;
+                    text = "You are marked as an attende on " + date;
                 } else {
                     text = "You did not come to class today";
                 }
@@ -145,30 +145,29 @@ public class NotificationsController {
             if (c.getAttendance().get(date).get(i).getStudentID().equalsIgnoreCase(student.getId())) {
                 System.out.println("The attendance id is " + c.getAttendance().get(date).get(i).getStudentID());
                 c.getAttendance().get(date).get(i).setIsPresent(true);
-                 System.out.println("The updated one is   " + c.toString());
-}
+                System.out.println("The updated one is   " + c.toString());
+            }
         }
-        
 
         WriteBatch batch = db.batch();
         DocumentReference sfRef = db.collection("Courses").document(c.getCourseId());
         batch.set(sfRef, c).commit();
-            try {
-                Message message = Message.builder()
-                        .putData("text", "You are marked as an Attende for "+c.getCourseName()+"!")
-                        .setToken(student.getToken())
-                        .build();
-                String response = FirebaseMessaging.getInstance().send(message);
-            } catch (FirebaseMessagingException ex) {
-                Logger.getLogger(NotificationsController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        
+        try {
+            Message message = Message.builder()
+                    .putData("text", "You are marked as an Attende for " + c.getCourseName() + "!")
+                    .setToken(student.getToken())
+                    .build();
+            String response = FirebaseMessaging.getInstance().send(message);
+        } catch (FirebaseMessagingException ex) {
+            Logger.getLogger(NotificationsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         //get the student object and the id of it from firebase
         //get the attendance for the given date and mark the student as absent, 
         //after teh update send the notification to the student token
     }
-    
-    public static void sendReminderToClassNow(Context ctx) throws InterruptedException, ExecutionException, ParseException, FirebaseMessagingException{
+
+    public static void sendReminderToClassNow(Context ctx) throws InterruptedException, ExecutionException, ParseException, FirebaseMessagingException {
         String courseId = ctx.pathParam("courseId");
         List<Student> studentsList = new ArrayList<Student>();
         List<Student> studentsInCourseList = new ArrayList<Student>();
@@ -201,24 +200,24 @@ public class NotificationsController {
                 studentsInCourseList.add(student);
             }
         }
-        for(Student s : studentsInCourseList){
-                        Message message = Message.builder()
-                                .putData("type", "CourseReminder")
-                                .putData("header", "New Quiz!")
-                                .putData("header", "A new Quiz is created for "+c.getCourseName())
-                                .setToken(s.getToken())
-                                .build();
-                        String response = FirebaseMessaging.getInstance().send(message);        }
+        for (Student s : studentsInCourseList) {
+            Message message = Message.builder()
+                    .putData("type", "CourseReminder")
+                    .putData("header", "New Quiz!")
+                    .putData("header", "A new Quiz is created for " + c.getCourseName())
+                    .setToken(s.getToken())
+                    .build();
+            String response = FirebaseMessaging.getInstance().send(message);
+        }
 
+        ctx.result("CourseId is " + courseId + "\n date");
 
-        ctx.result("CourseId is " + courseId + "\n date" );
-
-
-    
     }
-    
-    public static void sendReminderscheduled(Context ctx) throws InterruptedException, ExecutionException, ParseException, FirebaseMessagingException{
-        
-      
+
+    public static void sendReminderscheduled(Context ctx) throws InterruptedException, ExecutionException, ParseException, FirebaseMessagingException {
+        String sDate1 = "31-12-1998";
+        Date date1 = new SimpleDateFormat("dd-MM-yyyy").parse(sDate1);
+        System.out.println(sDate1 + "\t" + date1.getYear());
+
     }
 }

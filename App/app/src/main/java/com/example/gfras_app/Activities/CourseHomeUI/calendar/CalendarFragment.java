@@ -12,13 +12,15 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.gfras_app.Activities.CourseHomeUI.CourseHomeMainActivity;
+import com.example.gfras_app.Data.Course.Course;
 import com.example.gfras_app.R;
+import com.google.gson.Gson;
 
 public class CalendarFragment extends Fragment {
 
     String courseID;
     CalendarView calendarView;
-
+    Course course;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_calendar, container, false);
@@ -27,7 +29,10 @@ public class CalendarFragment extends Fragment {
         calendarView.setOnDateChangeListener((calendarView, i, i1, i2) -> displayEventsForDate(i, i1, i2));
         CourseHomeMainActivity activity = (CourseHomeMainActivity) getActivity();
         Bundle results = activity.getMyData();
-        String strtext = results.getString("COURSE_ID");
+        String strtext = results.getString("COURSE");
+        course = new Course();
+        Gson g = new Gson();
+        course = g.fromJson(results.getString("COURSE"), Course.class);
         textView.setText(strtext);
         return root;
     }

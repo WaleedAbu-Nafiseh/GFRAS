@@ -14,11 +14,11 @@ public class AttendanceItem {
     public AttendanceItem() {
     }
 
-    public boolean isPresent() {
+    public boolean isIsPresent() {
         return isPresent;
     }
 
-    public void setPresent(boolean present) {
+    public void setIsPresent(boolean present) {
         isPresent = present;
     }
 

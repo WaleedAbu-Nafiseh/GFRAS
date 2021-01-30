@@ -66,9 +66,9 @@ public class CourseHomeMainActivity extends AppCompatActivity {
     }
     public Bundle getMyData() {
         Intent intent = getIntent();
-        courseId = intent.getExtras().getString("COURSE_ID");
+        courseId = intent.getExtras().getString("COURSE");
         bundle = new Bundle();
-        bundle.putString("COURSE_ID",courseId);
+        bundle.putString("COURSE",courseId);
         return bundle;
     }
 }
