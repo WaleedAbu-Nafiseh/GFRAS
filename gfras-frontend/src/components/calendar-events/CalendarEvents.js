@@ -34,10 +34,14 @@ export const CalendarEvents = ({
 		views={allViews}
 		step={60}
 		formats={{
-			dayRangeHeaderFormat: ({ start, end }, culture, localizer) =>
-				localizer.format(start, { date: 'short' }, culture) +
-				' —-- ' +
-				localizer.format(end, { date: 'short' }, culture),
+			dayRangeHeaderFormat: ({ start, end }) =>
+				`${format(start, ' MMMM d, yyyy')} - ${format(end, ' MMMM d, yyyy')}`,
+			agendaHeaderFormat: (value) => {
+				return `${format(value.start, ' MMMM d, yyyy')} - ${format(
+					value.end,
+					' MMMM d, yyyy'
+				)}`;
+			},
 			eventTimeRangeFormat: (value) => {
 				return `${format(value.end, 'h:mm aa')}`;
 			}
