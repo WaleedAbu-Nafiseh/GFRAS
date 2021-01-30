@@ -5,7 +5,7 @@ Gamified Facial Recognition Attendance Software
 https://www.youtube.com/watch?v=sSCMnaMnCzA&t=14s
 
 # Technologies:
-Javalin (https://javalin.io/), ReactJS, Android.
+Javalin (https://javalin.io/), ReactJS, Android, Firebase
 
 # How to Run:
 1) Clone repositry
