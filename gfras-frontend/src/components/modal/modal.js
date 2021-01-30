@@ -18,7 +18,9 @@ export function Modal({
 	isModalVerticallyCentered = false,
 	modalContentStyle,
 	footerPosition,
-	bodyLineSeparator = '0px'
+	bodyLineSeparator = '0px',
+	modalBodyStyle,
+	modalOverLayBackground
 }) {
 	return (
 		<ChakraModal
@@ -29,7 +31,12 @@ export function Modal({
 			closeOnEsc
 			scrollBehavior='inside'
 		>
-			<ModalOverlay bg='rgba(255,255,255,0.8)' zIndex={2000} w='100%' h='100%'>
+			<ModalOverlay
+				bg={modalOverLayBackground || 'rgba(255,255,255,0.8)'}
+				zIndex={2000}
+				w='100%'
+				h='100%'
+			>
 				<ModalContent
 					p={5}
 					w='fit-content'
@@ -56,6 +63,7 @@ export function Modal({
 						overflow='auto'
 						borderBottom={bodyLineSeparator}
 						borderTop={bodyLineSeparator}
+						{...modalBodyStyle}
 					>
 						{modalBody}
 					</ModalBody>

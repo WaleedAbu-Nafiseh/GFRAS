@@ -51,7 +51,7 @@ export function AuthenticatedApp() {
 	});
 
 	return (
-		<Flex direction='column' h='100vh'>
+		<Flex direction='column' h='100vh' overflow='hidden'>
 			<Header
 				navTitle={formatMessage({ id: 'header.bar.title' })}
 				menuItems={navMenuItems}

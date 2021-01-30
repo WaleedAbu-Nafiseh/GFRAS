@@ -14,8 +14,13 @@
 		"date-fns": "^2.16.1",
 		"firebase": "^7.20.0",
 		"framer-motion": "^2.9.4",
+		"moment": "^2.29.1",
 		"nivo": "^0.31.0",
 		"react": "^16.13.1",
+		"react-big-calendar": "^0.30.0",
+		"date-arithmetic": "^4.0.1",
+		"globalize": "^0.1.1",
+		"node-sass": "^4.14.1",
 		"react-csv": "^2.0.3",
 		"react-csv-reader": "^3.1.1",
 		"react-date-picker": "^8.0.6",
@@ -27,6 +32,7 @@
 		"react-router-dom": "^5.2.0",
 		"react-scripts": "^4.0.0",
 		"react-table": "^7.6.0",
+		"react-time-picker": "^4.1.2",
 		"reselect": "^4.0.0"
 	},
 	"husky": {

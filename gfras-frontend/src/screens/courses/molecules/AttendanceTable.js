@@ -5,6 +5,8 @@ import { useAttendanceContext } from '../AttendanceContext';
 import { getStudentsAttendance } from '../../../API/students/getStudentsAttendance';
 import { useQuery } from 'react-query';
 import { attendanceTableSelector } from '../selectors';
+import { CardContainer } from '../../../components/chart-wrapper/ChartWrapper';
+import { TableLoader } from '../../../components/loaders/TableLoader';
 
 const tableInitialState = {
 	sortBy: [
@@ -118,13 +120,16 @@ export const AttendanceTable = ({ selectedMenuItem }) => {
 			}
 		);
 
-	return tableData ? (
-		<Table
-			columns={columns}
-			data={tableData}
-			initialState={tableInitialState}
-		/>
-	) : (
-		<Spinner m='auto' />
+	return (
+		<CardContainer
+			status={tableData ? 'success' : 'loading'}
+			Loader={<TableLoader />}
+		>
+			<Table
+				columns={columns}
+				data={tableData}
+				initialState={tableInitialState}
+			/>
+		</CardContainer>
 	);
 };

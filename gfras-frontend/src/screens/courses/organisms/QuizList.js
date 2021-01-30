@@ -62,7 +62,7 @@ export function QuizList() {
 	return (
 		<>
 			<BackButton />
-			<Flex direction='column' p='100px' w='full'>
+			<Flex direction='column' p='100px' w='full' overflow='auto'>
 				{data.map(({ id, quizTitle, quizID }, index) => {
 					return (
 						<Flex

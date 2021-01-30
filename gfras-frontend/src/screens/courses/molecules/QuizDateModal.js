@@ -3,11 +3,12 @@ import { Button, Flex } from '@chakra-ui/core';
 import { Modal } from '../../../components/modal/modal';
 import DatePicker from 'react-date-picker';
 import { format } from 'date-fns';
+import { CalendarIcon } from '../../../components/icons/CalendarIcon';
 
 function ModalFooter({ setIsOpen, onSubmitCreateQuestion, quizStartDate }) {
 	const startDate = format(quizStartDate, 'dd-MM-yyyy');
 	return (
-		<Flex w='full' h='full' mr='auto'>
+		<Flex w='full' h='full' mr='auto' justify='flex-end'>
 			<Button onClick={() => setIsOpen(false)} mr='10px'>
 				Cancel
 			</Button>
@@ -23,9 +24,9 @@ function ModalFooter({ setIsOpen, onSubmitCreateQuestion, quizStartDate }) {
 function ModalBody({ startDate, setStartDate }) {
 	return (
 		<Flex mt='40px' h='full' w='full'>
-			{' '}
 			<DatePicker
 				minDate={new Date()}
+				calendarIcon={<CalendarIcon />}
 				value={startDate}
 				onChange={setStartDate}
 			/>
@@ -40,6 +41,7 @@ function QuizDateModal({ isOpen, setIsOpen, onSubmitCreateQuestion }) {
 		<Modal
 			headerTitle='Set Reminder'
 			isOpen={isOpen}
+			modalBodyStyle={{ overflow: 'visible' }}
 			modalBody={
 				<ModalBody setStartDate={setStartDate} startDate={startDate} />
 			}

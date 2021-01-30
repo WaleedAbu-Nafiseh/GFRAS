@@ -105,3 +105,32 @@ export const selectStudentsDetailsTable = createSelector(
 	getStudentsDetailsTable,
 	(data) => data
 );
+
+const getReminders = ({ reminders }) => {
+	return reminders.map(({ title, date, description, time }, id) => {
+		const splitDate = date.split('-');
+		const splitTime = time.split(':');
+
+		return {
+			id,
+			title,
+			start: new Date(
+				splitDate[2],
+				splitDate[1] - 1,
+				splitDate[0],
+				splitTime[0],
+				splitTime[1]
+			),
+			end: new Date(
+				splitDate[2],
+				splitDate[1] - 1,
+				splitDate[0],
+				splitTime[0],
+				splitTime[1]
+			),
+			desc: description
+		};
+	});
+};
+
+export const selectReminders = createSelector(getReminders, (data) => data);
