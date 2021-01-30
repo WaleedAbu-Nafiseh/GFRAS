@@ -12,6 +12,7 @@ import AddStudents from '../organisms/AddStudents';
 import QuizListSideMenu from '../organisms/QuizListSideMenu';
 import Grades from '../organisms/Grades';
 import Dashboard from '../organisms/Dashboard';
+import Reminder from '../organisms/Reminder';
 
 export function QuizTemplate() {
 	const { selectedCourseDetail } = useCourseDetailsContext();
@@ -52,6 +53,7 @@ export function QuizTemplate() {
 				selectedQuizzesDetails === 'quizzes-grades' && <Grades />}
 			{selectedCourseDetail === 'attendance-list' && <Attendance />}
 			{selectedCourseDetail === 'add-new-students' && <AddStudents />}
+			{selectedCourseDetail === 'reminder' && <Reminder />}
 		</Flex>
 	);
 }

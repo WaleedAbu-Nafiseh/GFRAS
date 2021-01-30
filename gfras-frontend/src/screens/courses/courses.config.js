@@ -4,6 +4,7 @@ import { AttendanceIcon } from '../../components/icons/Attendance';
 import { AddStudents } from '../../components/icons/AddStudents';
 import { QuizDetailsIcon } from '../../components/icons/QuizDetails';
 import { DashboardIcon } from '../../components/icons/Dashboard';
+import { ReminderIcon } from '../../components/icons/Reminder';
 
 export const sideMenuItems = [
 	{
@@ -41,6 +42,12 @@ export const courseDetails = [
 		label: 'Add Students',
 		id: 'add-new-students',
 		icon: <AddStudents boxSize='35px' />,
+		canSideMenuExpand: false
+	},
+	{
+		label: 'Reminder',
+		id: 'reminder',
+		icon: <ReminderIcon boxSize='35px' />,
 		canSideMenuExpand: false
 	}
 ];

@@ -54,5 +54,10 @@
 	"course.courseDetails.dashboard.average.studentAttendance.tooltip": "overall attendance percentage of the students.",
 	"course.courseDetails.dashboard.table.studentsDetails.title": "Students Details",
 	"course.courseDetails.dashboard.table.studentsDetails.tooltip": "List of students with their details like id, name, attendance, total marks.",
-	"course.courseDetails.dashboard.container.tooltip": "The students detail dashboard visualizes the various aspects of a students details that is helpful for the course teacher."
+	"course.courseDetails.dashboard.container.tooltip": "The students detail dashboard visualizes the various aspects of a students details that is helpful for the course teacher.",
+	"course.courseDetails.reminder.createReminder": "Create",
+	"course.courseDetails.reminder.modal.createReminder.title": "Create Reminder",
+	"course.courseDetails.reminder.modal.createReminder.addTitle": "Add title",
+	"course.courseDetails.reminder.modal.createReminder.createButton": "Create",
+	"course.courseDetails.reminder.modal.createReminder.cancelButton": "Cancel"
 }
