@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { CalendarEvents } from '../../../components/calendar-events/CalendarEvents';
 import 'react-big-calendar/lib/sass/styles.scss';
-import { Flex, Spinner } from '@chakra-ui/core';
+import { Flex } from '@chakra-ui/core';
 import { selectReminders } from '../selectors';
 import { useReminderContext } from '../ReminderContext';
 import EventDetailsModal from '../atoms/EventDetailsModal';
+import { Spinner } from '../../../components/loaders/Spinner';
 
 function CalendarReminder() {
 	const { isLoading, reminders } = useReminderContext();
@@ -13,17 +14,7 @@ function CalendarReminder() {
 	const events = !isLoading && selectReminders({ reminders });
 
 	if (isLoading) {
-		return (
-			<Flex w='full' h='full' align='center' justify='center'>
-				<Spinner
-					thickness='4px'
-					speed='0.65s'
-					emptyColor='gray.200'
-					color='blue.500'
-					size='xl'
-				/>
-			</Flex>
-		);
+		return <Spinner />;
 	}
 
 	return (

@@ -1,5 +1,6 @@
 import React, { Suspense, useState } from 'react';
-import { Button, Spinner, Flex } from '@chakra-ui/core';
+import { Button, Flex } from '@chakra-ui/core';
+import { Spinner } from './components/loaders/Spinner';
 import * as ROUTES from './constant';
 import {
 	Switch,
@@ -56,7 +57,7 @@ export function AuthenticatedApp() {
 				navTitle={formatMessage({ id: 'header.bar.title' })}
 				menuItems={navMenuItems}
 			/>
-			<Suspense fallback={<Spinner m='auto' />}>
+			<Suspense fallback={<Spinner />}>
 				<Switch>
 					<Route
 						path={`${ROUTES.COURSE_DETAILS}/:courseID/:quizID`}

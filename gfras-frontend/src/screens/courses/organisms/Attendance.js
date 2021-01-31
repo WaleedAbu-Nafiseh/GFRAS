@@ -5,8 +5,8 @@ import {
 	Button,
 	Divider,
 	Tooltip,
-	Spinner,
-	Icon
+	Icon,
+	Input
 } from '@chakra-ui/core';
 import { useIntl } from 'react-intl';
 import { useParams } from 'react-router-dom';
@@ -19,16 +19,27 @@ import { CSVLink } from 'react-csv';
 import { DownloadIcon } from '../../../components/icons/Download';
 import { BackButton } from '../atoms/BackButton';
 import { submitAttendance } from '../../../API/attendance/submitAttendance';
+import { Spinner } from '../../../components/loaders/Spinner';
+import { useForm } from 'react-hook-form';
+import {
+	useFailureToast,
+	useSuccessToast
+} from '../../../custom-hooks/useSuccessToast';
 
 const csvHeaders = [{ label: 'Student Name', key: 'studentName' }];
 
 export function Attendance() {
+	const { register, watch } = useForm();
+	const successToast = useSuccessToast();
+	const failureToast = useFailureToast();
 	const { courseID } = useParams();
 	const { formatMessage } = useIntl();
 	const {
 		data,
 		refetchAttendanceList,
-		studentsAttendance
+		studentsAttendance,
+		compareStudentsAttendance,
+		setCompareStudentsAttendance
 	} = useAttendanceContext();
 
 	let dropDownItems = '';
@@ -69,12 +80,28 @@ export function Attendance() {
 			courseID,
 			date: format(new Date(), 'dd-MM-yyyy'),
 			time: format(new Date(), 'HH:mm'),
-			presentStudents: studentsAttendance
-		}).then(() => {
-			setSelectedMenuItem(format(new Date(), 'dd-MM-yyyy'));
-			refetchAttendanceList();
-			setIsLoading(false);
-		});
+			presentStudents: studentsAttendance,
+			attendancePoint: watch('attendance-point'),
+			comparePresentStudents: compareStudentsAttendance
+		})
+			.then(() => {
+				setSelectedMenuItem(format(new Date(), 'dd-MM-yyyy'));
+				refetchAttendanceList();
+				setIsLoading(false);
+				setCompareStudentsAttendance([]);
+				successToast({
+					title: 'Attendance',
+					description: 'Student Attendance Submitted successfully'
+				});
+			})
+			.catch((err) => {
+				failureToast({
+					title: formatMessage({
+						id: 'toastMessage.errorOccurred.title'
+					}),
+					description: err.message
+				});
+			});
 	};
 
 	if (!data || isLoading) {
@@ -121,7 +148,6 @@ export function Attendance() {
 			</Flex>
 		);
 	}
-
 	return (
 		<Flex w='full' direction='column'>
 			<Flex w='full' justify='space-between'>
@@ -168,11 +194,26 @@ export function Attendance() {
 			<Flex w='full' p='30px' maxH='calc(100% - 200px)'>
 				<AttendanceTable selectedMenuItem={selectedMenuItem} />
 			</Flex>
+			<Input
+				type='number'
+				w='200px'
+				ml='30px'
+				mb='10px'
+				placeHolder='Attendance Point'
+				id='attendance-point'
+				errorBorderColor='rgba(224,32,32,.38)'
+				name='attendance-point'
+				borderRadius='7px'
+				ref={register({ required: true })}
+			/>
 			<Flex borderTop='2px solid #EFEFEF' mx='20px'>
 				<Button
 					minW='100px'
 					mt='10px'
 					bg='#ff5722'
+					isDisabled={
+						compareStudentsAttendance.length === 0 || !watch('attendance-point')
+					}
 					_hover={{ bg: '#fc4216' }}
 					onClick={() => submitNewAttendance()}
 					color='white'
@@ -181,21 +222,33 @@ export function Attendance() {
 						id: 'course.courseDetails.attendance.submitButtonLabel'
 					})}
 				</Button>
-				<Button
-					minW='100px'
-					ml='20px'
-					mt='10px'
-					bg='#277da1'
-					_hover={{ bg: '#00688d' }}
-					color='white'
-					onClick={() => {
-						handleStartNewAttendance();
-					}}
+				<Tooltip
+					shouldWrapChildren
+					bg='red.600'
+					isDisabled={!dropDownItems.includes(format(new Date(), 'dd-MM-yyyy'))}
+					label='Attendance can be created once a day'
+					hasArrow
+					arrowSize={15}
 				>
-					{formatMessage({
-						id: 'course.attendance.attendanceList.takeNewAttendance'
-					})}
-				</Button>
+					<Button
+						minW='100px'
+						ml='20px'
+						mt='10px'
+						bg='#277da1'
+						isDisabled={dropDownItems.includes(
+							format(new Date(), 'dd-MM-yyyy')
+						)}
+						_hover={{ bg: '#00688d' }}
+						color='white'
+						onClick={() => {
+							handleStartNewAttendance();
+						}}
+					>
+						{formatMessage({
+							id: 'course.attendance.attendanceList.takeNewAttendance'
+						})}
+					</Button>
+				</Tooltip>
 			</Flex>
 		</Flex>
 	);

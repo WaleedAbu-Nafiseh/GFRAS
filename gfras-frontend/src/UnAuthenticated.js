@@ -1,7 +1,8 @@
 import React, { Suspense } from 'react';
-import { Flex, Spinner } from '@chakra-ui/core';
+import { Flex } from '@chakra-ui/core';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import * as ROUTES from './constant';
+import { Spinner } from './components/loaders/Spinner';
 
 const Login = React.lazy(
 	() => import('./screens/login/pages') /* webpackChunkName: "Login" */

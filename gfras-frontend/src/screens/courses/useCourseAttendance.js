@@ -14,10 +14,16 @@ export function useCourseAttendance() {
 		getData
 	);
 	const [studentsAttendance, setStudentsAttendance] = useState(() => []);
+	const [compareStudentsAttendance, setCompareStudentsAttendance] = useState(
+		[]
+	); //to compare white studentsAttendance object for disabling submittion
+
 	return {
 		data,
 		isError,
 		isLoading,
+		setCompareStudentsAttendance,
+		compareStudentsAttendance,
 		refetchAttendanceList,
 		studentsAttendance,
 		setStudentsAttendance
