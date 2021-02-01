@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Checkbox, Spinner } from '@chakra-ui/core';
+import { Checkbox } from '@chakra-ui/core';
 import Table from '../../../components/table/ReactTable';
 import { useAttendanceContext } from '../AttendanceContext';
 import { getStudentsAttendance } from '../../../API/students/getStudentsAttendance';
@@ -28,24 +28,31 @@ export const columns = [
 		Cell: (cell) => {
 			const {
 				studentsAttendance,
-				setStudentsAttendance
+				setStudentsAttendance,
+				setCompareStudentsAttendance,
+				compareStudentsAttendance
 			} = useAttendanceContext();
-
 			const isPresent = studentsAttendance.findIndex(({ id }) => {
 				return cell.row.values.id === id;
 			});
 
 			useEffect(() => {
 				if (cell.row.values.isPresent && isPresent === -1) {
-					setStudentsAttendance([
-						...studentsAttendance,
+					setStudentsAttendance((prevStudentsAttendance) => [
+						...prevStudentsAttendance,
 						{
 							studentName: cell.row.values.fullName,
 							id: cell.row.values.id
 						}
 					]);
 				}
-			}, [cell.row, isPresent, setStudentsAttendance, studentsAttendance]);
+			}, [
+				cell.row,
+				isPresent,
+				setStudentsAttendance,
+				studentsAttendance,
+				setCompareStudentsAttendance
+			]);
 
 			return (
 				<Checkbox
@@ -53,17 +60,32 @@ export const columns = [
 					colorScheme='green'
 					border='1px solid black'
 					isChecked={!cell.row.values.isPresent ? isPresent !== -1 : true}
+					isDisabled={cell.row.values.isPresent && isPresent !== -1}
 					onChange={() => {
 						if (!cell.row.values.isPresent) {
 							if (isPresent !== -1) {
-								setStudentsAttendance(
-									studentsAttendance.filter(
+								setCompareStudentsAttendance((prevCompareStudentsAttendance) =>
+									prevCompareStudentsAttendance.filter(
+										({ id }) => cell.row.values.id !== id
+									)
+								);
+								setStudentsAttendance((prevStudentsAttendance) =>
+									prevStudentsAttendance.filter(
 										({ id }) => cell.row.values.id !== id
 									)
 								);
 							} else {
-								setStudentsAttendance([
-									...studentsAttendance,
+								setCompareStudentsAttendance(
+									(prevCompareStudentsAttendance) => [
+										...prevCompareStudentsAttendance,
+										{
+											studentName: cell.row.values.fullName,
+											id: cell.row.values.id
+										}
+									]
+								);
+								setStudentsAttendance((prevStudentsAttendance) => [
+									...prevStudentsAttendance,
 									{
 										studentName: cell.row.values.fullName,
 										id: cell.row.values.id

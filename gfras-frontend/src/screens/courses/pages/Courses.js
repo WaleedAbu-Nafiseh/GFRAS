@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Flex, VStack, Button, Text, Spinner } from '@chakra-ui/core';
+import { Flex, VStack, Button, Text } from '@chakra-ui/core';
 import { SideMenu } from '../../../components/side-menu/SideMenu';
 import { sideMenuItems, YOUR_COURSES } from '../courses.config';
 import { CourseMainViews } from '../organisms/CourseMainViews';
 import CoursesProvider, { useCoursesContext } from '../CoursesContext';
+import { Spinner } from '../../../components/loaders/Spinner';
 
 function PageSideMenu() {
 	const [activeSideMenuButton, setActiveSideMenuButton] = useState(
@@ -44,7 +45,7 @@ function PageContainer() {
 	const { isError, isLoading } = useCoursesContext();
 
 	if (isError) return <Text m='auto'>Something went wrong</Text>;
-	if (isLoading) return <Spinner m='auto' />;
+	if (isLoading) return <Spinner />;
 	if (!isLoading && !isError) return <PageSideMenu />;
 }
 

@@ -36,8 +36,12 @@ const columns = [
 		accessor: 'attendance'
 	},
 	{
-		Header: 'Total Marks',
-		accessor: 'totalMarks'
+		Header: 'Total Attendance Points',
+		accessor: 'totalAttendancePoints'
+	},
+	{
+		Header: 'Total Quizzes Marks',
+		accessor: 'totalQuizzesMarks'
 	}
 ];
 

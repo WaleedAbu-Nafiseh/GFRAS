@@ -51,6 +51,16 @@ function getNoOfStudentAttendance({ courseAttendance, documentID }) {
 	}, 0);
 }
 
+function getTotalAttendancePoints({ courseAttendance, documentID }) {
+	return Object.keys(courseAttendance).reduce((acc, currAttendanceDay) => {
+		let attendancePointInOneDay = courseAttendance[currAttendanceDay].find(
+			({ studentID }) => studentID === documentID
+		).attendancePoint;
+
+		return acc + attendancePointInOneDay;
+	}, 0);
+}
+
 function getStudentTotalMarks({ studentsGradesSheet, documentID }) {
 	return studentsGradesSheet.reduce((acc, currStudentQuizData) => {
 		if (documentID === currStudentQuizData.studentId) {
@@ -74,10 +84,15 @@ function getStudentsDetailsTable({ studentsGradesSheet, data, studentsData }) {
 			courseAttendance: data.attendance,
 			documentID
 		});
-		const totalMarks = getStudentTotalMarks({
+		const totalQuizzesMarks = getStudentTotalMarks({
 			studentsGradesSheet,
 			documentID
 		});
+		const totalAttendancePoints = getTotalAttendancePoints({
+			courseAttendance: data.attendance,
+			documentID
+		});
+
 		if (tableDataStudentIndex === -1) {
 			return [
 				...acc,
@@ -85,7 +100,8 @@ function getStudentsDetailsTable({ studentsGradesSheet, data, studentsData }) {
 					studentID: student.studentUniversityId,
 					fullName: studentFullName,
 					attendance: noOfAttendance,
-					totalMarks
+					totalQuizzesMarks,
+					totalAttendancePoints
 				}
 			];
 		} else {
@@ -93,7 +109,7 @@ function getStudentsDetailsTable({ studentsGradesSheet, data, studentsData }) {
 			const studentTableData = {
 				...acc[tableDataStudentIndex],
 				attendance: acc[tableDataStudentIndex].attendance + noOfAttendance,
-				totalMarks: acc[tableDataStudentIndex].totalMarks + totalMarks
+				totalMarks: acc[tableDataStudentIndex].totalMarks + totalQuizzesMarks
 			};
 			acc.splice(tableDataStudentIndex, 1);
 			return [...acc, studentTableData];

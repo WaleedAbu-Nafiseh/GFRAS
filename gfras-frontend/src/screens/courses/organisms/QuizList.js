@@ -1,11 +1,12 @@
 import React from 'react';
-import { Flex, Text, Button, Spinner } from '@chakra-ui/core';
+import { Flex, Text, Button } from '@chakra-ui/core';
 import { useQuizContext } from '../QuizContext';
 import { useIntl } from 'react-intl';
 import { startQuiz } from '../../../API/quizzes/startQuiz';
 import { useLocation, useHistory } from 'react-router-dom';
 import { useCourseDetailsContext } from '../CourseDetailsContext';
 import { BackButton } from '../atoms/BackButton';
+import { Spinner } from '../../../components/loaders/Spinner';
 
 export function QuizList() {
 	const { pathname } = useLocation();

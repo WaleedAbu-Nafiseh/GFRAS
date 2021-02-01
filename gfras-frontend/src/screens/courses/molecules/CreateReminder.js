@@ -10,6 +10,11 @@ import TimePicker from 'react-time-picker';
 import { setNewReminder } from '../../../API/reminder/setNewReminder';
 import { useParams } from 'react-router-dom';
 import { format } from 'date-fns';
+import { useReminderContext } from '../ReminderContext';
+import {
+	useFailureToast,
+	useSuccessToast
+} from '../../../custom-hooks/useSuccessToast';
 
 function ReminderButton({ setIsCreateReminderModalOpen }) {
 	const { formatMessage: f } = useIntl();
@@ -40,8 +45,7 @@ function ModalBody({
 	onChangeDate,
 	time,
 	onChangeTime,
-	register,
-	onSubmit
+	register
 }) {
 	const { formatMessage: f } = useIntl();
 
@@ -212,6 +216,7 @@ function ReminderModal({
 	setIsCreateReminderModalOpen,
 	isCreateReminderModalOpen
 }) {
+	const { refetchReminders } = useReminderContext();
 	const { courseID } = useParams();
 	const [isLoading, setIsLoading] = useState(false);
 	const { register, handleSubmit, watch } = useForm();
@@ -219,7 +224,8 @@ function ReminderModal({
 	const [isCalenderOpened, setIsCalendarOpened] = useState(false);
 	const [date, setDate] = useState(new Date());
 	const [time, setTime] = useState(format(new Date(), 'HH:mm'));
-
+	const successToast = useSuccessToast();
+	const failureToast = useFailureToast();
 	const onSubmit = handleSubmit(({ title, description }) => {
 		setIsLoading(true);
 		setNewReminder({
@@ -230,12 +236,32 @@ function ReminderModal({
 			courseID
 		})
 			.then((res) => {
+				const splitDate = format(date, 'dd-MM-yyyy').split('-');
+				const splitTime = time.split(':');
 				setIsLoading(false);
 				setIsCreateReminderModalOpen(false);
+				refetchReminders();
+
+				successToast({
+					title: `Reminder created at ${format(date, 'MMM d')} ${format(
+						new Date(
+							+splitDate[2],
+							+splitDate[1] - 1,
+							+splitDate[0],
+							+splitTime[0],
+							+splitTime[1]
+						),
+						'h:mm aa'
+					)}`
+				});
 			})
-			.catch(() => {
+			.catch((err) => {
 				setIsLoading(false);
 				setIsCreateReminderModalOpen(false);
+				failureToast({
+					title: 'An error occurred',
+					description: err.message
+				});
 			});
 	});
 
@@ -247,7 +273,6 @@ function ReminderModal({
 			})}
 			modalBody={
 				<ModalBody
-					onSubmit={onSubmit}
 					register={register}
 					setIsCalendarOpened={setIsCalendarOpened}
 					date={date}
@@ -269,17 +294,6 @@ function ReminderModal({
 		/>
 	);
 }
-
-const events = [
-	{
-		start: '2015-07-19',
-		end: '2015-07-25',
-		title: 'test event',
-		eventClasses: 'optionalEvent',
-		description: 'This is a test description of an event',
-		data: 'you can add what ever random data you may want to use later'
-	}
-];
 
 function CreateReminder() {
 	const [isCreateReminderModalOpen, setIsCreateReminderModalOpen] = useState(

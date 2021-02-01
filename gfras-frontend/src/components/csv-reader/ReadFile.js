@@ -10,7 +10,7 @@ const papaparseOptions = {
 	transformHeader: (header) => header.toLowerCase().replace(/\W/g, '')
 };
 
-export const ReadFile = ({ setCSVFileData, ...rest }) => {
+export const ReadFile = ({ setCSVFileData, isOptional = false, ...rest }) => {
 	const { formatMessage } = useIntl();
 
 	const handleForce = (data, fileInfo) => {
@@ -20,7 +20,12 @@ export const ReadFile = ({ setCSVFileData, ...rest }) => {
 	return (
 		<Flex direction='column' fontWeight={500} ml='50px' mt='22px' {...rest}>
 			<Text color='rgba(18,18,18,0.38)'>
-				{formatMessage({ id: 'course.createNewCourse.addStudents' })}
+				<Flex w='full' align='center'>
+					{formatMessage({ id: 'course.createNewCourse.addStudents' })}
+					<Text fontSize='14px' ml='10px'>
+						{isOptional && '(optional field)'}
+					</Text>
+				</Flex>
 			</Text>
 			<Flex direction='column' marginTop='7px'>
 				<CSVReader
