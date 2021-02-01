@@ -108,7 +108,7 @@ export function CreateNewCourse() {
 					{formatMessage({ id: 'courses.createNewCourse.createNewCourseBtn' })}
 				</Button>
 			</form>
-			<ReadFile setCSVFileData={setCSVFileData} />
+			<ReadFile setCSVFileData={setCSVFileData} isOptional />
 		</Flex>
 	);
 }

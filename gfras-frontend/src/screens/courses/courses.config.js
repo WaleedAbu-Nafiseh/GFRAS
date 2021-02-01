@@ -21,6 +21,12 @@ export const courseDetails = [
 		canSideMenuExpand: false
 	},
 	{
+		label: 'Attendance',
+		id: 'attendance-list',
+		icon: <AttendanceIcon boxSize='35px' />,
+		canSideMenuExpand: false
+	},
+	{
 		label: 'Create Quiz',
 		id: 'create-quiz',
 		icon: <QuizIcon boxSize='40px' />,
@@ -31,12 +37,6 @@ export const courseDetails = [
 		id: 'quizzes-details',
 		icon: <QuizDetailsIcon boxSize='35px' />,
 		canSideMenuExpand: true
-	},
-	{
-		label: 'Attendance',
-		id: 'attendance-list',
-		icon: <AttendanceIcon boxSize='35px' />,
-		canSideMenuExpand: false
 	},
 	{
 		label: 'Add Students',

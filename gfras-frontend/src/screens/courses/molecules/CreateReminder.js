@@ -11,6 +11,10 @@ import { setNewReminder } from '../../../API/reminder/setNewReminder';
 import { useParams } from 'react-router-dom';
 import { format } from 'date-fns';
 import { useReminderContext } from '../ReminderContext';
+import {
+	useFailureToast,
+	useSuccessToast
+} from '../../../custom-hooks/useSuccessToast';
 
 function ReminderButton({ setIsCreateReminderModalOpen }) {
 	const { formatMessage: f } = useIntl();
@@ -220,7 +224,8 @@ function ReminderModal({
 	const [isCalenderOpened, setIsCalendarOpened] = useState(false);
 	const [date, setDate] = useState(new Date());
 	const [time, setTime] = useState(format(new Date(), 'HH:mm'));
-
+	const successToast = useSuccessToast();
+	const failureToast = useFailureToast();
 	const onSubmit = handleSubmit(({ title, description }) => {
 		setIsLoading(true);
 		setNewReminder({
@@ -231,13 +236,32 @@ function ReminderModal({
 			courseID
 		})
 			.then((res) => {
+				const splitDate = format(date, 'dd-MM-yyyy').split('-');
+				const splitTime = time.split(':');
 				setIsLoading(false);
 				setIsCreateReminderModalOpen(false);
 				refetchReminders();
+
+				successToast({
+					title: `Reminder created at ${format(date, 'MMM d')} ${format(
+						new Date(
+							+splitDate[2],
+							+splitDate[1] - 1,
+							+splitDate[0],
+							+splitTime[0],
+							+splitTime[1]
+						),
+						'h:mm aa'
+					)}`
+				});
 			})
-			.catch(() => {
+			.catch((err) => {
 				setIsLoading(false);
 				setIsCreateReminderModalOpen(false);
+				failureToast({
+					title: 'An error occurred',
+					description: err.message
+				});
 			});
 	});
 

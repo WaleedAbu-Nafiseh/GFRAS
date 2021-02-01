@@ -1,10 +1,8 @@
 import { useState } from 'react';
 
 export function useCourseDetails() {
-	const [isSideMenuExpanded, setIsSideMenuExpanded] = useState(true);
-	const [selectedCourseDetail, setSelectedCourseDetail] = useState(
-		'create-quiz'
-	);
+	const [isSideMenuExpanded, setIsSideMenuExpanded] = useState(false);
+	const [selectedCourseDetail, setSelectedCourseDetail] = useState('dashboard');
 
 	const [selectedQuizzesDetails, setSelectedQuizzesDetails] = useState(
 		'quizzes-list'

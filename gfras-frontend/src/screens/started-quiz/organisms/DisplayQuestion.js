@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Flex, Box, Text, Button } from '@chakra-ui/core';
 import {
 	ANSWER_OPTIONS,
 	optionsBackgroundColors,
 	hoverOptionsBackgroundColor
 } from '../displayQuestion.config';
-import { useParams, Prompt } from 'react-router-dom';
+import { useParams, Prompt, useHistory } from 'react-router-dom';
 import { useStartedQuizContext } from '../StartedQuizContext';
 import { useIntl } from 'react-intl';
 import { setQuizFinished } from '../../../API/quizzes/setQuizFinished';
 import { Modal } from '../../../components/modal/modal';
+import { CountdownCircleTimer } from 'react-countdown-circle-timer';
+import * as ROUTES from '../../../constant';
 
 function Question({ question }) {
 	return (
@@ -48,17 +50,68 @@ function Options({ data }) {
 	);
 }
 
-const ACTUAL_QUESTION_NUMBER = 1;
+const RenderTime = ({ remainingTime }) => {
+	return (
+		<Flex
+			w='full'
+			mr='auto'
+			h='full'
+			align='center'
+			justify='center'
+			fontSize='60px'
+		>
+			{remainingTime}
+		</Flex>
+	);
+};
 
-function NextQuestion({ noOfQuestions }) {
+const ACTUAL_QUESTION_NUMBER = 1;
+let prevQuestion = 0;
+const onSetQuizFinished = async ({ quizID }) => {
+	await setQuizFinished({ quizID });
+};
+
+function NextQuestion({ noOfQuestions, showModal }) {
 	const { setQuestionNumber, questionNumber } = useStartedQuizContext();
+	const [extraTimeCountDown, setExtraTimeCountDown] = React.useState(10);
+	const [isCountDownFinished, setIsCountDownFinished] = useState(false);
 	const { formatMessage } = useIntl();
 	const { quizID, courseID } = useParams();
 
 	const isLastQuestion = () =>
 		questionNumber + ACTUAL_QUESTION_NUMBER === noOfQuestions;
+
+	useEffect(() => {
+		if (isCountDownFinished && extraTimeCountDown > 0) {
+			setTimeout(
+				() =>
+					setExtraTimeCountDown(
+						(prevExtraTimeCountDown) => prevExtraTimeCountDown - 1
+					),
+				1000
+			);
+		}
+	}, [isCountDownFinished, extraTimeCountDown]);
+
+	if (
+		!isLastQuestion() &&
+		extraTimeCountDown === 0 &&
+		prevQuestion === questionNumber
+	) {
+		setQuestionNumber((prevState) => {
+			++prevQuestion;
+			return ++prevState;
+		});
+	}
+
+	if (isLastQuestion() && extraTimeCountDown === 0) {
+		onSetQuizFinished({ quizID }).then(() => {
+			window.location.href = `/top-students/${courseID}/${quizID}`;
+		});
+	}
+
 	//TODO: handle end button to show question false
-	return (
+	return isCountDownFinished ? (
 		<Button
 			position='absolute'
 			right='8px'
@@ -71,7 +124,7 @@ function NextQuestion({ noOfQuestions }) {
 				}
 			}}
 			maxH='48px'
-			maxW='48px'
+			maxW={isLastQuestion() ? '160px' : '230px'}
 			_hover={{
 				bg: isLastQuestion() ? 'red.600' : '#ff5722'
 			}}
@@ -80,13 +133,35 @@ function NextQuestion({ noOfQuestions }) {
 			color='white'
 		>
 			{isLastQuestion()
-				? formatMessage({ id: 'course.quiz.startedQuiz.endQuestion' })
-				: formatMessage({ id: 'course.quiz.startedQuiz.nextQuestion' })}
+				? `Ending the quiz... ${extraTimeCountDown}`
+				: `Going to the next question... ${extraTimeCountDown}`}
 		</Button>
+	) : (
+		<Flex ml='auto' mr='20px'>
+			<CountdownCircleTimer
+				isPlaying={!showModal}
+				duration={120}
+				colors={[
+					['#1a73e8', 0.5],
+					['#fc4216', 0.5]
+				]}
+				onComplete={() => {
+					setIsCountDownFinished(true);
+					return [false, 1000];
+				}}
+			>
+				{({ remainingTime }) => {
+					return <RenderTime remainingTime={remainingTime} />;
+				}}
+			</CountdownCircleTimer>
+		</Flex>
 	);
 }
 
-function ModalFooter({ setShowModal }) {
+function ModalFooter({ setShowModal, setNavigateToAnotherPage }) {
+	const { replace } = useHistory();
+	const { courseID, quizID } = useParams();
+
 	return (
 		<Flex justify='flex-end' w='full'>
 			<Button
@@ -110,7 +185,14 @@ function ModalFooter({ setShowModal }) {
 				border='none'
 				_hover={{ bg: 'red.600' }}
 				_focus={{ outline: 'none', border: 'none' }}
-				onClick={() => console.log('yes')}
+				onClick={async () => {
+					console.log('hi');
+					await setQuizFinished({ quizID }).then(() => {
+						setShowModal(false);
+						setNavigateToAnotherPage(true);
+						replace(`${ROUTES.COURSE_DETAILS}/${courseID}`);
+					});
+				}}
 			>
 				Continue
 			</Button>
@@ -121,6 +203,7 @@ function ModalFooter({ setShowModal }) {
 export function DisplayQuestion() {
 	const { data, questionNumber } = useStartedQuizContext();
 	const [showModal, setShowModal] = useState(false);
+	const [navigateToAnotherPage, setNavigateToAnotherPage] = useState(false);
 	const { formatMessage } = useIntl();
 
 	return (
@@ -128,14 +211,19 @@ export function DisplayQuestion() {
 			<Prompt
 				message={() => {
 					setShowModal(true);
-					return false;
+					return navigateToAnotherPage;
 				}}
 			/>
 			<Modal
 				headerTitle={'Navigate to another page'}
 				isOpen={showModal}
 				modalBody='If you navigate to another page the quiz will be ended'
-				modalFooter={<ModalFooter setShowModal={setShowModal} />}
+				modalFooter={
+					<ModalFooter
+						setShowModal={setShowModal}
+						setNavigateToAnotherPage={setNavigateToAnotherPage}
+					/>
+				}
 			/>
 			<Question question={data.questionData.question} />
 			<Text textAlign='center' color='#bbbfc6' fontWeight='600' fontSize='md'>
@@ -149,7 +237,7 @@ export function DisplayQuestion() {
 					}
 				)}
 			</Text>
-			<NextQuestion noOfQuestions={data.noOfQuestions} />
+			<NextQuestion noOfQuestions={data.noOfQuestions} showModal={showModal} />
 			<Options data={data} />
 		</Flex>
 	);
