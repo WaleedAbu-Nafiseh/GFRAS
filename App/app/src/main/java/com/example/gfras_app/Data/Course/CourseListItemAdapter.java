@@ -34,7 +34,7 @@ public class CourseListItemAdapter extends RecyclerView.Adapter<CourseListItemAd
     public void onBindViewHolder(@NonNull CourseListItemViewHolder holder, int position) {
         Course currentItem = coursesList.get(position);
         holder.mTextView1.setText(currentItem.getCourseName());
-        holder.mTextView2.setText(currentItem.getCourseId());
+        holder.mTextView2.setText(currentItem.getStudents().size()+" Students" );
 
     }
 

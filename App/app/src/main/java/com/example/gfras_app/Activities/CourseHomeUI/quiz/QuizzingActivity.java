@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.gfras_app.Data.Course.Course;
 import com.example.gfras_app.Data.Question;
 import com.example.gfras_app.Data.Quiz;
 import com.example.gfras_app.Data.GradeSheet;
@@ -25,6 +26,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.gson.Gson;
 
 public class QuizzingActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -44,6 +46,7 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
     private ConstraintLayout quizLayout;
     int currentQuestionCounter;
     Question currentQuestion;
+    Course currentCourse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +55,12 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_quizzing);
         Bundle bundle = getIntent().getExtras();
         String quizID = bundle.getString("QUIZ_ID");
-        Log.e(TAG, quizID);
-
+        Gson g = new Gson();
+        currentCourse = g.fromJson(bundle.getString("COURSE"), Course.class);
         txtQuestionPlace = findViewById(R.id.txtQuestionPlace);
         txtPoints = findViewById(R.id.txtPoints);
         prgsBar = findViewById(R.id.prgsBar);
+
         btnOptionA = findViewById(R.id.btnOptionA);
         btnOptionB = findViewById(R.id.btnOptionB);
         btnOptionC = findViewById(R.id.btnOptionC);
@@ -68,7 +72,6 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
         btnOptionC.setOnClickListener(this);
         btnOptionD.setOnClickListener(this);
 
-        Log.d(TAG, " onCreate");
         prgsBar.setVisibility(View.VISIBLE);
         db = FirebaseFirestore.getInstance();
         docRef = db.collection(CollectionsName.QUIZZES).document(quizID);
@@ -80,7 +83,6 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
 
     //Will be called by the onCreate method and it calls the write Ui whenever there is a change on the database
     public void start() {
-        Log.d(TAG, " start");
 
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -105,7 +107,7 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
 
     public void writeUI() {
         if (gradeSheet == null) {
-            gradeSheet = new GradeSheet(quiz.getQuestions().size(), quiz.getId(), UserServices.getCurrentUser(getApplicationContext()).getId());
+            gradeSheet = new GradeSheet(currentCourse.getCourseId(),quiz.getQuestions().size(), quiz.getId(), UserServices.getCurrentUser(getApplicationContext()).getId());
         }
         if (quiz.isFinished()) {
             Log.e("f", quiz.isFinished() + "is fni");

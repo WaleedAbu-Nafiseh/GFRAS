@@ -1,5 +1,6 @@
 package com.example.gfras_app.Activities.CourseHomeUI.quiz;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -104,8 +105,17 @@ public class QuizzesFragment extends Fragment {
 
     private void setOnclickListener() {
         listener = new QuizListItemAdapter.RecyclerViewClickListener() {
-
             public void onClick(View v, int position) {
+                Intent i = new Intent(getContext(), QuizzingActivity.class);
+                //Create the bundle
+                Bundle bundle = new Bundle();
+                //Add your data from getFactualResults method to bundle
+                bundle.putString("QUIZ_ID", quizList.get(position).getId());
+                Gson g = new Gson();
+                bundle.putString("COURSE", g.toJson(currentCourse));
+                //Add the bundle to the intent
+                i.putExtras(bundle);
+                startActivity(i);
 
             }
         };

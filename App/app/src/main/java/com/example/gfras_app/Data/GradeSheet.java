@@ -11,12 +11,12 @@ public class GradeSheet {
     @DocumentId
     private String id;
     private String quizId;
+    private String courseID;
     private String studentId;
     private int points;
     private List<Boolean> questionTF;
     private List<Boolean> questionAnswered;
     private List<Integer> questionPoints;
-
 
     public GradeSheet(String id, String quizId, int points, List<Boolean> questionTF, List<Integer> questionPoints, String studentId, List<Boolean> questionAnswered) {
         this.id = id;
@@ -26,20 +26,30 @@ public class GradeSheet {
         this.questionTF = questionTF;
         this.questionPoints = questionPoints;
         this.questionAnswered = questionAnswered;
+        this.courseID = courseID;
     }
 
-    public GradeSheet(int numQuestions,String quizId,String studentId) {
+    public GradeSheet(String courseID, int numQuestions, String quizId, String studentId) {
         this.points = 0;
         this.questionTF = new ArrayList<>();
         this.questionPoints = new ArrayList<>();
         this.questionAnswered = new ArrayList<>();
-        this.quizId=quizId;
-        this.studentId=studentId;
+        this.quizId = quizId;
+        this.studentId = studentId;
+        this.courseID = courseID;
 
         for (int i = 0; i < numQuestions; i++) {
             this.questionTF.add(false);
             this.questionAnswered.add(false);
         }
+    }
+
+    public String getCourseID() {
+        return courseID;
+    }
+
+    public void setCourseID(String courseID) {
+        this.courseID = courseID;
     }
 
     public String getId() {
