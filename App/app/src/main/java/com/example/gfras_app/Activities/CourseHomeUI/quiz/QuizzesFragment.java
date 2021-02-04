@@ -42,6 +42,7 @@ public class QuizzesFragment extends Fragment {
     List<Quiz> finishedQuizList;
     Course currentCourse;
     Course selectedCourse;
+    QuizListItemAdapter.RecyclerViewClickListener finishedListener;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -87,12 +88,15 @@ public class QuizzesFragment extends Fragment {
                             finishedQuizList.add(c);
                         }
                     }
+                    if(quizList.isEmpty()){
+                        mRecyclerView.setVisibility(View.INVISIBLE);
+                    }
 
                     mAdapter = new QuizListItemAdapter(quizList, listener);
                     mRecyclerView.setLayoutManager(mLayoutManager);
                     mRecyclerView.setAdapter(mAdapter);
 
-                    mAdapterFinished = new QuizListItemAdapter(finishedQuizList, listener);
+                    mAdapterFinished = new QuizListItemAdapter(finishedQuizList, finishedListener);
                     finishedquizListRecyclerView.setLayoutManager(mLayoutManagerFinished);
                     finishedquizListRecyclerView.setAdapter(mAdapterFinished);
 
@@ -111,6 +115,21 @@ public class QuizzesFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 //Add your data from getFactualResults method to bundle
                 bundle.putString("QUIZ_ID", quizList.get(position).getId());
+                Gson g = new Gson();
+                bundle.putString("COURSE", g.toJson(currentCourse));
+                //Add the bundle to the intent
+                i.putExtras(bundle);
+                startActivity(i);
+
+            }
+        };
+        finishedListener = new QuizListItemAdapter.RecyclerViewClickListener() {
+            public void onClick(View v, int position) {
+                Intent i = new Intent(getContext(), QuizzingActivity.class);
+                //Create the bundle
+                Bundle bundle = new Bundle();
+                //Add your data from getFactualResults method to bundle
+                bundle.putString("QUIZ_ID", finishedQuizList.get(position).getId());
                 Gson g = new Gson();
                 bundle.putString("COURSE", g.toJson(currentCourse));
                 //Add the bundle to the intent

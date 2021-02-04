@@ -6,10 +6,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 
+import com.example.gfras_app.Data.Course.Course;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.example.gfras_app.R;
+import com.google.gson.Gson;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -22,7 +24,7 @@ import androidx.appcompat.widget.Toolbar;
 public class CourseHomeMainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private String courseId;
+    private Course course;
     private  Bundle bundle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +68,11 @@ public class CourseHomeMainActivity extends AppCompatActivity {
     }
     public Bundle getMyData() {
         Intent intent = getIntent();
-        courseId = intent.getExtras().getString("COURSE");
         bundle = new Bundle();
-        bundle.putString("COURSE",courseId);
+        Gson g = new Gson();
+        course = g.fromJson(intent.getExtras().getString("COURSE"),Course.class);
+        bundle.putString("COURSE",g.toJson(course));
+        Log.e("HEEERRRREEEE", "->>>>>> "+course.getCourseId());
         return bundle;
     }
 }

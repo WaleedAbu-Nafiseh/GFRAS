@@ -86,9 +86,6 @@ public class LoginActivity extends AppCompatActivity {
                                             if(txtWrong.getVisibility()==View.INVISIBLE){
                                                 txtWrong.setVisibility(View.VISIBLE);
                                             }                                            txtWrong.setText("Password or username are wrong");
-                                            Log.d(TAG, document.getId() + " => " + document.getData());
-                                            Toast toast = Toast.makeText(getApplicationContext(), "Password or username are wrong!", Toast.LENGTH_LONG);
-                                            toast.show();
                                         }
                                     }
                                 } else {

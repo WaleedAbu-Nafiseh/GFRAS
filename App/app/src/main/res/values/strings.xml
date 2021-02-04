@@ -30,7 +30,7 @@
     <string name="menu_quizzes">Quizzes list</string>
     <string name="menu_fr">Facial Recognition</string>
     <string name="menu_calendar">Calendar</string>
-    <string name="nav_top_students">Coturse Information</string>
+    <string name="nav_top_students">Course Information</string>
     <string name="StudentPassword">Password</string>
     <string name="select_course">Please select a course</string>
     <string name="areYouInstructor">If you are an instructor, <u>Click here!</u></string>

@@ -1,9 +1,7 @@
 package com.example.gfras_app.Activities.CourseHomeUI.quiz;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,15 +61,6 @@ public class QuizListItemAdapter extends RecyclerView.Adapter<QuizListItemAdapte
         @Override
         public void onClick(View view) {
             listener.onClick(view, getAdapterPosition());
-            Intent i = new Intent(view.getContext(), QuizzingActivity.class);
-            //Create the bundle
-            Bundle bundle = new Bundle();
-            //Add your data from getFactualResults method to bundle
-            bundle.putString("QUIZ_ID", QuizzesList.get(getAdapterPosition()).getId());
-            //Add the bundle to the intent
-            i.putExtras(bundle);
-            view.getContext().startActivity(i);
-
         }
     }
 

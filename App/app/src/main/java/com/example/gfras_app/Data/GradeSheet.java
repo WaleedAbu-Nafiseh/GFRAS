@@ -44,6 +44,10 @@ public class GradeSheet {
         }
     }
 
+    public GradeSheet() {
+
+    }
+
     public String getCourseID() {
         return courseID;
     }

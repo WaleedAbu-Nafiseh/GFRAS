@@ -22,18 +22,20 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:textSize="18dp"
         android:text="@string/select_course"
-        app:layout_constraintBottom_toTopOf="@+id/CourseListRecyclerView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.01999998" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/CourseListRecyclerView"
         android:layout_width="411dp"
         android:layout_height="672dp"
-        android:paddingTop="30dp"
+        android:paddingTop="10dp"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

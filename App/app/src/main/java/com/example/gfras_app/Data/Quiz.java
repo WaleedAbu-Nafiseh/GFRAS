@@ -64,19 +64,15 @@ public class Quiz {
         this.quizTitle = quizTitle;
     }
 
-    public boolean isStarted() {
-        return isStarted;
-    }
-
-    public void setStarted(boolean started) {
-        isStarted = started;
-    }
-
     public boolean isFinished() {
         return finished;
     }
 
     public void setFinished(boolean finished) {
         this.finished = finished;
+    }
+
+    public void setStarted(boolean started) {
+        isStarted = started;
     }
 }

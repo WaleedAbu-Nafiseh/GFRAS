@@ -14,10 +14,8 @@
         android:elevation="10dp"
         app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.06999999">
+        app:layout_constraintTop_toBottomOf="@+id/details"
+        app:layout_constraintVertical_bias="0.07999998">
 
 
         <!--Linear layout to display pie chart -->
@@ -35,13 +33,13 @@
                 android:id="@+id/piechart"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp"
+                android:layout_marginRight="10dp"
                 android:layout_marginBottom="15dp"
                 android:layout_weight="1"
                 android:padding="6dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginStart="10dp"
 
                 />
 
@@ -114,13 +112,36 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/details"
         android:layout_width="match_parent"
-        android:layout_height="260dp"
+        android:layout_height="60dp"
+        android:elevation="10dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.07999998">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Your Points are: 25" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/missedDays"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:elevation="10dp"
         app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardViewGraph"
         app:layout_constraintVertical_bias="0.07999998">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="You have no missed Quizzes" />
 
     </androidx.cardview.widget.CardView>
 
