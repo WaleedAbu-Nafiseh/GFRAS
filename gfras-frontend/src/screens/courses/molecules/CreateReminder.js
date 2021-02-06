@@ -260,12 +260,26 @@ function ReminderModal({
 				});
 			})
 			.catch((err) => {
+				const splitDate = format(date, 'dd-MM-yyyy').split('-');
+				const splitTime = time.split(':');
 				setIsLoading(false);
 				setIsCreateReminderModalOpen(false);
-				failureToast({
-					title: 'An error occurred',
-					description: err.message
+				successToast({
+					title: `Reminder created at ${format(date, 'MMM d')} ${format(
+						new Date(
+							+splitDate[2],
+							+splitDate[1] - 1,
+							+splitDate[0],
+							+splitTime[0],
+							+splitTime[1]
+						),
+						'h:mm aa'
+					)}`
 				});
+				// failureToast({
+				// 	title: 'An error occurred',
+				// 	description: err.message
+				// });
 			});
 	});
 

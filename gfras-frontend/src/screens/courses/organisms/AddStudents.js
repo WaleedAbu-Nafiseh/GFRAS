@@ -46,18 +46,18 @@ function AddStudents() {
 			{/*<BackButton />*/}
 
 			<Flex direction='column' mt='60px' ml='90px'>
-				<FormControl display='flex' alignItems='center'>
-					<FormLabel fontSize='20px'>Add Manually</FormLabel>
-					<Switch
-						defaultChecked={false}
-						onChange={() => setIsAddManually((prevState) => !prevState)}
-						isChecked={isAddManually}
-						border='none'
-						outline='none'
-						colorScheme='green'
-						size='lg'
-					/>
-				</FormControl>
+				{/*<FormControl display='flex' alignItems='center'>*/}
+				{/*	<FormLabel fontSize='20px'>Add Manually</FormLabel>*/}
+				{/*	<Switch*/}
+				{/*		defaultChecked={false}*/}
+				{/*		onChange={() => setIsAddManually((prevState) => !prevState)}*/}
+				{/*		isChecked={isAddManually}*/}
+				{/*		border='none'*/}
+				{/*		outline='none'*/}
+				{/*		colorScheme='green'*/}
+				{/*		size='lg'*/}
+				{/*	/>*/}
+				{/*</FormControl>*/}
 				<AddNewStudentsCsv
 					isLoading={isLoading}
 					CSVFileData={CSVFileData}
