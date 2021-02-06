@@ -79,11 +79,11 @@ public class NotificationsController {
         //looping through all the ist of Attendance object and send the notification for all
         for (Attendance a : c.getAttendance().get(date)) {
             System.out.println("The attendance id is " + a.getStudentID());
-
+            String courseName = c.getCourseName();
             studentsInCourseList.forEach((v) -> {
                 String text = "";
                 if (a.isIsPresent()) {
-                    text = "You are marked as an attende on " + date;
+                    text = "You are marked as an attende on " + courseName;
                 } else {
                     text = "You did not come to class today";
                 }
