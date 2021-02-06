@@ -148,6 +148,10 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
                 DBServices.addToCollection("GradeSheet", gradeSheet);
 
             }
+        }else{
+            if (gradeSheet == null) {
+                gradeSheet = new GradeSheet(currentCourse.getCourseId(), quiz.getQuestions().size(), quiz.getId(), UserServices.getCurrentUser(getApplicationContext()).getId());
+            }
         }
 
         txtPoints.setText(Integer.toString(gradeSheet.getPoints()));
