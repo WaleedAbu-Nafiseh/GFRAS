@@ -30,7 +30,7 @@ import java.util.List;
 public class TopStudentsFragment extends Fragment {
     PieChart pieChart;
     CardView missedDays;
-    TextView absentDays, presentDays;
+    TextView absentDays, presentDays, txtPoints;
     int daysAbsent, daysAvailable, totalAttendanceDays;
     String legendLabelPresent, legendLabelAbsent;
     Course course;
@@ -39,11 +39,12 @@ public class TopStudentsFragment extends Fragment {
     List<AttendanceItem> absentAttendance;
     List<String> absentAttendanceText;
     ListView missedDaysText;
+    int points;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_top_students, container, false);
-
+        points = 0;
         course = new Course();
         Gson g = new Gson();
         listAttendance = new ArrayList<>();
@@ -52,7 +53,7 @@ public class TopStudentsFragment extends Fragment {
         course = g.fromJson(((CourseHomeMainActivity) getActivity()).getMyData().getString("COURSE"), Course.class);
         filterCourses();
         missedDaysText = (ListView) root.findViewById(R.id.missedDaysText);
-
+        txtPoints = root.findViewById(R.id.txtPoints);
         missedDays = root.findViewById(R.id.missedDays);
         pieChart = root.findViewById(R.id.piechart);
         absentDays = root.findViewById(R.id.absentDays);
@@ -88,7 +89,7 @@ public class TopStudentsFragment extends Fragment {
         for (AttendanceItem a : listAttendance) {
             Log.e("TEST", "" + a.getStudentID());
         }
-
+        txtPoints.setText("You have "+points+" points");
         return root;
     }
 
@@ -100,6 +101,7 @@ public class TopStudentsFragment extends Fragment {
             for (AttendanceItem attendance : attendanceItems) {
                 if (attendance.getStudentID().equals(UserServices.getCurrentUser(getContext()).getId()) && attendance.isIsPresent()) {
                     listAttendance.add(attendance);
+                    points = points + attendance.getAttendancePoint();
                 } else if (attendance.getStudentID().equals(UserServices.getCurrentUser(getContext()).getId()) && attendance.isIsPresent() == false) {
                     absentAttendance.add(attendance);
                     absentAttendanceText.add(key);
