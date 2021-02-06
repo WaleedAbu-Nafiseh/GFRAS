@@ -21,7 +21,9 @@ export const attendanceTableSelector = createSelector(
 
 function getOverallAttendance({ data }) {
 	const noOfStudentsCourse = data.students.length;
-	const noOfAttendanceTaken = Object.keys(data.attendance).length;
+	const noOfAttendanceTaken = data?.attendance
+		? Object.keys(data.attendance).length
+		: 0;
 	const noOfStudentsShouldAttend = noOfStudentsCourse * noOfAttendanceTaken;
 
 	const noOfOverallStudentsAttend = Object.keys(data.attendance).reduce(
@@ -56,14 +58,22 @@ function getTotalAttendancePoints({ courseAttendance, documentID }) {
 		let attendancePointInOneDay = courseAttendance[currAttendanceDay].find(
 			({ studentID }) => studentID === documentID
 		).attendancePoint;
+		if (attendancePointInOneDay > 0) {
+			console.log(
+				courseAttendance[currAttendanceDay].find(
+					({ studentID }) => studentID === documentID
+				),
+				{ attendancePointInOneDay }
+			);
+		}
 
-		return acc + attendancePointInOneDay;
+		return acc + isNaN(attendancePointInOneDay) ? 0 : attendancePointInOneDay;
 	}, 0);
 }
 
 function getStudentTotalMarks({ studentsGradesSheet, documentID }) {
 	return studentsGradesSheet.reduce((acc, currStudentQuizData) => {
-		if (documentID === currStudentQuizData.studentId) {
+		if (documentID === currStudentQuizData.studentID) {
 			return acc + currStudentQuizData.points;
 		}
 
@@ -92,6 +102,7 @@ function getStudentsDetailsTable({ studentsGradesSheet, data, studentsData }) {
 			courseAttendance: data.attendance,
 			documentID
 		});
+		if (totalAttendancePoints > 0) console.log({ totalAttendancePoints });
 
 		if (tableDataStudentIndex === -1) {
 			return [

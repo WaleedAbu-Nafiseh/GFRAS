@@ -105,6 +105,80 @@ public class NotificationsController {
 
         ctx.result("CourseId is " + courseId + "\n date" + date);
     }
+    
+    public static void sendCustomNotificationToCourse(Context ctx) throws FirebaseMessagingException, InterruptedException, ExecutionException {
+        String courseId = ctx.pathParam("courseId");
+        String type = ctx.pathParam("type");
+        String description = ctx.pathParam("description");
+        String courseName = ctx.pathParam("courseName");
+        String time = ctx.pathParam("time");
+        String date = ctx.pathParam("date");
+        String title = ctx.pathParam("title");
+        
+        List<Student> studentsList = new ArrayList<Student>();
+        List<Student> studentsInCourseList = new ArrayList<Student>();
+        Course c = new Course();
+
+        Firestore db = FirestoreClient.getFirestore();
+        //getCourse Id
+        //get Course
+        //getStudents All students in cours 
+        DocumentReference docRef = db.collection("Courses").document(courseId);
+        ApiFuture<DocumentSnapshot> future = docRef.get();
+        DocumentSnapshot document = future.get();
+        if (document.exists()) {
+            c = new Course();
+            c = document.toObject(Course.class);
+            System.out.println("Document data: " + document.getData());
+//            System.out.println("Object first attendance data: " + c.getAttendance().get(date).get(0).getStudentID());
+
+        } else {
+            System.out.println("No such document!");
+        }
+
+        ApiFuture<QuerySnapshot> dref = db.collection("students").get();
+        List<QueryDocumentSnapshot> docs = dref.get().getDocuments();
+        for (QueryDocumentSnapshot d : docs) {
+            studentsList.add(d.toObject(Student.class));
+            System.out.println(" the object ID is" + d.toObject(Student.class).getId());
+        }
+        System.out.println("Students in the course +" + c.getCourseId() + " are :");
+        for (Student student : studentsList) {
+            System.out.println("one from all students  +" + student.getId() + " are :");
+
+            if ((c.getStudents().contains(student.getId()))) {
+                System.out.println(student.getId() + "is in the course");
+                studentsInCourseList.add(student);
+            }
+        }
+        //looping through all the ist of Attendance object and send the notification for all
+//            System.out.println("The attendance id is " + a.getStudentID());
+
+            studentsInCourseList.forEach((student) -> {
+                String text = "";
+               
+                    System.out.println("You are valid  and id is " + student.getId());
+                    try {
+                        Message message = Message.builder()
+                                .putData("description", description)
+                                .putData("type", type)
+                                .putData("courseId", courseId)
+                                .putData("courseName", courseName)
+                                .putData("time", time)
+                                .putData("date", date)
+                                .putData("title", title)
+                                .setToken(student.getToken())
+                                .build();
+                        String response = FirebaseMessaging.getInstance().send(message);
+                    } catch (FirebaseMessagingException ex) {
+                        Logger.getLogger(NotificationsController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+            });
+
+
+        ctx.result("CourseId is " + courseId + "\n date" + date);
+    }
+    
 
     public static void markStudentAsPresentSendNotification(Context ctx) throws InterruptedException, ExecutionException {
         ///:courseId/:studentId/:date"
@@ -126,7 +200,6 @@ public class NotificationsController {
         if (document.exists()) {
             c = document.toObject(Course.class);
             System.out.println("Document data: " + document.getData());
-            System.out.println("Object first attendance data: " + c.getAttendance().get(date).get(0).getStudentID());
 
         } else {
             System.out.println("No such document!");

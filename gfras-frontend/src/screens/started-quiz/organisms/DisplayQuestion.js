@@ -140,7 +140,7 @@ function NextQuestion({ noOfQuestions, showModal }) {
 		<Flex ml='auto' mr='20px'>
 			<CountdownCircleTimer
 				isPlaying={!showModal}
-				duration={120}
+				duration={10}
 				colors={[
 					['#1a73e8', 0.5],
 					['#fc4216', 0.5]

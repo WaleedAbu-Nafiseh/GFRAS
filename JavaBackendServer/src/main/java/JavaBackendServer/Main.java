@@ -63,6 +63,13 @@ public class Main {
                 });
                  
             });
+            path("/customNotifications", () -> {
+
+            path("/:courseId/:courseName/:type/:description/:time/:date/:title", () -> {
+                    get(NotificationsController::sendCustomNotificationToCourse);
+                    
+                }); 
+            });
             path("/reminder",()->{
                  path("/quiz/:courseId/", () -> {
                     get(NotificationsController::sendReminderToClassNow);

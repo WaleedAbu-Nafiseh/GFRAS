@@ -5,6 +5,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,11 +32,21 @@ public class NotificationService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        Notification newMessageNotification = new Notification.Builder(getApplicationContext(), CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_baseline_students_24)
-                .setContentTitle("Attendance!")
-                .setContentText(remoteMessage.getData().get("text"))
-                .build();
+        Notification newMessageNotification;
+        Log.e("TEST",remoteMessage.getData().get("type"));
+        if(remoteMessage.getData().get("type").equals("taskReminder")) {
+            newMessageNotification = new Notification.Builder(getApplicationContext(), CHANNEL_ID)
+                    .setSmallIcon(R.drawable.ic_baseline_students_24)
+                    .setContentTitle(remoteMessage.getData().get("courseName") + ": " + remoteMessage.getData().get("title"))
+                    .setContentText(remoteMessage.getData().get("date") + " at " + remoteMessage.getData().get("time") )
+                    .build();
+        } else {
+             newMessageNotification = new Notification.Builder(getApplicationContext(), CHANNEL_ID)
+                    .setSmallIcon(R.drawable.ic_baseline_students_24)
+                    .setContentTitle("Attendance!")
+                    .setContentText(remoteMessage.getData().get("data") + ", " + remoteMessage.getData().get("type"))
+                    .build();
+        }
 
         // Issue the notification.
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);

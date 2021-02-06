@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Text } from '@chakra-ui/core';
+import { Flex, Text, Skeleton } from '@chakra-ui/core';
 import { useAttendanceContext } from '../AttendanceContext';
 import { useIntl } from 'react-intl';
 import { InfoButtons } from '../../../components/chart-wrapper/ChartWrapper';
@@ -7,10 +7,18 @@ import { selectDashboardOverallAttendance } from '../selectors';
 
 function OverallAttendancePercentage() {
 	const { formatMessage: f, formatNumber } = useIntl();
-	const { data } = useAttendanceContext();
+	const { data, isLoading } = useAttendanceContext();
 	const averageOfStudentsAttendance = selectDashboardOverallAttendance({
 		data
 	});
+
+	if (isLoading) {
+		return (
+			<Skeleton w='270px' h='118px'>
+				asokdoak{' '}
+			</Skeleton>
+		);
+	}
 
 	return (
 		<Flex
@@ -24,10 +32,15 @@ function OverallAttendancePercentage() {
 			fontSize={24}
 		>
 			<Text w='full' h='full' m='31px 17px 2px'>
-				{formatNumber(+averageOfStudentsAttendance / 100, {
-					style: 'percent',
-					maximumFractionDigits: 2
-				})}
+				{formatNumber(
+					isNaN(+averageOfStudentsAttendance)
+						? 0
+						: +averageOfStudentsAttendance / 100,
+					{
+						style: 'percent',
+						maximumFractionDigits: 2
+					}
+				)}
 			</Text>
 			<Flex w='full' h='full' fontWeight='normal'>
 				<Text h='full' mx='17px' isTruncated>
