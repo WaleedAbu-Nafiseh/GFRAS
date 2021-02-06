@@ -33,8 +33,7 @@ public class NotificationService extends FirebaseMessagingService {
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
         Notification newMessageNotification;
-        Log.e("TEST",remoteMessage.getData().get("type"));
-        if(remoteMessage.getData().get("type").equals("taskReminder")) {
+        if( remoteMessage.getData().get("type")!=null &&remoteMessage.getData().get("type").equals("taskReminder")) {
             newMessageNotification = new Notification.Builder(getApplicationContext(), CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_baseline_students_24)
                     .setContentTitle(remoteMessage.getData().get("courseName") + ": " + remoteMessage.getData().get("title"))
@@ -44,7 +43,7 @@ public class NotificationService extends FirebaseMessagingService {
              newMessageNotification = new Notification.Builder(getApplicationContext(), CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_baseline_students_24)
                     .setContentTitle("Attendance!")
-                    .setContentText(remoteMessage.getData().get("data") + ", " + remoteMessage.getData().get("type"))
+                    .setContentText(remoteMessage.getData().get("text"))
                     .build();
         }
 
