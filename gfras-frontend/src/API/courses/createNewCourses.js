@@ -16,7 +16,9 @@ export const createNewCourses = async ({
 	await courses
 		.add({
 			InstructorID: instructorID,
+			attendance: {},
 			courseName,
+			finished: false,
 			quizzes,
 			students
 		})

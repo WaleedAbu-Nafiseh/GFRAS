@@ -15,13 +15,16 @@ export const DropDown = ({
 	setSelectedMenuItem,
 	menuItems
 }) => {
+	const isDisabled = !menuItems || menuItems.length === 0;
+
 	return (
 		<Menu>
 			{({ isOpen }) => (
 				<>
 					<MenuButton
+						isDisabled={isDisabled}
 						as={Button}
-						w='150px'
+						w='fit-fontent'
 						h='1.5rem'
 						rightIcon={
 							<ChevronDownIcon
@@ -31,7 +34,7 @@ export const DropDown = ({
 						mr='30px'
 						mt='10px'
 					>
-						{selectedMenuItem}
+						{isDisabled ? 'No attendance taken' : selectedMenuItem}
 					</MenuButton>
 					<MenuList maxH='200px' overflow='auto'>
 						{menuItems.map((menuItem, id) => (

@@ -6,7 +6,8 @@ import {
 	Divider,
 	Tooltip,
 	Icon,
-	Input
+	Input,
+	IconButton
 } from '@chakra-ui/core';
 import { useIntl } from 'react-intl';
 import { useParams } from 'react-router-dom';
@@ -78,7 +79,7 @@ export function Attendance() {
 		setIsLoading(true);
 		await submitAttendance({
 			courseID,
-			date: format(new Date(), 'dd-MM-yyyy'),
+			date: selectedMenuItem,
 			time: format(new Date(), 'HH:mm'),
 			presentStudents: studentsAttendance,
 			attendancePoint: watch('attendance-point'),
@@ -148,35 +149,51 @@ export function Attendance() {
 			</Flex>
 		);
 	}
+	const isDisabled = !dropDownItems || dropDownItems.length === 0;
+	console.log({ studentsAttendance });
 	return (
 		<Flex w='full' direction='column'>
-			<Flex w='full' justify='space-between'>
-				<BackButton />
+			<Flex w='full' justify='flex-end'>
+				{/*<BackButton />*/}
 				<Flex alignItems='center'>
-					<CSVLink
-						data={studentsAttendance}
-						headers={csvHeaders}
-						filename={`${data.courseName}-Attendance Sheet-${selectedMenuItem}.csv`}
-					>
-						<Tooltip
-							hasArrow
-							label={formatMessage({
-								id: 'course.courseDetails.attendance.downloadButton'
-							})}
-							placement='bottom'
-							borderRadius='5px'
-							boxShadow=' 0 3px 4px 0 rgba(0,0,0,0.14), 0 3px 3px -2px rgba(0,0,0,0.12), 0 1px 8px 0 rgba(0,0,0,0.2)'
-							color='black'
-							bg='white'
+					{isDisabled ? (
+						<IconButton
+							mt='10px'
+							isDisabled={true}
+							bg='transparent'
+							_hover={{ bg: 'transparent' }}
+							_focus={{ bg: 'transparent' }}
+							_active={{ bg: 'transparent' }}
+							color='rgba(0,0,0,0.74)'
+							boxSize='16px'
+							as={DownloadIcon}
+						/>
+					) : (
+						<CSVLink
+							data={studentsAttendance}
+							headers={csvHeaders}
+							filename={`${data.courseName}-Attendance Sheet-${selectedMenuItem}.csv`}
 						>
-							<Icon
-								mt='10px'
-								color='rgba(0,0,0,0.74)'
-								boxSize='16px'
-								as={DownloadIcon}
-							/>
-						</Tooltip>
-					</CSVLink>
+							<Tooltip
+								hasArrow
+								label={formatMessage({
+									id: 'course.courseDetails.attendance.downloadButton'
+								})}
+								placement='bottom'
+								borderRadius='5px'
+								boxShadow=' 0 3px 4px 0 rgba(0,0,0,0.14), 0 3px 3px -2px rgba(0,0,0,0.12), 0 1px 8px 0 rgba(0,0,0,0.2)'
+								color='black'
+								bg='white'
+							>
+								<Icon
+									mt='10px'
+									color='rgba(0,0,0,0.74)'
+									boxSize='16px'
+									as={DownloadIcon}
+								/>
+							</Tooltip>
+						</CSVLink>
+					)}
 					<Divider
 						mx='10px'
 						h='20px'
@@ -194,9 +211,15 @@ export function Attendance() {
 			<Flex w='full' p='30px' maxH='calc(100% - 200px)'>
 				<AttendanceTable selectedMenuItem={selectedMenuItem} />
 			</Flex>
+			{isDisabled && (
+				<Text textAlign='center' fontSize='20px' fontWeight={500}>
+					No Data to Display
+				</Text>
+			)}
 			<Input
 				type='number'
 				w='200px'
+				isDisabled={isDisabled}
 				ml='30px'
 				mb='10px'
 				placeHolder='Attendance Point'

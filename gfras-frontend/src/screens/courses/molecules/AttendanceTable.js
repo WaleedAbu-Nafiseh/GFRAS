@@ -143,15 +143,18 @@ export const AttendanceTable = ({ selectedMenuItem }) => {
 		);
 
 	return (
-		<CardContainer
-			status={tableData ? 'success' : 'loading'}
-			Loader={<TableLoader />}
-		>
-			<Table
-				columns={columns}
-				data={tableData}
-				initialState={tableInitialState}
-			/>
-		</CardContainer>
+		<>
+			{' '}
+			<CardContainer
+				status={tableData ? 'success' : 'loading'}
+				Loader={<TableLoader />}
+			>
+				<Table
+					columns={columns}
+					data={tableData}
+					initialState={tableInitialState}
+				/>
+			</CardContainer>
+		</>
 	);
 };

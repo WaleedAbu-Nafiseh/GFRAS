@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { getStudentsGrades } from '../../../API/quizzes/getStudentsGrades';
 import Table from '../../../components/table/ReactTable';
 import { Flex } from '@chakra-ui/core';
+import { Spinner } from '../../../components/loaders/Spinner';
+import { TableLoader } from '../../../components/loaders/TableLoader';
 
 const tableInitialState = {
 	sortBy: [
@@ -27,16 +29,24 @@ const columns = [
 	}
 ];
 
-function GradesTable({ selectedQuizGrades }) {
-	const [tableData, setTableData] = useState([]);
-
+function GradesTable({ selectedQuizGrades, tableData, setTableData }) {
+	const [isLoading, setIsLoading] = useState(false);
+	const isDisabled = !selectedQuizGrades;
+	console.log(tableData);
 	useEffect(() => {
-		getStudentsGrades({ quizId: selectedQuizGrades.menuID }).then((res) => {
-			setTableData(res);
-		});
+		!isDisabled && setIsLoading(true);
+		!isDisabled &&
+			getStudentsGrades({ quizId: selectedQuizGrades.menuID }).then((res) => {
+				setIsLoading(false);
+				setTableData(res);
+			});
 	}, [selectedQuizGrades]);
 
-	return tableData.length > 0 ? (
+	if (isLoading) {
+		return <TableLoader />;
+	}
+
+	return tableData.length > 0 || isDisabled ? (
 		<Table
 			data={tableData}
 			columns={columns}

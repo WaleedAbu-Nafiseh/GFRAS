@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Flex, Text, Button } from '@chakra-ui/core';
 import { useQuizContext } from '../QuizContext';
 import { useIntl } from 'react-intl';
@@ -12,14 +12,19 @@ export function QuizList() {
 	const { pathname } = useLocation();
 	const { formatMessage } = useIntl();
 	const { replace } = useHistory();
-	const { data } = useQuizContext();
+	const { data, isLoading, refetchNewQuizCreated } = useQuizContext();
+	const activeQuizzes = data.filter(({ finished }) => finished === false);
+
+	useEffect(() => {
+		refetchNewQuizCreated();
+	}, []);
 
 	const {
 		setIsSideMenuExpanded,
 		setSelectedCourseDetail
 	} = useCourseDetailsContext();
 
-	if (!data) {
+	if (isLoading) {
 		return <Spinner />;
 	}
 
@@ -28,8 +33,9 @@ export function QuizList() {
 			replace(`${pathname}/${quizID}`);
 		});
 	};
+	const hasNoActiveQuizzes = data.length > 0 && activeQuizzes.length === 0;
 
-	if (data.length === 0) {
+	if (data.length === 0 || (data.length > 0 && activeQuizzes.length === 0)) {
 		return (
 			<>
 				<Flex
@@ -40,7 +46,9 @@ export function QuizList() {
 					justify='center'
 				>
 					<Text fontSize={20} fontWeight={500}>
-						{formatMessage({ id: 'course.quiz.quizList.noQuizzes' })}
+						{hasNoActiveQuizzes
+							? 'This Course has No Active Quizzes'
+							: formatMessage({ id: 'course.quiz.quizList.noQuizzes' })}
 					</Text>
 					<Button
 						w='fit-content'
@@ -62,9 +70,9 @@ export function QuizList() {
 
 	return (
 		<>
-			<BackButton />
+			{/*<BackButton />*/}
 			<Flex direction='column' p='100px' w='full' overflow='auto'>
-				{data.map(({ id, quizTitle, quizID }, index) => {
+				{activeQuizzes.map(({ id, quizTitle, quizID }, index) => {
 					return (
 						<Flex
 							border='1px solid white'
@@ -73,7 +81,9 @@ export function QuizList() {
 							p={'10px'}
 							my='10px'
 						>
-							<Text>{quizTitle}</Text>
+							<Text alignSelf='center' fontSize={20}>
+								{quizTitle}
+							</Text>
 							<Button
 								ml='auto'
 								bg='#ff5722'

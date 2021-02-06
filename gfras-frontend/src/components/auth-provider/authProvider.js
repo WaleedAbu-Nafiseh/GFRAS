@@ -26,6 +26,7 @@ export function AuthProvider({ children }) {
 	};
 
 	const signIn = ({ email, password }) => {
+		console.log('signin');
 		const db = firebase.firestore();
 		const citiesRef = db.collection('Instructors');
 		setIsLoading(true);
@@ -52,18 +53,22 @@ export function AuthProvider({ children }) {
 	const signUp = ({ email, password }) => {
 		setIsLoading(true);
 		const db = firebase.firestore();
-
+		console.log('signup');
 		db.collection('Instructors')
 			.where('email', '==', email)
 			.get()
 			.then((res) => {
+				console.log(res);
 				if (res.size === 0) {
 					setUserAuthentication(email);
-					db.collection('Instructors').add({
-						email,
-						password
-					});
-					localStorage.setItem('instructorID', res.docs[0].id);
+					db.collection('Instructors')
+						.add({
+							email,
+							password
+						})
+						.then((response) => {
+							localStorage.setItem('instructorID', response.id);
+						});
 				} else {
 					setErrMessage('landingPage.signUp.emailAlreadyInUse');
 				}

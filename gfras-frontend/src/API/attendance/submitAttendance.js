@@ -26,6 +26,7 @@ export const submitAttendance = async ({
 			attendance: {
 				...res.data().attendance,
 				[date]: courseDetail.map((studentID) => {
+					console.log({ date }, res.data()['attendance']);
 					const oldStudent = res
 						.data()
 						['attendance'][date].find(
@@ -45,9 +46,9 @@ export const submitAttendance = async ({
 						time: isFirstTime === -1 && oldStudent ? oldStudent.time : time,
 						attendancePoint:
 							isFirstTime === -1 && oldStudent
-								? oldStudent.attendancePoint
+								? +oldStudent.attendancePoint
 								: isPresent !== -1
-								? attendancePoint
+								? +attendancePoint
 								: 0
 					};
 				})
