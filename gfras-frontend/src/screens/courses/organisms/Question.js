@@ -86,7 +86,7 @@ export function Question() {
 				setQuestionAndOptions([]);
 				setNoOfSelectedQuestions(1);
 				setQuizTitle('');
-
+				setIsQuizDateModalOpen(false);
 				successToast({
 					title: formatMessage({
 						id: 'quiz.toastMessage.createNewQuiz.quizCreated.title'
@@ -100,6 +100,7 @@ export function Question() {
 				setIsLoading(false);
 				setQuestionAndOptions([]);
 				setNoOfSelectedQuestions(1);
+				setIsQuizDateModalOpen(false);
 				setQuizTitle('');
 				failureToast({
 					title: formatMessage({
@@ -178,6 +179,7 @@ export function Question() {
 	return (
 		<>
 			<QuizDateModal
+				isLoading={isLoading}
 				onSubmitCreateQuestion={onSubmitCreateQuestion}
 				setIsOpen={setIsQuizDateModalOpen}
 				isOpen={isQuizDateModalOpen}
@@ -197,7 +199,7 @@ export function Question() {
 				>
 					{formatMessage({ id: 'courses.createQuizzes.createQuiz' })}
 				</Button>
-				<BackButton />
+				{/*<BackButton />*/}
 			</Flex>
 			<Flex direction='column' mx='auto' justify='center' w='full' px='90px'>
 				<Input

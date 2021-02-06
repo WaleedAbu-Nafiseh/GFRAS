@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ReadFile } from '../../../components/csv-reader/ReadFile';
-import { Button, Flex } from '@chakra-ui/core';
+import { Button, Flex, Switch, FormControl, FormLabel } from '@chakra-ui/core';
 import { useIntl } from 'react-intl';
 import { addNewStudents } from '../../../API/students/addNewStudents';
 import { useParams } from 'react-router-dom';
@@ -9,8 +9,10 @@ import {
 	useSuccessToast
 } from '../../../custom-hooks/useSuccessToast';
 import { BackButton } from '../atoms/BackButton';
+import AddNewStudentsCsv from '../molecules/AddNewStudentsCSV';
 
 function AddStudents() {
+	const [isAddManually, setIsAddManually] = useState(false);
 	const [CSVFileData, setCSVFileData] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const { formatMessage } = useIntl();
@@ -41,23 +43,27 @@ function AddStudents() {
 
 	return (
 		<>
-			<BackButton />
+			{/*<BackButton />*/}
 
-			<Flex direction='column' mt='60px'>
-				<ReadFile ml={0} setCSVFileData={setCSVFileData} />
-				<Button
-					isDisabled={CSVFileData.length === 0}
-					bg='#ff5722'
-					_hover={{ bg: '#fc4216' }}
-					color='white'
-					borderRadius='7px'
-					width='200px'
-					mt={10}
-					onClick={handleSubmitNewStudents}
+			<Flex direction='column' mt='60px' ml='90px'>
+				<FormControl display='flex' alignItems='center'>
+					<FormLabel fontSize='20px'>Add Manually</FormLabel>
+					<Switch
+						defaultChecked={false}
+						onChange={() => setIsAddManually((prevState) => !prevState)}
+						isChecked={isAddManually}
+						border='none'
+						outline='none'
+						colorScheme='green'
+						size='lg'
+					/>
+				</FormControl>
+				<AddNewStudentsCsv
 					isLoading={isLoading}
-				>
-					{formatMessage({ id: 'course.addNewStudents.button.label' })}
-				</Button>
+					CSVFileData={CSVFileData}
+					handleSubmitNewStudents={handleSubmitNewStudents}
+					setCSVFileData={setCSVFileData}
+				/>
 			</Flex>
 		</>
 	);

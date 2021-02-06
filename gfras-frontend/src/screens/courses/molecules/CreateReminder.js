@@ -15,6 +15,7 @@ import {
 	useFailureToast,
 	useSuccessToast
 } from '../../../custom-hooks/useSuccessToast';
+import { useAttendanceContext } from '../AttendanceContext';
 
 function ReminderButton({ setIsCreateReminderModalOpen }) {
 	const { formatMessage: f } = useIntl();
@@ -68,14 +69,13 @@ function ModalBody({
 				justify='space-between'
 			>
 				<DatePicker
-					ref={register({ required: true })}
+					// ref={register({ required: true })}
 					format='dd-MM-y'
 					minDate={new Date()}
 					value={date}
 					calendarIcon={<CalendarIcon />}
 					onCalendarClose={() => setIsCalendarOpened(false)}
 					onCalendarOpen={() => setIsCalendarOpened(true)}
-					clearIcon=''
 					onChange={(newDate) => onChangeDate(newDate)}
 				/>
 				<TimePicker
@@ -83,7 +83,7 @@ function ModalBody({
 						onChangeTime(value);
 					}}
 					format='h:mm a'
-					ref={register({ required: true })}
+					// ref={register({ required: true })}
 					value={time}
 					disableClock
 					required
@@ -217,6 +217,9 @@ function ReminderModal({
 	isCreateReminderModalOpen
 }) {
 	const { refetchReminders } = useReminderContext();
+	const {
+		data: { courseName }
+	} = useAttendanceContext();
 	const { courseID } = useParams();
 	const [isLoading, setIsLoading] = useState(false);
 	const { register, handleSubmit, watch } = useForm();
@@ -230,6 +233,7 @@ function ReminderModal({
 		setIsLoading(true);
 		setNewReminder({
 			description,
+			courseName,
 			title,
 			date: format(date, 'dd-MM-yyyy'),
 			time,

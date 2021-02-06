@@ -19,6 +19,7 @@ export const QuizSideMenu = () => {
 	const handleAddQuestion = () => {
 		if (noOfSelectedQuestions < 5) {
 			setNoOfSelectedQuestions((prevState) => ++prevState);
+			setSelectedQuestion(selectedQuestion + 1);
 		}
 	};
 

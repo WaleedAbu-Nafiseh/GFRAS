@@ -29,6 +29,6 @@ export const getStudentsGrades = async ({ quizId }) => {
 					});
 			}
 		});
-
+	console.log(studentsTableData);
 	return studentsTableData;
 };

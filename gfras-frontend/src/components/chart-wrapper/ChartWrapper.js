@@ -45,6 +45,7 @@ export function InfoButtons({
 				color='rgba(18,18,18,0.87)'
 				fontSize='xs'
 				onOpen={onHover}
+				placement='auto'
 			>
 				<InfoOutlineIcon boxSize='16px' color='rgba(0,0,0,0.74)' />
 			</Tooltip>

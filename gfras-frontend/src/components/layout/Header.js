@@ -3,6 +3,7 @@ import { Box, Flex, Button } from '@chakra-ui/core';
 import { AuthContext } from '../auth-provider';
 import { NavLink } from 'react-router-dom';
 import * as ROUTES from '../../constant';
+import { EasyLectureIcon } from '../icons/EasyLectureIcon';
 
 const Header = ({ navTitle, menuItems, ...props }) => {
 	const [show, setShow] = React.useState(false);
@@ -26,10 +27,12 @@ const Header = ({ navTitle, menuItems, ...props }) => {
 						mr={6}
 						_focus={{ bg: 'transparent' }}
 						_hover={{ bg: 'transparent' }}
+						_active={{ bg: 'transparent' }}
 						letterSpacing={'-.1rem'}
 						fontSize={35}
 					>
-						{navTitle}
+						<EasyLectureIcon boxSize='120px' />
+						{/*{navTitle}*/}
 					</Button>
 				</NavLink>
 			</Flex>

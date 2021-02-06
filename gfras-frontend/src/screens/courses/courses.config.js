@@ -1,7 +1,7 @@
 import { QuizIcon } from '../../components/icons/Quiz';
 import React from 'react';
 import { AttendanceIcon } from '../../components/icons/Attendance';
-import { AddStudents } from '../../components/icons/AddStudents';
+import { StudentsDetails } from '../../components/icons/StudentsDetails';
 import { QuizDetailsIcon } from '../../components/icons/QuizDetails';
 import { DashboardIcon } from '../../components/icons/Dashboard';
 import { ReminderIcon } from '../../components/icons/Reminder';
@@ -40,8 +40,8 @@ export const courseDetails = [
 	},
 	{
 		label: 'Add Students',
-		id: 'add-new-students',
-		icon: <AddStudents boxSize='35px' />,
+		id: 'students-details',
+		icon: <StudentsDetails boxSize='35px' />,
 		canSideMenuExpand: false
 	},
 	{

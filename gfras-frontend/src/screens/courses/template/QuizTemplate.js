@@ -13,6 +13,8 @@ import QuizListSideMenu from '../organisms/QuizListSideMenu';
 import Grades from '../organisms/Grades';
 import Dashboard from '../organisms/Dashboard';
 import Reminder from '../organisms/Reminder';
+import StudentsDetailsMenu from '../organisms/StudentsDetailsMenu';
+import ArchivedQuizzes from '../organisms/ArchivedQuizzes';
 
 export function QuizTemplate() {
 	const { selectedCourseDetail } = useCourseDetailsContext();
@@ -42,6 +44,9 @@ export function QuizTemplate() {
 					/>
 					{selectedCourseDetail === 'create-quiz' && <QuizSideMenu />}
 					{selectedCourseDetail === 'quizzes-details' && <QuizListSideMenu />}
+					{selectedCourseDetail === 'students-details' && (
+						<StudentsDetailsMenu />
+					)}
 				</SideMenu>
 			)}
 			{/*<BackButton />*/}
@@ -51,8 +56,10 @@ export function QuizTemplate() {
 				selectedQuizzesDetails === 'quizzes-list' && <QuizList />}
 			{selectedCourseDetail === 'quizzes-details' &&
 				selectedQuizzesDetails === 'quizzes-grades' && <Grades />}
+			{selectedCourseDetail === 'quizzes-details' &&
+				selectedQuizzesDetails === 'archived-quizzes' && <ArchivedQuizzes />}
 			{selectedCourseDetail === 'attendance-list' && <Attendance />}
-			{selectedCourseDetail === 'add-new-students' && <AddStudents />}
+			{selectedCourseDetail === 'students-details' && <AddStudents />}
 			{selectedCourseDetail === 'reminder' && <Reminder />}
 		</Flex>
 	);

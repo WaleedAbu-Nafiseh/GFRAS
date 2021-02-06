@@ -33,7 +33,7 @@ export function Modal({
 		>
 			<ModalOverlay
 				bg={modalOverLayBackground || 'rgba(255,255,255,0.8)'}
-				zIndex={2000}
+				zIndex={1000}
 				w='100%'
 				h='100%'
 			>

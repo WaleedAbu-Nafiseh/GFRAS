@@ -17,6 +17,7 @@ function EmptyCourses({ setActiveSideMenuButton }) {
 				<Button
 					bg='#3182ce'
 					mt='10px'
+					color='white'
 					_hover={{ bg: '#006ace' }}
 					onClick={() => setActiveSideMenuButton(CREATE_NEW_COURSE)}
 				>
@@ -29,7 +30,7 @@ function EmptyCourses({ setActiveSideMenuButton }) {
 
 export function YourCourse({ setActiveSideMenuButton }) {
 	const { formatMessage } = useIntl();
-	const { data } = useCoursesContext();
+	const { data, isLoading } = useCoursesContext();
 	const courses = [];
 	data.forEach(function (doc) {
 		courses.push(
@@ -49,7 +50,9 @@ export function YourCourse({ setActiveSideMenuButton }) {
 					<Text color='gray'>
 						{formatMessage({ id: 'courses.yourCourses.noOfStudents' })}
 					</Text>
-					<Text fontWeight='500'>{doc.data().students.length}</Text>
+					<Text fontWeight='500' ml='10px'>
+						{doc.data().students.length}
+					</Text>
 				</Flex>
 				<NavLink
 					to={`/course-details/${doc.id}`}
@@ -71,7 +74,7 @@ export function YourCourse({ setActiveSideMenuButton }) {
 		);
 	});
 
-	if (data.size === 0) {
+	if (data.size === 0 && !isLoading) {
 		return <EmptyCourses setActiveSideMenuButton={setActiveSideMenuButton} />;
 	}
 

@@ -10,7 +10,7 @@ const getFinishedQuizzes = ({ quizzesData }) => {
 		title: quizTitle
 	}));
 	dropdownData.sort((a, b) => (a.title > b.title ? 1 : -1));
-
+	console.log(finishedQuizzes);
 	return { finishedQuizzes, dropdownData };
 };
 

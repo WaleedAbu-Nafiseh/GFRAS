@@ -55,7 +55,7 @@ export function AuthenticatedApp() {
 		<Flex direction='column' h='100vh' overflow='hidden'>
 			<Header
 				navTitle={formatMessage({ id: 'header.bar.title' })}
-				menuItems={navMenuItems}
+				menuItems={[]}
 			/>
 			<Suspense fallback={<Spinner />}>
 				<Switch>
