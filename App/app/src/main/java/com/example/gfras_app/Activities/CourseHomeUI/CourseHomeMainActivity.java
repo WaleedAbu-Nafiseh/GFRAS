@@ -72,7 +72,6 @@ public class CourseHomeMainActivity extends AppCompatActivity {
         Gson g = new Gson();
         course = g.fromJson(intent.getExtras().getString("COURSE"),Course.class);
         bundle.putString("COURSE",g.toJson(course));
-        Log.e("HEEERRRREEEE", "->>>>>> "+course.getCourseId());
         return bundle;
     }
 }

@@ -144,10 +144,13 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
                 DBServices.addToCollection("GradeSheet", gradeSheet);
 
             }
-        }else{
+        } else {
             if (gradeSheet == null) {
                 gradeSheet = new GradeSheet(currentCourse.getCourseId(), quiz.getQuestions().size(), quiz.getId(), UserServices.getCurrentUser(getApplicationContext()).getId());
             }
+        }
+        if (gradeSheet!= null) {
+            txtPoints.setText(Integer.toString(gradeSheet.getPoints()));
         }
 
         for (Question question : quiz.getQuestions()) {
@@ -182,13 +185,12 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
             btnOptionC.setBackground(getDrawable(R.drawable.quizzingbtn3background));
             btnOptionD.setBackground(getDrawable(R.drawable.quizzingbtn4background));
 
-        }
-        else if (quiz.isFinished()) {
+        } else if (quiz.isFinished()) {
             prgsBar.setVisibility(View.INVISIBLE);
-        }
-        else {
+        } else {
             //It is not started
             txtQuestionPlace.setText("Please wait until the quiz starts");
+            txtPoints.setVisibility(View.INVISIBLE);
             btnOptionA.setVisibility(View.INVISIBLE);
             btnOptionB.setVisibility(View.INVISIBLE);
             btnOptionC.setVisibility(View.INVISIBLE);
@@ -209,7 +211,7 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 gradeSheet[0] = document.toObject(GradeSheet.class);
-                                txtQuestionPlace.setText("Your grade in  "+gradeSheet[0].getPoints()+"\n"+ ((gradeSheet[0].getPoints() > 3) ? "You are above avergae " : "You are below average"));
+                                txtQuestionPlace.setText("Your grade in  " + gradeSheet[0].getPoints() + "\n" + ((gradeSheet[0].getPoints() > 3) ? "You are above avergae " : "You are below average"));
                                 txtPoints.setVisibility(View.INVISIBLE);
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                             }

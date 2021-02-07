@@ -46,8 +46,9 @@ public class QuizzesFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        setOnclickListener();
         View root = inflater.inflate(R.layout.fragment_quizzes, container, false);
+        setOnclickListener();
+
         return root;
     }
 
@@ -59,6 +60,7 @@ public class QuizzesFragment extends Fragment {
         finishedquizListRecyclerView = getActivity().findViewById(R.id.finishedquizListRecyclerView);
         mRecyclerView.setHasFixedSize(true);
         finishedquizListRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(getContext());
         mLayoutManagerFinished = new LinearLayoutManager(getContext());
         Gson g = new Gson();
         CourseHomeMainActivity activity = (CourseHomeMainActivity) getActivity();
@@ -67,6 +69,7 @@ public class QuizzesFragment extends Fragment {
         selectedCourse = new Course();
         quizList = new LinkedList<Quiz>();
         finishedQuizList = new LinkedList<Quiz>();
+        setOnclickListener();
         showData();
     }
 
@@ -85,7 +88,7 @@ public class QuizzesFragment extends Fragment {
                             finishedQuizList.add(c);
                         }
                     }
-                    if(quizList.isEmpty()){
+                    if (quizList.isEmpty()) {
                         mRecyclerView.setVisibility(View.INVISIBLE);
                     }
 
