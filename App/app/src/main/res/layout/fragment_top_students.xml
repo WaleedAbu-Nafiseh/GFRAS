@@ -138,10 +138,19 @@
         app:layout_constraintVertical_bias="0.07999998">
 
         <TextView
+            android:paddingTop="5dp"
+            android:layout_marginLeft="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="You have no missed Quizzes" />
+            android:text="Missed Days are:">
+
+        </TextView>
+
+        <ListView
+            android:id="@+id/missedDaysText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
 
     </androidx.cardview.widget.CardView>
 

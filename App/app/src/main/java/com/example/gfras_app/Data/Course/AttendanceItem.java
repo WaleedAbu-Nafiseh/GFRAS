@@ -4,11 +4,13 @@ public class AttendanceItem {
     boolean isPresent;
     String studentID;
     String time;
+    int attendancePoint;
 
-    public AttendanceItem(boolean isPresent, String studentID, String time) {
+    public AttendanceItem(boolean isPresent, String studentID, String time, int attendancePoint) {
         this.isPresent = isPresent;
         this.studentID = studentID;
         this.time = time;
+        this.attendancePoint = attendancePoint;
     }
 
     public AttendanceItem() {
@@ -38,4 +40,11 @@ public class AttendanceItem {
         this.time = time;
     }
 
+    public int getAttendancePoint() {
+        return attendancePoint;
+    }
+
+    public void setAttendancePoint(int attendancePoint) {
+        this.attendancePoint = attendancePoint;
+    }
 }
