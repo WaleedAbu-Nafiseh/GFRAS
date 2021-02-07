@@ -32,7 +32,7 @@ public class ReminderItemAdapter extends RecyclerView.Adapter<ReminderItemAdapte
     @Override
     public void onBindViewHolder(@NonNull ReminderItemAdapterViewHolder holder, int position) {
         Reminder currentItem = reminders.get(position);
-        holder.TextView1.setText(currentItem.getTitle());
+        holder.TextView1.setText("Title : "+currentItem.getTitle() +" , on "+reminders.get(position).getDate() );
     }
 
     @Override

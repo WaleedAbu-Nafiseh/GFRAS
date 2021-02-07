@@ -99,6 +99,7 @@ public class HomePageActivity extends AppCompatActivity {
                             prgsBarHomePage.setVisibility(View.INVISIBLE);
                             mRecyclerView.setAdapter(mAdapter);
 
+
                         } else {
                             Log.d("TAG", "Error getting documents: ", task.getException());
                         }
