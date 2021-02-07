@@ -40,7 +40,8 @@ export function Attendance() {
 		refetchAttendanceList,
 		studentsAttendance,
 		compareStudentsAttendance,
-		setCompareStudentsAttendance
+		setCompareStudentsAttendance,
+		changesOnOldValues
 	} = useAttendanceContext();
 
 	let dropDownItems = '';
@@ -60,6 +61,7 @@ export function Attendance() {
 	const [selectedMenuItem, setSelectedMenuItem] = useState(
 		data && data.attendance ? dropDownItems[0] : ''
 	);
+	console.log(dropDownItems);
 	const [isLoading, setIsLoading] = useState(false);
 
 	const handleStartNewAttendance = async () => {
@@ -86,7 +88,7 @@ export function Attendance() {
 			comparePresentStudents: compareStudentsAttendance
 		})
 			.then(() => {
-				setSelectedMenuItem(format(new Date(), 'dd-MM-yyyy'));
+				// setSelectedMenuItem(format(new Date(), 'dd-MM-yyyy'));
 				refetchAttendanceList();
 				setIsLoading(false);
 				setCompareStudentsAttendance([]);
@@ -150,7 +152,6 @@ export function Attendance() {
 		);
 	}
 	const isDisabled = !dropDownItems || dropDownItems.length === 0;
-	console.log({ studentsAttendance });
 	return (
 		<Flex w='full' direction='column'>
 			<Flex w='full' justify='flex-end'>
@@ -234,9 +235,6 @@ export function Attendance() {
 					minW='100px'
 					mt='10px'
 					bg='#ff5722'
-					isDisabled={
-						compareStudentsAttendance.length === 0 || !watch('attendance-point')
-					}
 					_hover={{ bg: '#fc4216' }}
 					onClick={() => submitNewAttendance()}
 					color='white'

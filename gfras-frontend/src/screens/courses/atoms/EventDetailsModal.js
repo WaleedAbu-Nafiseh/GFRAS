@@ -12,20 +12,20 @@ const DATE_WEEK_DAY_FORMAT = 'EEEE, MMMM dd';
 
 function EventDetailsModalHeader({ setIsOpenEventDetailsModal }) {
 	const buttons = [
+		// {
+		// 	tooltipLabel: 'Edit Reminder',
+		// 	id: 'edit-reminder',
+		// 	icon: <EditIcon />,
+		// 	onClick: () => console.log('edit reminder clicked')
+		// },
+		// {
+		// 	tooltipLabel: 'Delete Reminder',
+		// 	id: 'delete-reminder',
+		// 	icon: <DeleteIcon />,
+		// 	onClick: () => console.log('delete reminder clicked')
+		// },
 		{
-			tooltipLabel: 'Edit Reminder',
-			id: 'edit-reminder',
-			icon: <EditIcon />,
-			onClick: () => console.log('edit reminder clicked')
-		},
-		{
-			tooltipLabel: 'Delete Reminder',
-			id: 'delete-reminder',
-			icon: <DeleteIcon />,
-			onClick: () => console.log('delete reminder clicked')
-		},
-		{
-			tooltipLabel: 'Close',
+			// tooltipLabel: 'Close',
 			id: 'close',
 			icon: <CloseIcon boxSize='12px' />,
 			onClick: () => setIsOpenEventDetailsModal(false)
@@ -35,18 +35,18 @@ function EventDetailsModalHeader({ setIsOpenEventDetailsModal }) {
 		<Flex w='full' h='full' justify='flex-end'>
 			{buttons.map(({ tooltipLabel, icon, onClick, id }) => {
 				return (
-					<Tooltip label={tooltipLabel}>
-						<IconButton
-							{...(id === 'close' && { ml: '10px' })}
-							w='fit-content'
-							bg='transparent'
-							isRound
-							onClick={onClick}
-							outline='none'
-							_focus={{ outline: 'none' }}
-							icon={icon}
-						/>
-					</Tooltip>
+					// <Tooltip label={tooltipLabel} key={id}>
+					<IconButton
+						{...(id === 'close' && { ml: '10px' })}
+						w='fit-content'
+						bg='transparent'
+						isRound
+						onClick={onClick}
+						outline='none'
+						_focus={{ outline: 'none' }}
+						icon={icon}
+					/>
+					// </Tooltip>
 				);
 			})}
 		</Flex>
