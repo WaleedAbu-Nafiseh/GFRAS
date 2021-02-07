@@ -67,7 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="34dp"
         android:layout_marginEnd="4dp"
-        android:background="@drawable/btnbackground"
+        android:backgroundTint="@color/colorAccent"
         android:text="Login"
         android:textColor="#ffff"
         android:textSize="20dp"

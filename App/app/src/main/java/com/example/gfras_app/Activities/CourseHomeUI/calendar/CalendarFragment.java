@@ -6,15 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gfras_app.Activities.CourseHomeUI.CourseHomeMainActivity;
-import com.example.gfras_app.Activities.CourseHomeUI.quiz.QuizListItemAdapter;
 import com.example.gfras_app.Data.Course.Course;
-import com.example.gfras_app.Data.Quiz;
 import com.example.gfras_app.Data.Reminder;
 import com.example.gfras_app.R;
 import com.example.gfras_app.util.CollectionsName;
@@ -34,13 +33,24 @@ public class CalendarFragment extends Fragment {
     String courseID;
     CalendarView calendarView;
     Course course;
-
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_calendar, container, false);
-        TextView textView = root.findViewById(R.id.text_gallery);
-        calendarView = root.findViewById(R.id.calendarView);
+        return root;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        calendarView = getActivity().findViewById(R.id.calendarView);
+        mRecyclerView = getActivity().findViewById(R.id.reminderRecyclerView);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(getContext());
+
         courseReminders = new ArrayList<>();
         calendarView.setOnDateChangeListener((calendarView, i, i1, i2) -> displayEventsForDate(i, i1, i2));
         CourseHomeMainActivity activity = (CourseHomeMainActivity) getActivity();
@@ -49,9 +59,8 @@ public class CalendarFragment extends Fragment {
         course = new Course();
         Gson g = new Gson();
         course = g.fromJson(results.getString("COURSE"), Course.class);
-        textView.setText(strtext);
         getAllReminders();
-        return root;
+
     }
 
     private void getAllReminders() {
@@ -65,8 +74,12 @@ public class CalendarFragment extends Fragment {
                         Reminder c = document.toObject(Reminder.class);
                         courseReminders.add(c);
                     }
+                    mAdapter = new ReminderItemAdapter(courseReminders);
+                    mRecyclerView.setLayoutManager(mLayoutManager);
+                    mRecyclerView.setAdapter(mAdapter);
+
                     String text = "";
-                    for (Reminder r :courseReminders){
+                    for (Reminder r : courseReminders) {
 
                     }
                 } else {

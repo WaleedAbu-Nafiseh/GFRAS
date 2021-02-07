@@ -84,7 +84,6 @@ public class TopStudentsFragment extends Fragment {
             missedDaysText.setVisibility(View.VISIBLE);
             ArrayAdapter adapter = new ArrayAdapter<String>(getContext(), R.layout.activity_listview, absentAttendanceText);
             missedDaysText.setAdapter(adapter);
-
         }
         for (AttendanceItem a : listAttendance) {
             Log.e("TEST", "" + a.getStudentID());

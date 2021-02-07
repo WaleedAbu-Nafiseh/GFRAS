@@ -47,9 +47,7 @@ public class QuizzesFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         setOnclickListener();
-
         View root = inflater.inflate(R.layout.fragment_quizzes, container, false);
-
         return root;
     }
 
@@ -61,7 +59,6 @@ public class QuizzesFragment extends Fragment {
         finishedquizListRecyclerView = getActivity().findViewById(R.id.finishedquizListRecyclerView);
         mRecyclerView.setHasFixedSize(true);
         finishedquizListRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(getContext());
         mLayoutManagerFinished = new LinearLayoutManager(getContext());
         Gson g = new Gson();
         CourseHomeMainActivity activity = (CourseHomeMainActivity) getActivity();

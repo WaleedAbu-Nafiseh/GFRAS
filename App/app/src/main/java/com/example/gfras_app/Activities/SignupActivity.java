@@ -78,11 +78,7 @@ public class SignupActivity extends AppCompatActivity {
                 d.getTime();
                 Student student = new Student(firstname, lastname, d, pass, stdNum, phone, courses);
                 DBServices.addToCollection(CollectionsName.STUDENTS, student);
-
-
             }
-
-
         });
     }
 }

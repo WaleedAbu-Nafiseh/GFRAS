@@ -133,17 +133,13 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
     public void writeUI() {
 
         if (quiz.isFinished()) {
-            gradeSheet = getGradeSheet();
             txtQuestionPlace.setText("The quiz is done");
             btnOptionA.setVisibility(View.INVISIBLE);
             btnOptionB.setVisibility(View.INVISIBLE);
             btnOptionC.setVisibility(View.INVISIBLE);
             btnOptionD.setVisibility(View.INVISIBLE);
-
-            Log.e("f", quiz.isFinished() + "is fni");
-            txtQuestionPlace.setText("You are done");
             if (gradeSheet == null) {
-                gradeSheet = new GradeSheet(currentCourse.getCourseId(), quiz.getQuestions().size(), quiz.getId(), UserServices.getCurrentUser(getApplicationContext()).getId());
+                gradeSheet = getGradeSheet();
             } else {
                 DBServices.addToCollection("GradeSheet", gradeSheet);
 
@@ -154,8 +150,6 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
             }
         }
 
-        txtPoints.setText(Integer.toString(gradeSheet.getPoints()));
-        Log.d(TAG, "writeUI points " + gradeSheet.getPoints());
         for (Question question : quiz.getQuestions()) {
 
             if (question.isShowQuestion() == true) {
@@ -215,7 +209,8 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 gradeSheet[0] = document.toObject(GradeSheet.class);
-                                txtQuestionPlace.setText("You are done and the grade is "+gradeSheet[0].getPoints());
+                                txtQuestionPlace.setText("Your grade in  "+gradeSheet[0].getPoints()+"\n"+ ((gradeSheet[0].getPoints() > 3) ? "You are above avergae " : "You are below average"));
+                                txtPoints.setVisibility(View.INVISIBLE);
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                             }
                         } else {
