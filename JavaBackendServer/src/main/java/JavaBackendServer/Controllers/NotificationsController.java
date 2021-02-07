@@ -85,7 +85,7 @@ public class NotificationsController {
                 if (a.isIsPresent()) {
                     text = "You are marked as an attende on " + courseName;
                 } else {
-                    text = "You did not come to class today";
+                    text = "You did not come to the " + courseName  + " class today!";
                 }
                 if (a.getStudentID().equalsIgnoreCase(v.getId())) {
                     System.out.println("You are valid  and id is " + v.getId());

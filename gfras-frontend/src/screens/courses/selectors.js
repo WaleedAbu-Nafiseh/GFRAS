@@ -73,7 +73,7 @@ function getTotalAttendancePoints({ courseAttendance, documentID }) {
 
 function getStudentTotalMarks({ studentsGradesSheet, documentID }) {
 	return studentsGradesSheet.reduce((acc, currStudentQuizData) => {
-		if (documentID === currStudentQuizData.studentID) {
+		if (documentID === currStudentQuizData.studentId) {
 			return acc + currStudentQuizData.points;
 		}
 
@@ -103,7 +103,11 @@ function getStudentsDetailsTable({ studentsGradesSheet, data, studentsData }) {
 			documentID
 		});
 		if (totalAttendancePoints > 0) console.log({ totalAttendancePoints });
-
+		if (totalQuizzesMarks > 0)
+			console.log({
+				totalQuizzesMarks,
+				studentUniversityId: student.studentUniversityId
+			});
 		if (tableDataStudentIndex === -1) {
 			return [
 				...acc,

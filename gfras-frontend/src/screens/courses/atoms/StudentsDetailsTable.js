@@ -65,7 +65,7 @@ function StudentsDetailsTable() {
 		data &&
 		studentsData &&
 		selectStudentsDetailsTable({ studentsGradesSheet, data, studentsData });
-
+	console.log(tableData);
 	return (
 		<Flex w='full' h='full' mt='20px' direction='column'>
 			<Flex w='full' h='full' align='center'>

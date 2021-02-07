@@ -16,7 +16,7 @@ export const DropDown = ({
 	menuItems
 }) => {
 	const isDisabled = !menuItems || menuItems.length === 0;
-
+	console.log(selectedMenuItem);
 	return (
 		<Menu>
 			{({ isOpen }) => (
