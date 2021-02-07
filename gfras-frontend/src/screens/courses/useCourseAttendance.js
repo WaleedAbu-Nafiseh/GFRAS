@@ -17,7 +17,7 @@ export function useCourseAttendance() {
 	const [compareStudentsAttendance, setCompareStudentsAttendance] = useState(
 		[]
 	); //to compare white studentsAttendance object for disabling submittion
-
+	const [changesOnOldValues, setChangesOnOldValues] = useState([]);
 	return {
 		data,
 		isError,
@@ -26,6 +26,8 @@ export function useCourseAttendance() {
 		compareStudentsAttendance,
 		refetchAttendanceList,
 		studentsAttendance,
-		setStudentsAttendance
+		setStudentsAttendance,
+		changesOnOldValues,
+		setChangesOnOldValues
 	};
 }
