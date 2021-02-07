@@ -133,7 +133,7 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
     public void writeUI() {
 
         if (quiz.isFinished()) {
-            txtQuestionPlace.setText("The quiz is done");
+            txtQuestionPlace.setText("The quiz is done \n"+""+gradeSheet.getPoints()+" points ");
             btnOptionA.setVisibility(View.INVISIBLE);
             btnOptionB.setVisibility(View.INVISIBLE);
             btnOptionC.setVisibility(View.INVISIBLE);
@@ -142,13 +142,9 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
                 gradeSheet = getGradeSheet();
             } else {
                 DBServices.addToCollection("GradeSheet", gradeSheet);
-
-            }
-        } else {
-            if (gradeSheet == null) {
-                gradeSheet = new GradeSheet(currentCourse.getCourseId(), quiz.getQuestions().size(), quiz.getId(), UserServices.getCurrentUser(getApplicationContext()).getId());
             }
         }
+
         if (gradeSheet!= null) {
             txtPoints.setText(Integer.toString(gradeSheet.getPoints()));
         }
@@ -185,9 +181,11 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
             btnOptionC.setBackground(getDrawable(R.drawable.quizzingbtn3background));
             btnOptionD.setBackground(getDrawable(R.drawable.quizzingbtn4background));
 
-        } else if (quiz.isFinished()) {
+        }
+        else if (quiz.isFinished()) {
             prgsBar.setVisibility(View.INVISIBLE);
-        } else {
+        }
+        else {
             //It is not started
             txtQuestionPlace.setText("Please wait until the quiz starts");
             txtPoints.setVisibility(View.INVISIBLE);
@@ -195,6 +193,10 @@ public class QuizzingActivity extends AppCompatActivity implements View.OnClickL
             btnOptionB.setVisibility(View.INVISIBLE);
             btnOptionC.setVisibility(View.INVISIBLE);
             btnOptionD.setVisibility(View.INVISIBLE);
+                if (gradeSheet == null ) {
+                    gradeSheet = new GradeSheet(currentCourse.getCourseId(), quiz.getQuestions().size(), quiz.getId(), UserServices.getCurrentUser(getApplicationContext()).getId());
+                }
+
         }
 
     }

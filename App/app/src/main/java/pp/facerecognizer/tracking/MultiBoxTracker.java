@@ -197,8 +197,8 @@ public class MultiBoxTracker {
 
             if( !TextUtils.isEmpty(recognition.title)){
                 labelString=  String.format("%s %.2f", recognition.title, recognition.detectionConfidence);
-                if(recognition.detectionConfidence>0.55){
-                    run("http://192.168.2.18:7000/notifications/IvG38iUdqTs0T4X9xtLb/1162767/07-11-2020/");
+                if(recognition.detectionConfidence>0.6){
+                    run("http://172.168.1.119:7000/notifications/UiZDxub5qEnJTLA0o1Sm/1162767/07-11-2020/");
                     Log.e("TEST","Logged as an attendee to db, confidence is :"+recognition.detectionConfidence+" , and  ");
                 }
                 //The method to mark as present should be called from here
