@@ -276,6 +276,8 @@ function ReminderModal({
 						'h:mm aa'
 					)}`
 				});
+				refetchReminders();
+
 				// failureToast({
 				// 	title: 'An error occurred',
 				// 	description: err.message
