@@ -66,13 +66,25 @@ const BarComponent = (props) => {
 
 export const RaceChart = ({ barData, chartHeight }) => {
 	const yearData = [...barData].sort((a, b) => a.value - b.value);
+	const x = [
+		{
+			id: '1160563',
+			studentName: 'Mariam Mustafa',
+			value: 4
+		},
+		{
+			id: '1163093',
+			studentName: 'Ali Abu Al Rub',
+			value: 6
+		}
+	];
 
 	return (
 		<Flex direction='column' align='center' w='full' h={chartHeight || '300px'}>
 			<ResponsiveBar
 				layout='horizontal'
 				margin={{ top: 26, right: 12, bottom: 26, left: 60 }}
-				data={yearData}
+				data={x}
 				gridXValues={[0, 6]}
 				indexBy='id'
 				keys={['value']}
@@ -87,7 +99,7 @@ export const RaceChart = ({ barData, chartHeight }) => {
 				colorBy='indexValue'
 				borderColor='black'
 				enableGridY={false}
-				axisBottom={''}
+				axisBottom={null}
 				padding={0.3}
 				isInteractive={false}
 				barComponent={BarComponent}
