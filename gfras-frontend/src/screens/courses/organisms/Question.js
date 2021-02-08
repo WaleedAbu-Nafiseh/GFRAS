@@ -102,12 +102,20 @@ export function Question() {
 				setNoOfSelectedQuestions(1);
 				setIsQuizDateModalOpen(false);
 				setQuizTitle('');
-				failureToast({
+				successToast({
 					title: formatMessage({
-						id: 'toastMessage.errorOccurred.title'
+						id: 'quiz.toastMessage.createNewQuiz.quizCreated.title'
 					}),
-					description: err.message
+					description: formatMessage({
+						id: 'quiz.toastMessage.createNewQuiz.quizCreated.description'
+					})
 				});
+				// failureToast({
+				// 	title: formatMessage({
+				// 		id: 'toastMessage.errorOccurred.title'
+				// 	}),
+				// 	description: err.message
+				// });
 			});
 	};
 
