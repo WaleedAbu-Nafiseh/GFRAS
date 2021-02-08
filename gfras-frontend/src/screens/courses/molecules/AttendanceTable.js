@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Checkbox, Flex } from '@chakra-ui/core';
+import { Checkbox } from '@chakra-ui/core';
 import Table from '../../../components/table/ReactTable';
 import { useAttendanceContext } from '../AttendanceContext';
 import { getStudentsAttendance } from '../../../API/students/getStudentsAttendance';
@@ -30,25 +30,14 @@ export const columns = [
 				studentsAttendance,
 				setStudentsAttendance,
 				setCompareStudentsAttendance,
-				compareStudentsAttendance,
-				changesOnOldValues
+				compareStudentsAttendance
 			} = useAttendanceContext();
-			const isStudentChecked =
-				studentsAttendance.findIndex(({ id }) => id === cell.row.values.id) !==
-				-1;
 			const isPresent = studentsAttendance.findIndex(({ id }) => {
 				return cell.row.values.id === id;
 			});
 
 			useEffect(() => {
 				if (cell.row.values.isPresent && isPresent === -1) {
-					setCompareStudentsAttendance((prevStudentsAttendance) => [
-						...prevStudentsAttendance,
-						{
-							studentName: cell.row.values.fullName,
-							id: cell.row.values.id
-						}
-					]);
 					setStudentsAttendance((prevStudentsAttendance) => [
 						...prevStudentsAttendance,
 						{
@@ -57,53 +46,52 @@ export const columns = [
 						}
 					]);
 				}
-			}, []);
+			}, [
+				cell.row,
+				isPresent,
+				setStudentsAttendance,
+				studentsAttendance,
+				setCompareStudentsAttendance
+			]);
 
-			// useEffect(() => {
-			// 	if (!isStudentChecked && cell.row.values.isPresent) {
-			// 		setChangesOnOldValues((prevState) => [
-			// 			...prevState,
-			// 			cell.row.values.id
-			// 		]);
-			// 	} else if (isStudentChecked && cell.row.values.isPresent) {
-			// 		setChangesOnOldValues((prevState) =>
-			// 			prevState.filter(({ id }) => id !== cell.row.values.id)
-			// 		);
-			// 	}
-			// }, [cell.row.values.id]);
 			return (
 				<Checkbox
 					size='sm'
-					{...(!isStudentChecked &&
-						cell.row.values.isPresent && { border: '1px solid red' })}
-					isChecked={isStudentChecked}
+					colorScheme='green'
+					border='1px solid black'
+					isChecked={!cell.row.values.isPresent ? isPresent !== -1 : true}
+					isDisabled={cell.row.values.isPresent && isPresent !== -1}
 					onChange={() => {
-						if (isStudentChecked) {
-							setCompareStudentsAttendance((prevState) => {
-								return prevState.filter(({ id }) => cell.row.values.id !== id);
-							});
-							setStudentsAttendance((prevState) => {
-								return prevState.filter(({ id }) => cell.row.values.id !== id);
-							});
-						} else {
-							setCompareStudentsAttendance((prevState) => {
-								return [
-									...prevState,
+						if (!cell.row.values.isPresent) {
+							if (isPresent !== -1) {
+								setCompareStudentsAttendance((prevCompareStudentsAttendance) =>
+									prevCompareStudentsAttendance.filter(
+										({ id }) => cell.row.values.id !== id
+									)
+								);
+								setStudentsAttendance((prevStudentsAttendance) =>
+									prevStudentsAttendance.filter(
+										({ id }) => cell.row.values.id !== id
+									)
+								);
+							} else {
+								setCompareStudentsAttendance(
+									(prevCompareStudentsAttendance) => [
+										...prevCompareStudentsAttendance,
+										{
+											studentName: cell.row.values.fullName,
+											id: cell.row.values.id
+										}
+									]
+								);
+								setStudentsAttendance((prevStudentsAttendance) => [
+									...prevStudentsAttendance,
 									{
-										id: cell.row.values.id,
-										studentName: cell.row.values.fullName
+										studentName: cell.row.values.fullName,
+										id: cell.row.values.id
 									}
-								];
-							});
-							setStudentsAttendance((prevState) => {
-								return [
-									...prevState,
-									{
-										id: cell.row.values.id,
-										studentName: cell.row.values.fullName
-									}
-								];
-							});
+								]);
+							}
 						}
 					}}
 				/>
@@ -145,7 +133,6 @@ export const AttendanceTable = ({ selectedMenuItem }) => {
 			setStudentsAttendance([presentStudents]);
 		}
 	}, [selectedMenuItem, students]);
-
 	const tableData =
 		students &&
 		attendanceTableSelector(
@@ -156,17 +143,15 @@ export const AttendanceTable = ({ selectedMenuItem }) => {
 		);
 
 	return (
-		<>
-			<CardContainer
-				status={tableData ? 'success' : 'loading'}
-				Loader={<TableLoader />}
-			>
-				<Table
-					columns={columns}
-					data={tableData}
-					initialState={tableInitialState}
-				/>
-			</CardContainer>
-		</>
+		<CardContainer
+			status={tableData ? 'success' : 'loading'}
+			Loader={<TableLoader />}
+		>
+			<Table
+				columns={columns}
+				data={tableData}
+				initialState={tableInitialState}
+			/>
+		</CardContainer>
 	);
 };
